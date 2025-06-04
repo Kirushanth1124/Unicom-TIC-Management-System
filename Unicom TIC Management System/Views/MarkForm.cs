@@ -1,0 +1,132 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using SchoolManageSystem.Controllers;
+using Unicom_TIC_Management_System;
+using Unicom_TIC_Management_System.Modals;
+using Unicom_TIC_Management_System;
+
+namespace Unicom_TIC_Management_System.Views
+{
+    public partial class MarkForm : Form
+    {
+        private MarkController markController = new MarkController();
+        private StudentController studentController = new StudentController();
+        private ExamController examController = new ExamController();
+
+        public MarkForm()
+        {
+            InitializeComponent();
+            LoadStudents();
+            LoadExams();
+            LoadMarks();
+        }
+
+        private void LoadStudents()
+        {
+            var students = studentController.GetAllStudents();
+            comboBoxStudents.DataSource = students;
+            comboBoxStudents.DisplayMember = "Name";
+            comboBoxStudents.ValueMember = "StudentID";
+        }
+
+        private void LoadExams()
+        {
+            var exams = examController.GetAllExams();
+            comboBoxExams.DataSource = exams;
+            comboBoxExams.DisplayMember = "ExamName";
+            comboBoxExams.ValueMember = "ExamID";
+        }
+
+        private void LoadMarks()
+        {
+            var marks = markController.GetAllMarks();
+            dataGridViewMarks.DataSource = null;
+            dataGridViewMarks.DataSource = marks;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            if (comboBoxStudents.SelectedValue == null || comboBoxExams.SelectedValue == null)
+            {
+                MessageBox.Show("Please select both a student and an exam.");
+                return;
+            }
+
+            if (!int.TryParse(txtScore.Text, out int score))
+            {
+                MessageBox.Show("Please enter a valid score.");
+                return;
+            }
+
+            var mark = new Mark
+            {
+                StudentId = (int)comboBoxStudents.SelectedValue,
+                ExamId = (int)comboBoxExams.SelectedValue,
+                Score = score
+            };
+
+            markController.AddMark(mark);
+            LoadMarks();
+            txtScore.Clear();
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewMarks.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a mark to update.");
+                return;
+            }
+
+            if (!int.TryParse(txtScore.Text, out int score))
+            {
+                MessageBox.Show("Please enter a valid score.");
+                return;
+            }
+
+            var row = dataGridViewMarks.SelectedRows[0];
+            int markId = Convert.ToInt32(row.Cells["MarkId"].Value);
+
+            var mark = new Mark
+            {
+                MarkId = markId,
+                StudentId = (int)comboBoxStudents.SelectedValue,
+                ExamId = (int)comboBoxExams.SelectedValue,
+                Score = score
+            };
+
+            markController.UpdateMark(mark);
+            LoadMarks();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewMarks.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a mark to delete.");
+                return;
+            }
+
+            var row = dataGridViewMarks.SelectedRows[0];
+            int markId = Convert.ToInt32(row.Cells["MarkId"].Value);
+
+            markController.DeleteMark(markId);
+            LoadMarks();
+            txtScore.Clear();
+        }
+
+        private void dataGridViewMarks_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridViewMarks.SelectedRows.Count > 0)
+            {
+                var row = dataGridViewMarks.SelectedRows[0];
+
+                txtScore.Text = row.Cells["Score"].Value.ToString();
+
+                comboBoxStudents.SelectedValue = row.Cells["StudentId"].Value;
+                comboBoxExams.SelectedValue = row.Cells["ExamId"].Value;
+            }
+        }
+    }
+}
