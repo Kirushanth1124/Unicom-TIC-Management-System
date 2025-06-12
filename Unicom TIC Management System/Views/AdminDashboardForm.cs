@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Unicom_TIC_Management_System.Views
+{
+    public partial class AdminDashboardForm : Form
+    {
+        public AdminDashboardForm()
+        {
+            InitializeComponent();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+            btnManageExam.Enabled = false;
+
+
+            var examForm = new ExamForm();
+            examForm.Show();
+
+
+            btnManageExam.Enabled = true;
+        }
+
+        private void btnManageStudents_Click(object sender, EventArgs e)
+        {
+
+            btnManageStudents.Enabled = false;
+
+
+            var studentForm = new StudentForm();
+            studentForm.Show();
+
+
+            btnManageStudents.Enabled = true;
+        }
+
+        private void btnManageCourses_Click(object sender, EventArgs e)
+        {
+
+
+            btnManageCourses.Enabled = false;
+
+
+            var courseForm = new CourseForm();
+            courseForm.Show();
+
+
+            btnManageCourses.Enabled = true;
+
+        }
+
+        private void btnManageMarks_Click(object sender, EventArgs e)
+        {
+            btnManageMarks.Enabled = true;
+
+            var markForm = new MarkForm();
+            markForm.Show();
+
+            btnManageMarks.Enabled = true;
+
+        }
+
+        private void btnManageTimeTable_Click(object sender, EventArgs e)
+        {
+            btnManageTimeTable.Enabled = true;
+
+            var timetableForm = new TimetableForm();
+            timetableForm.Show();
+
+            btnManageTimeTable.Enabled = true;
+
+        }
+
+        private void btnManageLecturers_Click(object sender, EventArgs e)
+        {
+            btnManageLecturers.Enabled = true;
+
+            var lecturerDashboardForm = new LecturerDashboardForm();
+            lecturerDashboardForm.Show();
+
+            btnManageLecturers.Enabled = true;
+
+        }
+    }
+}

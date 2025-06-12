@@ -82,11 +82,11 @@ namespace Unicom_TIC_Management_System.Repositories
                         FOREIGN KEY (SubjectID) REFERENCES Subject(SubjectID)
                     );
 
-                    CREATE TABLE IF NOT EXISTS Users (
-                        UserID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    CREATE TABLE Users (
+                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
                         Username TEXT NOT NULL,
-                        UserPassword TEXT NOT NULL,
-                        Role TEXT NOT NULL
+                        Password TEXT NOT NULL,
+                        Role TEXT NOT NULL -- Values: 'Admin', 'Staff', 'Student', 'Lecturer'
                     );
 
                     CREATE TABLE IF NOT EXISTS ManageMarks (

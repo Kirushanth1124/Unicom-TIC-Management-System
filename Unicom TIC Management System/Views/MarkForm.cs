@@ -5,6 +5,7 @@ using SchoolManageSystem.Controllers;
 using Unicom_TIC_Management_System;
 using Unicom_TIC_Management_System.Modals;
 using Unicom_TIC_Management_System;
+using Unicom_TIC_Management_System.Controllers;
 
 namespace Unicom_TIC_Management_System.Views
 {

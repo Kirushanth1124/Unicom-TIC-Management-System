@@ -1,14 +1,14 @@
-﻿namespace Unicom_TIC_Management_System
+﻿namespace Unicom_TIC_Management_System.Views
 {
-    partial class Form1
+    partial class LoginForm
     {
         /// <summary>
-        ///  Required designer variable.
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        ///  Clean up any resources being used.
+        /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
@@ -23,8 +23,8 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -32,22 +32,25 @@
             label2 = new Label();
             txtUsername = new TextBox();
             txtPassword = new TextBox();
-            button1 = new Button();
+            btnLogin = new Button();
+            comboBoxRole = new ComboBox();
+            dataGridViewUsers = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewUsers).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(161, 58);
+            label1.Location = new Point(29, 22);
             label1.Name = "label1";
-            label1.Size = new Size(60, 15);
+            label1.Size = new Size(65, 15);
             label1.TabIndex = 0;
-            label1.Text = "Username";
+            label1.Text = "User Name";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(161, 128);
+            label2.Location = new Point(29, 61);
             label2.Name = "label2";
             label2.Size = new Size(57, 15);
             label2.TabIndex = 1;
@@ -55,40 +58,58 @@
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(315, 58);
+            txtUsername.Location = new Point(158, 22);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(100, 23);
             txtUsername.TabIndex = 2;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(315, 120);
+            txtPassword.Location = new Point(158, 61);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(100, 23);
             txtPassword.TabIndex = 3;
             // 
-            // button1
+            // btnLogin
             // 
-            button1.Location = new Point(234, 226);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 4;
-            button1.Text = "Login";
-            button1.UseVisualStyleBackColor = true;
+            btnLogin.Location = new Point(29, 139);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(75, 23);
+            btnLogin.TabIndex = 4;
+            btnLogin.Text = "Login";
+            btnLogin.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // comboBoxRole
+            // 
+            comboBoxRole.FormattingEnabled = true;
+            comboBoxRole.Location = new Point(167, 130);
+            comboBoxRole.Name = "comboBoxRole";
+            comboBoxRole.Size = new Size(121, 23);
+            comboBoxRole.TabIndex = 5;
+            // 
+            // dataGridViewUsers
+            // 
+            dataGridViewUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewUsers.Location = new Point(64, 209);
+            dataGridViewUsers.Name = "dataGridViewUsers";
+            dataGridViewUsers.Size = new Size(514, 186);
+            dataGridViewUsers.TabIndex = 6;
+            // 
+            // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(button1);
+            Controls.Add(dataGridViewUsers);
+            Controls.Add(comboBoxRole);
+            Controls.Add(btnLogin);
             Controls.Add(txtPassword);
             Controls.Add(txtUsername);
             Controls.Add(label2);
             Controls.Add(label1);
-            Name = "Form1";
-            Text = "Form1";
-            Load += Form1_Load;
+            Name = "LoginForm";
+            Text = "LoginForm";
+            ((System.ComponentModel.ISupportInitialize)dataGridViewUsers).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -99,6 +120,8 @@
         private Label label2;
         private TextBox txtUsername;
         private TextBox txtPassword;
-        private Button button1;
+        private Button btnLogin;
+        private ComboBox comboBoxRole;
+        private DataGridView dataGridViewUsers;
     }
 }

@@ -88,7 +88,7 @@
             // 
             txtScore.Location = new Point(160, 135);
             txtScore.Name = "txtScore";
-            txtScore.Size = new Size(100, 23);
+            txtScore.Size = new Size(121, 23);
             txtScore.TabIndex = 5;
             // 
             // btnAdd

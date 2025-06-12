@@ -3,41 +3,54 @@ using System.Data.SQLite;
 using Unicom_TIC_Management_System.Modals;
 using Unicom_TIC_Management_System.Repositories;
 
-namespace SchoolManageSystem.Controllers
+namespace Unicom_TIC_Management_System.Controllers
 {
     internal class LoginController
     {
-        /// <summary>
-        /// Validates login credentials and returns the user object if successful.
-        /// </summary>
-        public User Login(string username, string password)
+       
+        public User Login(string username, string password, string role)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("SELECT * FROM Users WHERE Username = @Username AND Password = @Password", conn);
+                var cmd = new SQLiteCommand(
+                    "SELECT * FROM Users WHERE Username = @Username AND Password = @Password AND Role = @Role", conn);
                 cmd.Parameters.AddWithValue("@Username", username);
-                cmd.Parameters.AddWithValue("@Password", password); // plain text as per spec
+                cmd.Parameters.AddWithValue("@Password", password); 
+                cmd.Parameters.AddWithValue("@Role", role);
 
-                var reader = cmd.ExecuteReader();
-                if (reader.Read())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    return new User
+                    if (reader.Read())
                     {
-                        UserId = reader.GetInt32(0),
-                        Username = reader.GetString(1),
-                        Password = reader.GetString(2),
-                        Role = reader.GetString(3)
-                    };
+                        return new User
+                        {
+                            UserId = reader.GetInt32(0),
+                            Username = reader.GetString(1),
+                            Password = reader.GetString(2),
+                            Role = reader.GetString(3)
+                        };
+                    }
                 }
             }
 
-            // Return null if login fails
-            return null;
+            return null; 
         }
 
-        /// <summary>
-        /// Optional: Check if a username already exists (e.g., for Admin registration logic)
-        /// </summary>
+        
+        public void AddUser(User user)
+        {
+            using (var conn = DbCon.GetConnection())
+            {
+                var cmd = new SQLiteCommand(
+                    "INSERT INTO Users (Username, Password, Role) VALUES (@Username, @Password, @Role)", conn);
+                cmd.Parameters.AddWithValue("@Username", user.Username);
+                cmd.Parameters.AddWithValue("@Password", user.Password); 
+                cmd.Parameters.AddWithValue("@Role", user.Role);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        
         public bool UsernameExists(string username)
         {
             using (var conn = DbCon.GetConnection())
@@ -49,17 +62,38 @@ namespace SchoolManageSystem.Controllers
             }
         }
 
-        /// <summary>
-        /// Optional: Add a new user (e.g., Admin creates user accounts)
-        /// </summary>
-        public void AddUser(User user)
+       
+        public List<User> GetAllUsers()
+        {
+            var users = new List<User>();
+
+            using (var conn = DbCon.GetConnection())
+            {
+                var cmd = new SQLiteCommand("SELECT * FROM Users", conn);
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    users.Add(new User
+                    {
+                        UserId = reader.GetInt32(0),
+                        Username = reader.GetString(1),
+                        Password = reader.GetString(2),
+                        Role = reader.GetString(3)
+                    });
+                }
+            }
+
+            return users;
+        }
+
+       
+        public void DeleteUser(int userId)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("INSERT INTO Users (Username, Password, Role) VALUES (@Username, @Password, @Role)", conn);
-                cmd.Parameters.AddWithValue("@Username", user.Username);
-                cmd.Parameters.AddWithValue("@Password", user.Password); // still plain text
-                cmd.Parameters.AddWithValue("@Role", user.Role);
+                var cmd = new SQLiteCommand("DELETE FROM Users WHERE UserId = @UserId", conn);
+                cmd.Parameters.AddWithValue("@UserId", userId);
                 cmd.ExecuteNonQuery();
             }
         }

@@ -1,131 +1,123 @@
-﻿using SchoolManageSystem;
-using SchoolManageSystem;
-using SchoolManageSystem;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Unicom_TIC_Management_System.Modals;
 using Unicom_TIC_Management_System.Repositories;
 
-namespace SchoolManageSystem.Controllers
+namespace Unicom_TIC_Management_System.Controllers
 {
-    internal class StudentController
+    public class StudentController
     {
-        //private readonly StudentService _studentService;
-
-        public StudentController()
-        {
-            //_studentService = new StudentService();
-        }
-
-        //public List<Student> GetAllStudents() => _studentService.GetAll();
-
-        //public void AddStudent(Student student) => _studentService.Add(student);
-
-        //public void UpdateStudent(Student student) => _studentService.Update(student);
-
-        //public void DeleteStudent(int studentId) => _studentService.Delete(studentId);
-
-
+        
         public List<Student> GetAllStudents()
         {
             var students = new List<Student>();
 
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand(@"
-                    SELECT s.Id, s.Name, s.Address, s.SectionId, sec.Name AS CourseName
+                var query = @"
+                    SELECT s.StudentID, s.Name, s.Address, s.CourseID, c.CourseName
                     FROM Students s
-                    LEFT JOIN Course sec ON s.Course ID = sec.Id", conn);
+                    LEFT JOIN Courses c ON s.CourseID = c.CourseID";
 
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (var cmd = new SQLiteCommand(query, conn))
+                using (var reader = cmd.ExecuteReader())
                 {
-                    Student student = new Student
+                    while (reader.Read())
                     {
-                        StudentId = reader.GetInt32(0),
-                        Name = reader.GetString(1),
-                        Address = reader.GetString(2),
-                        CourseId = reader.GetInt32(3),
-                        
-                    };
-                    students.Add(student);
-
-                    //students.Add(new Student
-                    //{
-                    //    Id = reader.GetInt32(0),
-                    //    Name = reader.GetString(1),
-                    //    Address = reader.GetString(2),
-                    //    SectionName = reader.IsDBNull(3) ? "" : reader.GetString(3)
-                    //});
+                        students.Add(new Student
+                        {
+                            StudentId = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Address = reader.GetString(2),
+                            CourseId = reader.GetInt32(3),
+                            CourseName = reader.IsDBNull(4) ? string.Empty : reader.GetString(4)
+                        });
+                    }
                 }
             }
 
             return students;
         }
 
+        // Add a new student to the database
         public void AddStudent(Student student)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var command = new SQLiteCommand("INSERT INTO Students (Name, Address, SectionId) VALUES (@Name, @Address, @SectionId)", conn);
-                command.Parameters.AddWithValue("@Name", student.Name);
-                command.Parameters.AddWithValue("@Address", student.Address);
-                command.Parameters.AddWithValue("@CourseID", student.CourseId );
-                command.ExecuteNonQuery();
+                var query = "INSERT INTO Students (Name, Address, CourseID) VALUES (@Name, @Address, @CourseID)";
+
+                using (var cmd = new SQLiteCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Name", student.Name);
+                    cmd.Parameters.AddWithValue("@Address", student.Address);
+                    cmd.Parameters.AddWithValue("@CourseID", student.CourseId);
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
+        // Update an existing student
         public void UpdateStudent(Student student)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var command = new SQLiteCommand("UPDATE Students SET Name = @Name, Address = @Address, SectionId = @SectionId WHERE Id = @Id", conn);
-                command.Parameters.AddWithValue("@Name", student.Name);
-                command.Parameters.AddWithValue("@Address", student.Address);
-                command.Parameters.AddWithValue("@CourseID", student.CourseId);
-                command.Parameters.AddWithValue("@StudentID", student.StudentId);
-                command.ExecuteNonQuery();
-            }                                                                            
+                var query = "UPDATE Students SET Name = @Name, Address = @Address, CourseID = @CourseID WHERE StudentID = @StudentID";
+
+                using (var cmd = new SQLiteCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Name", student.Name);
+                    cmd.Parameters.AddWithValue("@Address", student.Address);
+                    cmd.Parameters.AddWithValue("@CourseID", student.CourseId);
+                    cmd.Parameters.AddWithValue("@StudentID", student.StudentId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
+        // Delete a student by ID
         public void DeleteStudent(int studentId)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var command = new SQLiteCommand("DELETE FROM Students WHERE Id = @Id", conn);
-                command.Parameters.AddWithValue("@Id", studentId);
-                command.ExecuteNonQuery();
+                var query = "DELETE FROM Students WHERE StudentID = @StudentID";
+
+                using (var cmd = new SQLiteCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@StudentID", studentId);
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
-        public Student GetStudentById(int id)
+        // Get one student by ID
+        public Student GetStudentById(int studentId)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("SELECT * FROM Students WHERE Id = @Id", conn);
-                cmd.Parameters.AddWithValue("@Id", id);
+                var query = "SELECT StudentID, Name, Address, CourseID FROM Students WHERE StudentID = @StudentID";
 
-                using (var reader = cmd.ExecuteReader())
+                using (var cmd = new SQLiteCommand(query, conn))
                 {
-                    if (reader.Read())
+                    cmd.Parameters.AddWithValue("@StudentID", studentId);
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        return new Student
+                        if (reader.Read())
                         {
-                            StudentId = reader.GetInt32(0),
-                            Name = reader.GetString(1),
-                            Address = reader.GetString(2),
-                            CourseId = reader.IsDBNull(3) ? 0 : reader.GetInt32(3)
-                        };
+                            return new Student
+                            {
+                                StudentId = reader.GetInt32(0),
+                                Name = reader.GetString(1),
+                                Address = reader.GetString(2),
+                                CourseId = reader.GetInt32(3)
+                            };
+                        }
                     }
                 }
             }
 
             return null;
         }
-
     }
 }

@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace Unicom_TIC_Management_System.Views
 {
-    public partial class StudentForm : Form
+    public partial class StaffDashboardForm : Form
     {
-        public StudentForm()
+        public StaffDashboardForm()
         {
             InitializeComponent();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void StudentForm_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
