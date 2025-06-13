@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             label1 = new Label();
             label2 = new Label();
             txtUsername = new TextBox();
@@ -35,6 +36,7 @@
             btnLogin = new Button();
             comboBoxRole = new ComboBox();
             dataGridViewUsers = new DataGridView();
+            printPreviewDialog1 = new PrintPreviewDialog();
             ((System.ComponentModel.ISupportInitialize)dataGridViewUsers).BeginInit();
             SuspendLayout();
             // 
@@ -95,6 +97,16 @@
             dataGridViewUsers.Size = new Size(514, 186);
             dataGridViewUsers.TabIndex = 6;
             // 
+            // printPreviewDialog1
+            // 
+            printPreviewDialog1.AutoScrollMargin = new Size(0, 0);
+            printPreviewDialog1.AutoScrollMinSize = new Size(0, 0);
+            printPreviewDialog1.ClientSize = new Size(400, 300);
+            printPreviewDialog1.Enabled = true;
+            printPreviewDialog1.Icon = (Icon)resources.GetObject("printPreviewDialog1.Icon");
+            printPreviewDialog1.Name = "printPreviewDialog1";
+            printPreviewDialog1.Visible = false;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -123,5 +135,6 @@
         private Button btnLogin;
         private ComboBox comboBoxRole;
         private DataGridView dataGridViewUsers;
+        private PrintPreviewDialog printPreviewDialog1;
     }
 }

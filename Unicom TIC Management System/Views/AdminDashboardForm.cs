@@ -90,5 +90,18 @@ namespace Unicom_TIC_Management_System.Views
             btnManageLecturers.Enabled = true;
 
         }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+
+            btnLogout.Enabled = false;
+
+
+            var loginform = new LoginForm();
+            loginform.Show();
+
+
+            btnLogout.Enabled = true;
+        }
     }
 }

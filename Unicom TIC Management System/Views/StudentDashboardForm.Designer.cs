@@ -28,12 +28,67 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "StudentDashboardForm";
+            btnViewMarks = new Button();
+            btnViewTimetable = new Button();
+            btnLogout = new Button();
+            dgvData = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
+            SuspendLayout();
+            // 
+            // btnViewMarks
+            // 
+            btnViewMarks.Location = new Point(61, 84);
+            btnViewMarks.Name = "btnViewMarks";
+            btnViewMarks.Size = new Size(110, 23);
+            btnViewMarks.TabIndex = 1;
+            btnViewMarks.Text = "View Marks";
+            btnViewMarks.UseVisualStyleBackColor = true;
+            // 
+            // btnViewTimetable
+            // 
+            btnViewTimetable.Location = new Point(61, 158);
+            btnViewTimetable.Name = "btnViewTimetable";
+            btnViewTimetable.Size = new Size(110, 23);
+            btnViewTimetable.TabIndex = 2;
+            btnViewTimetable.Text = "View Timetable";
+            btnViewTimetable.UseVisualStyleBackColor = true;
+            // 
+            // btnLogout
+            // 
+            btnLogout.Location = new Point(687, 396);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(75, 23);
+            btnLogout.TabIndex = 3;
+            btnLogout.Text = "Logout";
+            btnLogout.UseVisualStyleBackColor = true;
+            // 
+            // dgvData
+            // 
+            dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvData.Location = new Point(12, 196);
+            dgvData.Name = "dgvData";
+            dgvData.Size = new Size(389, 198);
+            dgvData.TabIndex = 4;
+            // 
+            // StudentDashboardForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(dgvData);
+            Controls.Add(btnLogout);
+            Controls.Add(btnViewTimetable);
+            Controls.Add(btnViewMarks);
+            Name = "StudentDashboardForm";
+            Text = "StudentDashboardForm";
+            ((System.ComponentModel.ISupportInitialize)dgvData).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
+        private Button btnViewMarks;
+        private Button btnViewTimetable;
+        private Button btnLogout;
+        private DataGridView dgvData;
     }
 }

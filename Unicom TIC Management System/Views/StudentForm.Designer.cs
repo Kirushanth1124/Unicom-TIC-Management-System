@@ -28,125 +28,104 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lable1 = new Label();
-            lbl = new Label();
-            label2 = new Label();
             label1 = new Label();
-            txtStName = new TextBox();
-            txtStAddress = new TextBox();
+            label2 = new Label();
             label3 = new Label();
             label4 = new Label();
-            textBox1 = new TextBox();
-            dateTimePicker1 = new DateTimePicker();
             label5 = new Label();
+            txtStName = new TextBox();
+            txtStAddress = new TextBox();
+            dateTimePicker1 = new DateTimePicker();
+            txtPhoneNumber = new TextBox();
             radMale = new RadioButton();
             radFemale = new RadioButton();
             btnAdd = new Button();
-            btnUpdate = new Button();
             btnDelete = new Button();
+            btnUpdate = new Button();
             dataGridView1 = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
-            // lable1
+            // label1
             // 
-            lable1.AutoSize = true;
-            lable1.Location = new Point(27, 9);
-            lable1.Name = "lable1";
-            lable1.Size = new Size(83, 15);
-            lable1.TabIndex = 0;
-            lable1.Text = "Student Name";
-            // 
-            // lbl
-            // 
-            lbl.AutoSize = true;
-            lbl.Location = new Point(49, 67);
-            lbl.Name = "lbl";
-            lbl.Size = new Size(93, 15);
-            lbl.TabIndex = 1;
-            lbl.Text = "Student Address";
+            label1.AutoSize = true;
+            label1.Location = new Point(23, 20);
+            label1.Name = "label1";
+            label1.Size = new Size(83, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Student Name";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(49, 67);
+            label2.Location = new Point(23, 61);
             label2.Name = "label2";
-            label2.Size = new Size(38, 15);
+            label2.Size = new Size(93, 15);
             label2.TabIndex = 1;
-            label2.Text = "label2";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(27, 43);
-            label1.Name = "label1";
-            label1.Size = new Size(96, 15);
-            label1.TabIndex = 1;
-            label1.Text = "Student  Address";
-            // 
-            // txtStName
-            // 
-            txtStName.Location = new Point(152, 9);
-            txtStName.Name = "txtStName";
-            txtStName.Size = new Size(100, 23);
-            txtStName.TabIndex = 2;
-            txtStName.TextChanged += textBox1_TextChanged;
-            // 
-            // txtStAddress
-            // 
-            txtStAddress.Location = new Point(152, 43);
-            txtStAddress.Name = "txtStAddress";
-            txtStAddress.Size = new Size(100, 23);
-            txtStAddress.TabIndex = 3;
+            label2.Text = "Student Address";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(27, 88);
+            label3.Location = new Point(23, 96);
             label3.Name = "label3";
             label3.Size = new Size(31, 15);
-            label3.TabIndex = 4;
+            label3.TabIndex = 2;
             label3.Text = "DOB";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(27, 128);
+            label4.Location = new Point(23, 133);
             label4.Name = "label4";
-            label4.Size = new Size(109, 15);
-            label4.TabIndex = 6;
-            label4.Text = "TelePhone Number";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(152, 128);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 7;
-            // 
-            // dateTimePicker1
-            // 
-            dateTimePicker1.Location = new Point(152, 86);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(200, 23);
-            dateTimePicker1.TabIndex = 8;
+            label4.Size = new Size(88, 15);
+            label4.TabIndex = 3;
+            label4.Text = "Phone Number";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(27, 168);
+            label5.Location = new Point(23, 176);
             label5.Name = "label5";
             label5.Size = new Size(45, 15);
-            label5.TabIndex = 9;
+            label5.TabIndex = 4;
             label5.Text = "Gender";
+            // 
+            // txtStName
+            // 
+            txtStName.Location = new Point(191, 17);
+            txtStName.Name = "txtStName";
+            txtStName.Size = new Size(100, 23);
+            txtStName.TabIndex = 5;
+            // 
+            // txtStAddress
+            // 
+            txtStAddress.Location = new Point(191, 53);
+            txtStAddress.Name = "txtStAddress";
+            txtStAddress.Size = new Size(100, 23);
+            txtStAddress.TabIndex = 6;
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(191, 90);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(200, 23);
+            dateTimePicker1.TabIndex = 7;
+            // 
+            // txtPhoneNumber
+            // 
+            txtPhoneNumber.Location = new Point(191, 130);
+            txtPhoneNumber.Name = "txtPhoneNumber";
+            txtPhoneNumber.Size = new Size(100, 23);
+            txtPhoneNumber.TabIndex = 8;
             // 
             // radMale
             // 
             radMale.AutoSize = true;
-            radMale.Location = new Point(152, 164);
+            radMale.Location = new Point(191, 176);
             radMale.Name = "radMale";
             radMale.Size = new Size(51, 19);
-            radMale.TabIndex = 10;
+            radMale.TabIndex = 9;
             radMale.TabStop = true;
             radMale.Text = "Male";
             radMale.UseVisualStyleBackColor = true;
@@ -154,72 +133,71 @@
             // radFemale
             // 
             radFemale.AutoSize = true;
-            radFemale.Location = new Point(243, 164);
+            radFemale.Location = new Point(297, 176);
             radFemale.Name = "radFemale";
             radFemale.Size = new Size(63, 19);
-            radFemale.TabIndex = 11;
+            radFemale.TabIndex = 10;
             radFemale.TabStop = true;
             radFemale.Text = "Female";
             radFemale.UseVisualStyleBackColor = true;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(27, 207);
+            btnAdd.Location = new Point(461, 12);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(75, 23);
-            btnAdd.TabIndex = 12;
+            btnAdd.TabIndex = 11;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
             // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(461, 125);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(75, 23);
+            btnDelete.TabIndex = 12;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = true;
+            // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(152, 207);
+            btnUpdate.Location = new Point(461, 72);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(75, 23);
             btnUpdate.TabIndex = 13;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
             // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(296, 207);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(75, 23);
-            btnDelete.TabIndex = 14;
-            btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
-            // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(27, 258);
+            dataGridView1.Location = new Point(2, 212);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(514, 288);
-            dataGridView1.TabIndex = 15;
+            dataGridView1.Size = new Size(710, 226);
+            dataGridView1.TabIndex = 14;
             // 
             // StudentForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 567);
+            ClientSize = new Size(800, 450);
             Controls.Add(dataGridView1);
-            Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
+            Controls.Add(btnDelete);
             Controls.Add(btnAdd);
             Controls.Add(radFemale);
             Controls.Add(radMale);
-            Controls.Add(label5);
+            Controls.Add(txtPhoneNumber);
             Controls.Add(dateTimePicker1);
-            Controls.Add(textBox1);
-            Controls.Add(label4);
-            Controls.Add(label3);
             Controls.Add(txtStAddress);
             Controls.Add(txtStName);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(lable1);
             Name = "StudentForm";
-            Text = "0";
-            Load += StudentForm_Load;
+            Text = "StudentForm";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -227,22 +205,20 @@
 
         #endregion
 
-        private Label lable1;
-        private Label lbl;
-        private Label label2;
         private Label label1;
-        private TextBox txtStName;
-        private TextBox txtStAddress;
+        private Label label2;
         private Label label3;
         private Label label4;
-        private TextBox textBox1;
-        private DateTimePicker dateTimePicker1;
         private Label label5;
+        private TextBox txtStName;
+        private TextBox txtStAddress;
+        private DateTimePicker dateTimePicker1;
+        private TextBox txtPhoneNumber;
         private RadioButton radMale;
         private RadioButton radFemale;
         private Button btnAdd;
-        private Button btnUpdate;
         private Button btnDelete;
+        private Button btnUpdate;
         private DataGridView dataGridView1;
     }
 }

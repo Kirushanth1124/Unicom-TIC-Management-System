@@ -38,7 +38,7 @@
             // 
             btnViewTimetable.Location = new Point(80, 39);
             btnViewTimetable.Name = "btnViewTimetable";
-            btnViewTimetable.Size = new Size(75, 23);
+            btnViewTimetable.Size = new Size(121, 23);
             btnViewTimetable.TabIndex = 0;
             btnViewTimetable.Text = "View TimeTable";
             btnViewTimetable.UseVisualStyleBackColor = true;
@@ -51,12 +51,13 @@
             btnLogout.TabIndex = 1;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click_1;
             // 
             // btnViewExams
             // 
             btnViewExams.Location = new Point(80, 116);
             btnViewExams.Name = "btnViewExams";
-            btnViewExams.Size = new Size(75, 23);
+            btnViewExams.Size = new Size(121, 23);
             btnViewExams.TabIndex = 2;
             btnViewExams.Text = "View Exam";
             btnViewExams.UseVisualStyleBackColor = true;
@@ -65,7 +66,7 @@
             // 
             groupActions.Location = new Point(272, 21);
             groupActions.Name = "groupActions";
-            groupActions.Size = new Size(516, 289);
+            groupActions.Size = new Size(516, 247);
             groupActions.TabIndex = 3;
             groupActions.TabStop = false;
             groupActions.Text = "groupBox1";

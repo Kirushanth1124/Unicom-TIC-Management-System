@@ -1,9 +1,21 @@
 ﻿using System.Data.SQLite;
+using Unicom_TIC_Management_System.Modals;
 
 namespace Unicom_TIC_Management_System.Repositories
 {
     public class DatabaseManager
     {
+        
+        private static DatabaseManager _instance;
+        public static DatabaseManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new DatabaseManager();
+                return _instance;
+            }
+        }
         public static void CreateTables()
         {
             using (var conn = DbCon.GetConnection())
@@ -115,6 +127,21 @@ namespace Unicom_TIC_Management_System.Repositories
 
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        internal List<Student> GetAllStudents()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object GetStudentMarks(int studentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object GetStudentTimetable(int studentId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

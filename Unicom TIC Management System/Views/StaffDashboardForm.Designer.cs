@@ -28,12 +28,105 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "StaffDashboardForm";
+            lblWelcome = new Label();
+            dgvStudents = new DataGridView();
+            btnLoadStudents = new Button();
+            btnViewTimetable = new Button();
+            btnManageExams = new Button();
+            btnManageMarks = new Button();
+            btnLogout = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
+            SuspendLayout();
+            // 
+            // lblWelcome
+            // 
+            lblWelcome.AutoSize = true;
+            lblWelcome.Location = new Point(70, 30);
+            lblWelcome.Name = "lblWelcome";
+            lblWelcome.Size = new Size(38, 15);
+            lblWelcome.TabIndex = 0;
+            lblWelcome.Text = "label1";
+            // 
+            // dgvStudents
+            // 
+            dgvStudents.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvStudents.Location = new Point(425, 214);
+            dgvStudents.Name = "dgvStudents";
+            dgvStudents.Size = new Size(240, 150);
+            dgvStudents.TabIndex = 1;
+            // 
+            // btnLoadStudents
+            // 
+            btnLoadStudents.Location = new Point(33, 88);
+            btnLoadStudents.Name = "btnLoadStudents";
+            btnLoadStudents.Size = new Size(130, 23);
+            btnLoadStudents.TabIndex = 2;
+            btnLoadStudents.Text = "Load Students";
+            btnLoadStudents.UseVisualStyleBackColor = true;
+            // 
+            // btnViewTimetable
+            // 
+            btnViewTimetable.Location = new Point(33, 142);
+            btnViewTimetable.Name = "btnViewTimetable";
+            btnViewTimetable.Size = new Size(130, 23);
+            btnViewTimetable.TabIndex = 3;
+            btnViewTimetable.Text = "View Timetable";
+            btnViewTimetable.UseVisualStyleBackColor = true;
+            // 
+            // btnManageExams
+            // 
+            btnManageExams.Location = new Point(33, 197);
+            btnManageExams.Name = "btnManageExams";
+            btnManageExams.Size = new Size(130, 23);
+            btnManageExams.TabIndex = 4;
+            btnManageExams.Text = "Manage Exams";
+            btnManageExams.UseVisualStyleBackColor = true;
+            // 
+            // btnManageMarks
+            // 
+            btnManageMarks.Location = new Point(33, 252);
+            btnManageMarks.Name = "btnManageMarks";
+            btnManageMarks.Size = new Size(130, 23);
+            btnManageMarks.TabIndex = 5;
+            btnManageMarks.Text = "Manage Marks";
+            btnManageMarks.UseVisualStyleBackColor = true;
+            // 
+            // btnLogout
+            // 
+            btnLogout.Location = new Point(33, 415);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(130, 23);
+            btnLogout.TabIndex = 6;
+            btnLogout.Text = "Logout";
+            btnLogout.UseVisualStyleBackColor = true;
+            // 
+            // StaffDashboardForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(btnLogout);
+            Controls.Add(btnManageMarks);
+            Controls.Add(btnManageExams);
+            Controls.Add(btnViewTimetable);
+            Controls.Add(btnLoadStudents);
+            Controls.Add(dgvStudents);
+            Controls.Add(lblWelcome);
+            Name = "StaffDashboardForm";
+            Text = "StaffDashboardForm";
+            ((System.ComponentModel.ISupportInitialize)dgvStudents).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label lblWelcome;
+        private DataGridView dgvStudents;
+        private Button btnLoadStudents;
+        private Button btnViewTimetable;
+        private Button btnManageExams;
+        private Button btnManageMarks;
+        private Button btnLogout;
     }
 }

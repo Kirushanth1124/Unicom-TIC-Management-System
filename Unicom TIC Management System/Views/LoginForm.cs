@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using Unicom_TIC_Management_System.Controllers;
-using Unicom_TIC_Management_System.Modals;
+﻿using Unicom_TIC_Management_System.Controllers;
 
 namespace Unicom_TIC_Management_System.Views
 {
@@ -12,7 +9,7 @@ namespace Unicom_TIC_Management_System.Views
         public LoginForm()
         {
             InitializeComponent();
-            comboBoxRole.SelectedIndex = 0; 
+            comboBoxRole.SelectedIndex = 0;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

@@ -34,5 +34,10 @@ namespace Unicom_TIC_Management_System.Views
             var loginForm = new LoginForm();
             loginForm.Show();
         }
+
+        private void btnLogout_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
