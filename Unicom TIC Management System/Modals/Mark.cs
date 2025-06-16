@@ -8,10 +8,10 @@ namespace Unicom_TIC_Management_System.Modals
 {
     internal class Mark
     {
-        public int StudentId { get; set; }
-        public int ExamId { get; set; }
+        public int StudentID { get; set; }
+        public int ExamID { get; set; }
         public int Score { get; set; }
-        public int MarkId { get; set; }
+        public int MarkID { get; set; }
         public string ExamName { get; set; }
         public string StudentName { get; set; }
 

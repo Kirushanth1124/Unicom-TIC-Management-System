@@ -1,105 +1,108 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using SchoolManageSystem.Controllers;
-using Unicom_TIC_Management_System;
+using Unicom_TIC_Management_System.Controllers;
 using Unicom_TIC_Management_System.Modals;
-using Unicom_TIC_Management_System;
 
 namespace Unicom_TIC_Management_System.Views
 {
     public partial class ExamForm : Form
     {
         private ExamController examController = new ExamController();
-        private SubjectController subjectController = new SubjectController();
+        private SubjectController subjectController = new SubjectController(); // Assuming this exists
+        private int selectedExamId = -1;
 
         public ExamForm()
         {
             InitializeComponent();
-            LoadSubjects();
-            LoadExams();
+            LoadSubjects();   
+            LoadExams();      
         }
 
         private void LoadSubjects()
         {
             var subjects = subjectController.GetAllSubjects();
-            comboBoxSubjects.DataSource = subjects;
-            comboBoxSubjects.DisplayMember = "SubjectName";
-            comboBoxSubjects.ValueMember = "SubjectID";
+            cmbSubjects.DataSource = subjects;
+            cmbSubjects.DisplayMember = "SubjectName";
+            cmbSubjects.ValueMember = "SubjectID";
         }
 
         private void LoadExams()
         {
-            var exams = examController.GetAllExams();
-            dataGridViewExams.DataSource = null;
-            dataGridViewExams.DataSource = exams;
+            dgvExams.DataSource = null;
+            dgvExams.DataSource = examController.GetAllExams();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtExamName.Text))
+            if (string.IsNullOrWhiteSpace(txtExamName.Text) || cmbSubjects.SelectedIndex == -1)
             {
-                MessageBox.Show("Please enter an exam name.");
+                MessageBox.Show("Please enter exam name and select subject.");
                 return;
             }
 
             var exam = new Exam
             {
-                ExamName = txtExamName.Text.Trim(),
-                SubjectID = Convert.ToInt32(comboBoxSubjects.SelectedValue)
+                ExamName = txtExamName.Text,
+                SubjectID = (int)cmbSubjects.SelectedValue
             };
 
             examController.AddExam(exam);
             LoadExams();
-            txtExamName.Clear();
+            ClearForm();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (dataGridViewExams.SelectedRows.Count == 0)
+            if (selectedExamId == -1)
             {
                 MessageBox.Show("Please select an exam to update.");
                 return;
             }
 
-            var row = dataGridViewExams.SelectedRows[0];
-            int examId = Convert.ToInt32(row.Cells["ExamID"].Value);
-
             var exam = new Exam
             {
-                ExamID = examId,
-                ExamName = txtExamName.Text.Trim(),
-                SubjectID = Convert.ToInt32(comboBoxSubjects.SelectedValue)
+                ExamID = selectedExamId,
+                ExamName = txtExamName.Text,
+                SubjectID = (int)cmbSubjects.SelectedValue
             };
 
             examController.UpdateExam(exam);
             LoadExams();
+            ClearForm();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dataGridViewExams.SelectedRows.Count == 0)
+            if (selectedExamId == -1)
             {
                 MessageBox.Show("Please select an exam to delete.");
                 return;
             }
 
-            var row = dataGridViewExams.SelectedRows[0];
-            int examId = Convert.ToInt32(row.Cells["ExamID"].Value);
-
-            examController.DeleteExam(examId);
+            examController.DeleteExam(selectedExamId);
             LoadExams();
-            txtExamName.Clear();
+            ClearForm();
         }
 
-        private void dataGridViewExams_SelectionChanged(object sender, EventArgs e)
+        private void dgvExams_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridViewExams.SelectedRows.Count > 0)
+            if (e.RowIndex >= 0)
             {
-                var row = dataGridViewExams.SelectedRows[0];
+                var row = dgvExams.Rows[e.RowIndex];
+                selectedExamId = Convert.ToInt32(row.Cells["ExamID"].Value);
                 txtExamName.Text = row.Cells["ExamName"].Value.ToString();
-                comboBoxSubjects.SelectedValue = Convert.ToInt32(row.Cells["SubjectID"].Value);
+                cmbSubjects.SelectedValue = Convert.ToInt32(row.Cells["SubjectID"].Value);
             }
+        }
+
+        private void ClearForm()
+        {
+            txtExamName.Clear();
+            cmbSubjects.SelectedIndex = 0;
+            selectedExamId = -1;
         }
     }
 }

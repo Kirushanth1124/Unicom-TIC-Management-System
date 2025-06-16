@@ -39,72 +39,86 @@
             // 
             // btnLogout
             // 
-            btnLogout.Location = new Point(704, 399);
+            btnLogout.BackColor = Color.LightGray;
+            btnLogout.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogout.Location = new Point(654, 399);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(75, 23);
+            btnLogout.Size = new Size(125, 48);
             btnLogout.TabIndex = 0;
             btnLogout.Text = "Logout";
-            btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.UseVisualStyleBackColor = false;
             btnLogout.Click += btnLogout_Click;
             // 
             // btnManageCourses
             // 
-            btnManageCourses.Location = new Point(310, 179);
+            btnManageCourses.BackColor = Color.LightGray;
+            btnManageCourses.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnManageCourses.Location = new Point(68, 179);
             btnManageCourses.Name = "btnManageCourses";
-            btnManageCourses.Size = new Size(109, 23);
+            btnManageCourses.Size = new Size(160, 35);
             btnManageCourses.TabIndex = 1;
             btnManageCourses.Text = "Manage Course";
-            btnManageCourses.UseVisualStyleBackColor = true;
+            btnManageCourses.UseVisualStyleBackColor = false;
             btnManageCourses.Click += btnManageCourses_Click;
             // 
             // btnManageLecturers
             // 
-            btnManageLecturers.Location = new Point(437, 179);
+            btnManageLecturers.BackColor = Color.LightGray;
+            btnManageLecturers.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnManageLecturers.Location = new Point(68, 252);
             btnManageLecturers.Name = "btnManageLecturers";
-            btnManageLecturers.Size = new Size(140, 23);
+            btnManageLecturers.Size = new Size(160, 31);
             btnManageLecturers.TabIndex = 2;
             btnManageLecturers.Text = "Manage Lecturer";
-            btnManageLecturers.UseVisualStyleBackColor = true;
+            btnManageLecturers.UseVisualStyleBackColor = false;
             btnManageLecturers.Click += btnManageLecturers_Click;
             // 
             // btnManageStudents
             // 
-            btnManageStudents.Location = new Point(169, 179);
+            btnManageStudents.BackColor = Color.LightGray;
+            btnManageStudents.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnManageStudents.Location = new Point(68, 36);
             btnManageStudents.Name = "btnManageStudents";
-            btnManageStudents.Size = new Size(113, 23);
+            btnManageStudents.Size = new Size(160, 33);
             btnManageStudents.TabIndex = 3;
             btnManageStudents.Text = "Manage Student";
-            btnManageStudents.UseVisualStyleBackColor = true;
+            btnManageStudents.UseVisualStyleBackColor = false;
             btnManageStudents.Click += btnManageStudents_Click;
             // 
             // btnManageTimeTable
             // 
-            btnManageTimeTable.Location = new Point(400, 231);
+            btnManageTimeTable.BackColor = Color.LightGray;
+            btnManageTimeTable.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnManageTimeTable.Location = new Point(68, 389);
             btnManageTimeTable.Name = "btnManageTimeTable";
-            btnManageTimeTable.Size = new Size(140, 23);
+            btnManageTimeTable.Size = new Size(160, 33);
             btnManageTimeTable.TabIndex = 4;
             btnManageTimeTable.Text = "Manage Timetable";
-            btnManageTimeTable.UseVisualStyleBackColor = true;
+            btnManageTimeTable.UseVisualStyleBackColor = false;
             btnManageTimeTable.Click += btnManageTimeTable_Click;
             // 
             // btnManageExam
             // 
-            btnManageExam.Location = new Point(202, 231);
+            btnManageExam.BackColor = Color.LightGray;
+            btnManageExam.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnManageExam.Location = new Point(68, 105);
             btnManageExam.Name = "btnManageExam";
-            btnManageExam.Size = new Size(140, 23);
+            btnManageExam.Size = new Size(160, 35);
             btnManageExam.TabIndex = 5;
             btnManageExam.Text = "Manage Exam";
-            btnManageExam.UseVisualStyleBackColor = true;
+            btnManageExam.UseVisualStyleBackColor = false;
             btnManageExam.Click += button6_Click;
             // 
             // btnManageMarks
             // 
-            btnManageMarks.Location = new Point(310, 287);
+            btnManageMarks.BackColor = Color.LightGray;
+            btnManageMarks.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnManageMarks.Location = new Point(68, 318);
             btnManageMarks.Name = "btnManageMarks";
-            btnManageMarks.Size = new Size(140, 23);
+            btnManageMarks.Size = new Size(160, 34);
             btnManageMarks.TabIndex = 6;
             btnManageMarks.Text = "Manage Marks";
-            btnManageMarks.UseVisualStyleBackColor = true;
+            btnManageMarks.UseVisualStyleBackColor = false;
             btnManageMarks.Click += btnManageMarks_Click;
             // 
             // AdminDashboardForm
@@ -119,6 +133,7 @@
             Controls.Add(btnManageLecturers);
             Controls.Add(btnManageCourses);
             Controls.Add(btnLogout);
+            ForeColor = Color.Maroon;
             Name = "AdminDashboardForm";
             Text = "AdminDashboardForm";
             ResumeLayout(false);

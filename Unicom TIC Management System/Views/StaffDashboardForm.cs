@@ -62,7 +62,50 @@ namespace Unicom_TIC_Management_System.Views
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            this.Close(); 
+            this.Close();
+        }
+
+        private void btnLoadStudents_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                List<Student> students = DatabaseManager.Instance.GetAllStudents();
+                dgvStudents.DataSource = students;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading students: {ex.Message}");
+            }
+        }
+
+        private void btnViewTimetable_Click_1(object sender, EventArgs e)
+        {
+            TimetableForm form = new TimetableForm();
+            form.ShowDialog();
+        }
+
+        private void btnManageExams_Click_1(object sender, EventArgs e)
+        {
+            ExamForm form = new ExamForm();
+            form.ShowDialog();
+        }
+
+        private void btnManageMarks_Click_1(object sender, EventArgs e)
+        {
+            MarkForm form = new MarkForm();
+            form.ShowDialog();
+        }
+
+        private void btnLogout_Click_1(object sender, EventArgs e)
+        {
+            btnLogout.Enabled = false;
+
+
+            var loginform = new LoginForm();
+            loginform.Show();
+
+
+            btnLogout.Enabled = true;
         }
     }
 }

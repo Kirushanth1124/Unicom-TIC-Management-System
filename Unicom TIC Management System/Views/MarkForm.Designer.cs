@@ -99,6 +99,7 @@
             btnAdd.TabIndex = 6;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click_1;
             // 
             // btnDelete
             // 
@@ -108,6 +109,7 @@
             btnDelete.TabIndex = 7;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click_1;
             // 
             // btnUpdate
             // 
@@ -117,6 +119,7 @@
             btnUpdate.TabIndex = 8;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click_1;
             // 
             // dataGridViewMarks
             // 
@@ -125,6 +128,7 @@
             dataGridViewMarks.Name = "dataGridViewMarks";
             dataGridViewMarks.Size = new Size(423, 194);
             dataGridViewMarks.TabIndex = 9;
+            dataGridViewMarks.CellContentClick += dataGridViewMarks_CellContentClick;
             // 
             // MarkForm
             // 

@@ -24,7 +24,21 @@ namespace Unicom_TIC_Management_System.Views
             dataGridViewCourses.DataSource = courses;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+
+        private void dataGridViewCourses_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridViewCourses.SelectedRows.Count > 0)
+            {
+                txtCourseName.Text = dataGridViewCourses.SelectedRows[0].Cells["CourseName"].Value.ToString();
+            }
+        }
+
+        private void txtCourseName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAdd_Click_1(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtCourseName.Text))
             {
@@ -38,7 +52,7 @@ namespace Unicom_TIC_Management_System.Views
             txtCourseName.Clear();
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private void btnUpdate_Click_1(object sender, EventArgs e)
         {
             if (dataGridViewCourses.SelectedRows.Count == 0)
             {
@@ -59,8 +73,9 @@ namespace Unicom_TIC_Management_System.Views
             LoadCourses();
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void btnDelete_Click_1(object sender, EventArgs e)
         {
+
             if (dataGridViewCourses.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a course to delete.");
@@ -73,14 +88,6 @@ namespace Unicom_TIC_Management_System.Views
             controller.DeleteCourse(courseId);
             LoadCourses();
             txtCourseName.Clear();
-        }
-
-        private void dataGridViewCourses_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dataGridViewCourses.SelectedRows.Count > 0)
-            {
-                txtCourseName.Text = dataGridViewCourses.SelectedRows[0].Cells["CourseName"].Value.ToString();
-            }
         }
     }
 }

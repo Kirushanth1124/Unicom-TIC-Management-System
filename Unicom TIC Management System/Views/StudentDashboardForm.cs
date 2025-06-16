@@ -15,7 +15,7 @@ namespace Unicom_TIC_Management_System.Views
             InitializeComponent();
             _studentId = studentId;
             _studentName = studentName;
-            
+
 
             btnViewMarks.Click += BtnViewMarks_Click;
             btnViewTimetable.Click += BtnViewTimetable_Click;
@@ -54,7 +54,50 @@ namespace Unicom_TIC_Management_System.Views
 
         private void BtnLogout_Click(object sender, EventArgs e)
         {
-            this.Close();
+            
+        }
+
+        private void btnViewTimetable_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                var timetable = DatabaseManager.Instance.GetStudentTimetable(_studentId);
+                dgvData.DataSource = timetable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading timetable: {ex.Message}");
+            }
+        }
+
+        private void btnViewMarks_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                var marks = DatabaseManager.Instance.GetStudentMarks(_studentId);
+                dgvData.DataSource = marks;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading marks: {ex.Message}");
+            }
+        }
+
+        private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnLogout_Click_1(object sender, EventArgs e)
+        {
+            btnLogout.Enabled = false;
+
+
+            var loginform = new LoginForm();
+            loginform.Show();
+
+
+            btnLogout.Enabled = true;
         }
     }
 }

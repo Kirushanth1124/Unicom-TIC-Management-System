@@ -43,18 +43,20 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(29, 22);
             label1.Name = "label1";
-            label1.Size = new Size(65, 15);
+            label1.Size = new Size(94, 21);
             label1.TabIndex = 0;
             label1.Text = "User Name";
             // 
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.Location = new Point(29, 61);
             label2.Name = "label2";
-            label2.Size = new Size(57, 15);
+            label2.Size = new Size(82, 21);
             label2.TabIndex = 1;
             label2.Text = "Password";
             // 
@@ -64,6 +66,7 @@
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(100, 23);
             txtUsername.TabIndex = 2;
+            txtUsername.TextChanged += txtUsername_TextChanged;
             // 
             // txtPassword
             // 
@@ -74,20 +77,23 @@
             // 
             // btnLogin
             // 
-            btnLogin.Location = new Point(29, 139);
+            btnLogin.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogin.Location = new Point(36, 130);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(75, 23);
+            btnLogin.Size = new Size(75, 36);
             btnLogin.TabIndex = 4;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.Click += btnLogin_Click_1;
             // 
             // comboBoxRole
             // 
             comboBoxRole.FormattingEnabled = true;
-            comboBoxRole.Location = new Point(167, 130);
+            comboBoxRole.Location = new Point(158, 140);
             comboBoxRole.Name = "comboBoxRole";
             comboBoxRole.Size = new Size(121, 23);
             comboBoxRole.TabIndex = 5;
+            comboBoxRole.SelectedIndexChanged += comboBoxRole_SelectedIndexChanged;
             // 
             // dataGridViewUsers
             // 
@@ -96,6 +102,7 @@
             dataGridViewUsers.Name = "dataGridViewUsers";
             dataGridViewUsers.Size = new Size(514, 186);
             dataGridViewUsers.TabIndex = 6;
+            dataGridViewUsers.CellContentClick += dataGridViewUsers_CellContentClick;
             // 
             // printPreviewDialog1
             // 
@@ -121,6 +128,7 @@
             Controls.Add(label1);
             Name = "LoginForm";
             Text = "LoginForm";
+            Load += LoginForm_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewUsers).EndInit();
             ResumeLayout(false);
             PerformLayout();

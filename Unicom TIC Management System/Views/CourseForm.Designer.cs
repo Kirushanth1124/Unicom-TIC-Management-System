@@ -52,6 +52,7 @@
             txtCourseName.Name = "txtCourseName";
             txtCourseName.Size = new Size(100, 23);
             txtCourseName.TabIndex = 1;
+            txtCourseName.TextChanged += txtCourseName_TextChanged;
             // 
             // btnAdd
             // 
@@ -61,6 +62,7 @@
             btnAdd.TabIndex = 2;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click_1;
             // 
             // btnUpdate
             // 
@@ -70,6 +72,7 @@
             btnUpdate.TabIndex = 3;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click_1;
             // 
             // btnDelete
             // 
@@ -79,6 +82,7 @@
             btnDelete.TabIndex = 4;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click_1;
             // 
             // dataGridViewCourses
             // 
@@ -87,6 +91,7 @@
             dataGridViewCourses.Name = "dataGridViewCourses";
             dataGridViewCourses.Size = new Size(438, 214);
             dataGridViewCourses.TabIndex = 5;
+            dataGridViewCourses.CellContentClick += dataGridViewCourses_CellContentClick;
             // 
             // CourseForm
             // 

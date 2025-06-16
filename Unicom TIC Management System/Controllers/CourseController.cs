@@ -12,19 +12,17 @@ namespace SchoolManageSystem.Controllers
         {
             var courses = new List<Course>();
 
-            using (var conn = DbCon.GetConnection())
-            {
-                var cmd = new SQLiteCommand("SELECT CourseID, CourseName FROM Courses", conn);
-                var reader = cmd.ExecuteReader();
+            using var conn = DbCon.GetConnection();
+            using var cmd = new SQLiteCommand("SELECT CourseID, CourseName FROM Courses", conn);
+            using var reader = cmd.ExecuteReader();
 
-                while (reader.Read())
+            while (reader.Read())
+            {
+                courses.Add(new Course
                 {
-                    courses.Add(new Course
-                    {
-                        CourseId = reader.GetInt32(0),
-                        CourseName = reader.GetString(1)
-                    });
-                }
+                    CourseId = reader.GetInt32(0),
+                    CourseName = reader.GetString(1)
+                });
             }
 
             return courses;
@@ -34,7 +32,19 @@ namespace SchoolManageSystem.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("INSERT INTO Courses (CourseName) VALUES (@CourseName)", conn);
+                Random rnd = new Random();
+                int randomId;
+
+                // Unique CourseID generate பண்ணி DB-ல் இருக்கிறதா Check பண்ணுங்க
+                do
+                {
+                    randomId = rnd.Next(1, 10000); // Range பெரிதாக வைத்துக்கொள்ளலாம்
+                } while (CourseIdExists(randomId, conn));
+
+                course.CourseId = randomId;
+
+                using var cmd = new SQLiteCommand("INSERT INTO Courses (CourseID, CourseName) VALUES (@CourseID, @CourseName)", conn);
+                cmd.Parameters.AddWithValue("@CourseID", course.CourseId);
                 cmd.Parameters.AddWithValue("@CourseName", course.CourseName);
                 cmd.ExecuteNonQuery();
             }
@@ -44,7 +54,7 @@ namespace SchoolManageSystem.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("UPDATE Courses SET CourseName = @CourseName WHERE CourseID = @CourseID", conn);
+                using var cmd = new SQLiteCommand("UPDATE Courses SET CourseName = @CourseName WHERE CourseID = @CourseID", conn);
                 cmd.Parameters.AddWithValue("@CourseName", course.CourseName);
                 cmd.Parameters.AddWithValue("@CourseID", course.CourseId);
                 cmd.ExecuteNonQuery();
@@ -55,7 +65,7 @@ namespace SchoolManageSystem.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("DELETE FROM Courses WHERE CourseID = @CourseID", conn);
+                using var cmd = new SQLiteCommand("DELETE FROM Courses WHERE CourseID = @CourseID", conn);
                 cmd.Parameters.AddWithValue("@CourseID", courseId);
                 cmd.ExecuteNonQuery();
             }
@@ -65,10 +75,10 @@ namespace SchoolManageSystem.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("SELECT CourseID, CourseName FROM Courses WHERE CourseID = @CourseID", conn);
+                using var cmd = new SQLiteCommand("SELECT CourseID, CourseName FROM Courses WHERE CourseID = @CourseID", conn);
                 cmd.Parameters.AddWithValue("@CourseID", id);
 
-                var reader = cmd.ExecuteReader();
+                using var reader = cmd.ExecuteReader();
                 if (reader.Read())
                 {
                     return new Course
@@ -80,6 +90,16 @@ namespace SchoolManageSystem.Controllers
             }
 
             return null;
+        }
+
+        private bool CourseIdExists(int courseId, SQLiteConnection conn)
+        {
+            using var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Courses WHERE CourseID = @CourseID", conn);
+            cmd.Parameters.AddWithValue("@CourseID", courseId);
+
+            var result = cmd.ExecuteScalar();
+            int count = (result != null && result != DBNull.Value) ? Convert.ToInt32(result) : 0;
+            return count > 0;
         }
     }
 }

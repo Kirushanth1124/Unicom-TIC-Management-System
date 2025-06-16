@@ -8,7 +8,8 @@ namespace Unicom_TIC_Management_System.Controllers
 {
     public class StudentController
     {
-        
+        private static Random rnd = new Random();
+
         public List<Student> GetAllStudents()
         {
             var students = new List<Student>();
@@ -16,7 +17,7 @@ namespace Unicom_TIC_Management_System.Controllers
             using (var conn = DbCon.GetConnection())
             {
                 var query = @"
-                    SELECT s.StudentID, s.Name, s.Address, s.CourseID, c.CourseName
+                    SELECT s.StudentID, s.StudentName, s.Address, s.CourseID, c.CourseName
                     FROM Students s
                     LEFT JOIN Courses c ON s.CourseID = c.CourseID";
 
@@ -40,16 +41,41 @@ namespace Unicom_TIC_Management_System.Controllers
             return students;
         }
 
-        // Add a new student to the database
+        // Check if StudentID exists in the database
+        private bool StudentIdExists(int studentId)
+        {
+            using (var conn = DbCon.GetConnection())
+            {
+                conn.Open();
+                using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Students WHERE StudentID = @StudentID", conn))
+                {
+                    cmd.Parameters.AddWithValue("@StudentID", studentId);
+                    var count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+        }
+
+        // Add a new student with random StudentID
         public void AddStudent(Student student)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var query = "INSERT INTO Students (Name, Address, CourseID) VALUES (@Name, @Address, @CourseID)";
+                conn.Open();
 
-                using (var cmd = new SQLiteCommand(query, conn))
+                // Generate unique random StudentId
+                int randomId;
+                do
                 {
-                    cmd.Parameters.AddWithValue("@Name", student.Name);
+                    randomId = rnd.Next(101, 200);
+                } while (StudentIdExists(randomId));
+
+                student.StudentId = randomId;
+
+                using (var cmd = new SQLiteCommand("INSERT INTO Students (StudentID, StudentName, Address, CourseID) VALUES (@StudentID, @StudentName, @Address, @CourseID)", conn))
+                {
+                    cmd.Parameters.AddWithValue("@StudentID", student.StudentId);
+                    cmd.Parameters.AddWithValue("@StudentName", student.Name);
                     cmd.Parameters.AddWithValue("@Address", student.Address);
                     cmd.Parameters.AddWithValue("@CourseID", student.CourseId);
                     cmd.ExecuteNonQuery();
@@ -62,14 +88,21 @@ namespace Unicom_TIC_Management_System.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                var query = "UPDATE Students SET Name = @Name, Address = @Address, CourseID = @CourseID WHERE StudentID = @StudentID";
-
-                using (var cmd = new SQLiteCommand(query, conn))
+                conn.Open();
+                using (var cmd = new SQLiteCommand(@"
+            UPDATE Students
+            SET StudentName = @StudentName,
+                Address = @Address,
+                DOB = @DOB,
+                CourseID = @CourseID
+            WHERE StudentID = @StudentID", conn))
                 {
-                    cmd.Parameters.AddWithValue("@Name", student.Name);
+                    cmd.Parameters.AddWithValue("@StudentName", student.Name);
                     cmd.Parameters.AddWithValue("@Address", student.Address);
+                    cmd.Parameters.AddWithValue("@DOB", student.DOB);
                     cmd.Parameters.AddWithValue("@CourseID", student.CourseId);
                     cmd.Parameters.AddWithValue("@StudentID", student.StudentId);
+
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -80,9 +113,8 @@ namespace Unicom_TIC_Management_System.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                var query = "DELETE FROM Students WHERE StudentID = @StudentID";
-
-                using (var cmd = new SQLiteCommand(query, conn))
+                conn.Open();
+                using (var cmd = new SQLiteCommand("DELETE FROM Students WHERE StudentID = @StudentID", conn))
                 {
                     cmd.Parameters.AddWithValue("@StudentID", studentId);
                     cmd.ExecuteNonQuery();
@@ -95,22 +127,21 @@ namespace Unicom_TIC_Management_System.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                var query = "SELECT StudentID, Name, Address, CourseID FROM Students WHERE StudentID = @StudentID";
-
-                using (var cmd = new SQLiteCommand(query, conn))
+                conn.Open();
+                using (var cmd = new SQLiteCommand("SELECT * FROM Students WHERE StudentID = @StudentID", conn))
                 {
                     cmd.Parameters.AddWithValue("@StudentID", studentId);
-
                     using (var reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             return new Student
                             {
-                                StudentId = reader.GetInt32(0),
-                                Name = reader.GetString(1),
-                                Address = reader.GetString(2),
-                                CourseId = reader.GetInt32(3)
+                                StudentId = reader.GetInt32(reader.GetOrdinal("StudentID")),
+                                Name = reader.GetString(reader.GetOrdinal("StudentName")),
+                                Address = reader.GetString(reader.GetOrdinal("Address")),
+                                DOB = reader.GetString(reader.GetOrdinal("DOB")),
+                                CourseId = reader.GetInt32(reader.GetOrdinal("CourseID"))
                             };
                         }
                     }

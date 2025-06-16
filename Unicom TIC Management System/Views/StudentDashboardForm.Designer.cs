@@ -37,21 +37,23 @@
             // 
             // btnViewMarks
             // 
-            btnViewMarks.Location = new Point(61, 84);
+            btnViewMarks.Location = new Point(28, 34);
             btnViewMarks.Name = "btnViewMarks";
             btnViewMarks.Size = new Size(110, 23);
             btnViewMarks.TabIndex = 1;
             btnViewMarks.Text = "View Marks";
             btnViewMarks.UseVisualStyleBackColor = true;
+            btnViewMarks.Click += btnViewMarks_Click_1;
             // 
             // btnViewTimetable
             // 
-            btnViewTimetable.Location = new Point(61, 158);
+            btnViewTimetable.Location = new Point(28, 87);
             btnViewTimetable.Name = "btnViewTimetable";
             btnViewTimetable.Size = new Size(110, 23);
             btnViewTimetable.TabIndex = 2;
             btnViewTimetable.Text = "View Timetable";
             btnViewTimetable.UseVisualStyleBackColor = true;
+            btnViewTimetable.Click += btnViewTimetable_Click_1;
             // 
             // btnLogout
             // 
@@ -61,6 +63,7 @@
             btnLogout.TabIndex = 3;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click_1;
             // 
             // dgvData
             // 
@@ -69,6 +72,7 @@
             dgvData.Name = "dgvData";
             dgvData.Size = new Size(389, 198);
             dgvData.TabIndex = 4;
+            dgvData.CellContentClick += dgvData_CellContentClick;
             // 
             // StudentDashboardForm
             // 

@@ -8,6 +8,7 @@ namespace SchoolManageSystem.Controllers
 {
     internal class MarkController
     {
+        // எல்லா மதிப்பெண்களையும் எடுத்துக்கொள்கிறது
         public List<Mark> GetAllMarks()
         {
             var marks = new List<Mark>();
@@ -15,7 +16,7 @@ namespace SchoolManageSystem.Controllers
             using (var conn = DbCon.GetConnection())
             {
                 var cmd = new SQLiteCommand(@"
-                    SELECT m.MarkID, m.StudentID, s.Name AS StudentName,
+                    SELECT m.MarkID, m.StudentID,s.StudentName AS StudentName,
                            m.ExamID, e.ExamName, m.Score
                     FROM Marks m
                     LEFT JOIN Students s ON m.StudentID = s.StudentID
@@ -27,12 +28,12 @@ namespace SchoolManageSystem.Controllers
                 {
                     marks.Add(new Mark
                     {
-                        MarkId = reader.GetInt32(0),
-                        StudentId = reader.GetInt32(1),
+                        MarkID = reader.GetInt32(0),             
+                        StudentID = reader.GetInt32(1),         
                         StudentName = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                        ExamId = reader.GetInt32(3),
-                        ExamName = reader.IsDBNull(4) ? "" : reader.GetString(4),
-                        Score = reader.GetInt32(5)
+                        ExamID = reader.GetInt32(3),             
+                        ExamName = reader.IsDBNull(4) ? "" : reader.GetString(4),    
+                        Score = reader.GetInt32(5)                
                     });
                 }
             }
@@ -40,31 +41,48 @@ namespace SchoolManageSystem.Controllers
             return marks;
         }
 
+        // புதிய மதிப்பெண்களை சேர்
         public void AddMark(Mark mark)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("INSERT INTO Marks (StudentID, ExamID, Score) VALUES (@StudentID, @ExamID, @Score)", conn);
-                cmd.Parameters.AddWithValue("@StudentID", mark.StudentId);
-                cmd.Parameters.AddWithValue("@ExamID", mark.ExamId);
+                conn.Open();
+
+                Random rnd = new Random();
+                int randomId;
+
+                // MarkID க்கான தனித்துவமான ID உருவாக்கு
+                do
+                {
+                    randomId = rnd.Next(51, 100);
+                } while (MarkIdExists(randomId, conn));
+
+                mark.MarkID = randomId;
+
+                var cmd = new SQLiteCommand("INSERT INTO Marks (MarkID, StudentID, ExamID, Score) VALUES (@MarkID, @StudentID, @ExamID, @Score)", conn);
+                cmd.Parameters.AddWithValue("@MarkID", mark.MarkID);
+                cmd.Parameters.AddWithValue("@StudentID", mark.StudentID);
+                cmd.Parameters.AddWithValue("@ExamID", mark.ExamID);
                 cmd.Parameters.AddWithValue("@Score", mark.Score);
                 cmd.ExecuteNonQuery();
             }
         }
 
+        // மதிப்பெண் புதுப்பி
         public void UpdateMark(Mark mark)
         {
             using (var conn = DbCon.GetConnection())
             {
                 var cmd = new SQLiteCommand("UPDATE Marks SET StudentID = @StudentID, ExamID = @ExamID, Score = @Score WHERE MarkID = @MarkID", conn);
-                cmd.Parameters.AddWithValue("@StudentID", mark.StudentId);
-                cmd.Parameters.AddWithValue("@ExamID", mark.ExamId);
+                cmd.Parameters.AddWithValue("@StudentID", mark.StudentID);
+                cmd.Parameters.AddWithValue("@ExamID", mark.ExamID);
                 cmd.Parameters.AddWithValue("@Score", mark.Score);
-                cmd.Parameters.AddWithValue("@MarkID", mark.MarkId);
+                cmd.Parameters.AddWithValue("@MarkID", mark.MarkID);
                 cmd.ExecuteNonQuery();
             }
         }
 
+        // மதிப்பெண் அழி
         public void DeleteMark(int markId)
         {
             using (var conn = DbCon.GetConnection())
@@ -75,11 +93,12 @@ namespace SchoolManageSystem.Controllers
             }
         }
 
+        // MarkID மூலம் மதிப்பெண் விவரங்கள் எடு
         public Mark GetMarkById(int markId)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("SELECT * FROM Marks WHERE MarkID = @MarkID", conn);
+                var cmd = new SQLiteCommand("SELECT MarkID, StudentID, ExamID, Score FROM Marks WHERE MarkID = @MarkID", conn);
                 cmd.Parameters.AddWithValue("@MarkID", markId);
 
                 var reader = cmd.ExecuteReader();
@@ -87,9 +106,9 @@ namespace SchoolManageSystem.Controllers
                 {
                     return new Mark
                     {
-                        MarkId = reader.GetInt32(0),
-                        StudentId = reader.GetInt32(1),
-                        ExamId = reader.GetInt32(2),
+                        MarkID = reader.GetInt32(0),
+                        StudentID = reader.GetInt32(1),
+                        ExamID = reader.GetInt32(2),
                         Score = reader.GetInt32(3)
                     };
                 }
@@ -98,6 +117,7 @@ namespace SchoolManageSystem.Controllers
             return null;
         }
 
+        // ஒரு மாணவனின் அனைத்து மதிப்பெண்களையும் எடு
         public List<Mark> GetMarksByStudentId(int studentId)
         {
             var marks = new List<Mark>();
@@ -119,10 +139,10 @@ namespace SchoolManageSystem.Controllers
                 {
                     marks.Add(new Mark
                     {
-                        MarkId = reader.GetInt32(0),
-                        StudentId = reader.GetInt32(1),
+                        MarkID = reader.GetInt32(0),
+                        StudentID = reader.GetInt32(1),
                         StudentName = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                        ExamId = reader.GetInt32(3),
+                        ExamID = reader.GetInt32(3),
                         ExamName = reader.IsDBNull(4) ? "" : reader.GetString(4),
                         Score = reader.GetInt32(5)
                     });
@@ -130,6 +150,17 @@ namespace SchoolManageSystem.Controllers
             }
 
             return marks;
+        }
+
+        // MarkID database-ல் இருக்கிறதா என சரிபார்
+        private bool MarkIdExists(int markId, SQLiteConnection conn)
+        {
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Marks WHERE MarkID = @MarkID", conn))
+            {
+                cmd.Parameters.AddWithValue("@MarkID", markId);
+                var count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
         }
     }
 }

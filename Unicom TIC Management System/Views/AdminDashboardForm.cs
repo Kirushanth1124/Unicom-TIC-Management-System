@@ -12,9 +12,14 @@ namespace Unicom_TIC_Management_System.Views
 {
     public partial class AdminDashboardForm : Form
     {
+
         public AdminDashboardForm()
         {
             InitializeComponent();
+            /*Image img = Image.FromFile(@"Z:\C# Programming\Unicom TIC Management System\Unicom TIC Management System\Images\R.JPEG");*/
+
+            /*this.BackgroundImageLayout = ImageLayout.Stretch;*/
+
         }
 
         private void button6_Click(object sender, EventArgs e)

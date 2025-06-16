@@ -1,16 +1,24 @@
-﻿namespace Unicom_TIC_Management_System.Views
+﻿
+namespace Unicom_TIC_Management_System.Views
 {
     partial class ExamForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        private System.Windows.Forms.Label lblExamName;
+        private System.Windows.Forms.TextBox txtExamName;
+        private System.Windows.Forms.Label lblSubject;
+        private System.Windows.Forms.ComboBox cmbSubjects;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.DataGridView dgvExams;
+        private EventHandler ExamForm_Load;
 
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,120 +30,120 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            txtExamName = new TextBox();
-            comboBoxSubjects = new ComboBox();
-            label2 = new Label();
-            btnAdd = new Button();
-            btnDelete = new Button();
-            btnUpdate = new Button();
-            dataGridViewExams = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewExams).BeginInit();
-            SuspendLayout();
+            this.lblExamName = new System.Windows.Forms.Label();
+            this.txtExamName = new System.Windows.Forms.TextBox();
+            this.lblSubject = new System.Windows.Forms.Label();
+            this.cmbSubjects = new System.Windows.Forms.ComboBox();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.dgvExams = new System.Windows.Forms.DataGridView();
+
+            ((System.ComponentModel.ISupportInitialize)(this.dgvExams)).BeginInit();
+            this.SuspendLayout();
+
             // 
-            // label1
+            // lblExamName
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(106, 40);
-            label1.Name = "label1";
-            label1.Size = new Size(70, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Exam Name";
+            this.lblExamName.AutoSize = true;
+            this.lblExamName.Location = new System.Drawing.Point(30, 25);
+            this.lblExamName.Name = "lblExamName";
+            this.lblExamName.Size = new System.Drawing.Size(70, 13);
+            this.lblExamName.Text = "Exam Name:";
+
             // 
             // txtExamName
             // 
-            txtExamName.Location = new Point(234, 40);
-            txtExamName.Name = "txtExamName";
-            txtExamName.Size = new Size(100, 23);
-            txtExamName.TabIndex = 1;
+            this.txtExamName.Location = new System.Drawing.Point(110, 22);
+            this.txtExamName.Name = "txtExamName";
+            this.txtExamName.Size = new System.Drawing.Size(200, 20);
+
             // 
-            // comboBoxSubjects
+            // lblSubject
             // 
-            comboBoxSubjects.FormattingEnabled = true;
-            comboBoxSubjects.Location = new Point(234, 91);
-            comboBoxSubjects.Name = "comboBoxSubjects";
-            comboBoxSubjects.Size = new Size(121, 23);
-            comboBoxSubjects.TabIndex = 2;
+            this.lblSubject.AutoSize = true;
+            this.lblSubject.Location = new System.Drawing.Point(30, 60);
+            this.lblSubject.Name = "lblSubject";
+            this.lblSubject.Size = new System.Drawing.Size(46, 13);
+            this.lblSubject.Text = "Subject:";
+
             // 
-            // label2
+            // cmbSubjects
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(106, 99);
-            label2.Name = "label2";
-            label2.Size = new Size(78, 15);
-            label2.TabIndex = 3;
-            label2.Text = "Select Course";
+            this.cmbSubjects.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSubjects.Location = new System.Drawing.Point(110, 57);
+            this.cmbSubjects.Name = "cmbSubjects";
+            this.cmbSubjects.Size = new System.Drawing.Size(200, 21);
+
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(89, 156);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(75, 23);
-            btnAdd.TabIndex = 4;
-            btnAdd.Text = "Add";
-            btnAdd.UseVisualStyleBackColor = true;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(376, 156);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(75, 23);
-            btnDelete.TabIndex = 5;
-            btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
+            this.btnAdd.Location = new System.Drawing.Point(330, 20);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.Text = "Add";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(234, 156);
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(75, 23);
-            btnUpdate.TabIndex = 6;
-            btnUpdate.Text = "Update";
-            btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Location = new System.Drawing.Point(330, 50);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+
             // 
-            // dataGridViewExams
+            // btnDelete
             // 
-            dataGridViewExams.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewExams.Location = new Point(106, 219);
-            dataGridViewExams.Name = "dataGridViewExams";
-            dataGridViewExams.Size = new Size(409, 181);
-            dataGridViewExams.TabIndex = 7;
+            this.btnDelete.Location = new System.Drawing.Point(420, 20);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+
+            // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(420, 50);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.Text = "Clear";
+            this.btnClear.Click += new System.EventHandler((s, e) => ClearForm());
+
+            // 
+            // dgvExams
+            // 
+            this.dgvExams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvExams.Location = new System.Drawing.Point(30, 100);
+            this.dgvExams.Name = "dgvExams";
+            this.dgvExams.Size = new System.Drawing.Size(465, 250);
+            this.dgvExams.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvExams.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExams_CellClick);
+
             // 
             // ExamForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(dataGridViewExams);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnDelete);
-            Controls.Add(btnAdd);
-            Controls.Add(label2);
-            Controls.Add(comboBoxSubjects);
-            Controls.Add(txtExamName);
-            Controls.Add(label1);
-            Name = "ExamForm";
-            Text = "ExamForm";
-            ((System.ComponentModel.ISupportInitialize)dataGridViewExams).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.ClientSize = new System.Drawing.Size(534, 381);
+            this.Controls.Add(this.lblExamName);
+            this.Controls.Add(this.txtExamName);
+            this.Controls.Add(this.lblSubject);
+            this.Controls.Add(this.cmbSubjects);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnUpdate);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.dgvExams);
+            this.Name = "ExamForm";
+            this.Text = "Exam Management";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvExams)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
         #endregion
-
-        private Label label1;
-        private TextBox txtExamName;
-        private ComboBox comboBoxSubjects;
-        private Label label2;
-        private Button btnAdd;
-        private Button btnDelete;
-        private Button btnUpdate;
-        private DataGridView dataGridViewExams;
     }
 }

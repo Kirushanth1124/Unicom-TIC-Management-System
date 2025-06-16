@@ -63,6 +63,7 @@
             btnLoadStudents.TabIndex = 2;
             btnLoadStudents.Text = "Load Students";
             btnLoadStudents.UseVisualStyleBackColor = true;
+            btnLoadStudents.Click += btnLoadStudents_Click_1;
             // 
             // btnViewTimetable
             // 
@@ -72,6 +73,7 @@
             btnViewTimetable.TabIndex = 3;
             btnViewTimetable.Text = "View Timetable";
             btnViewTimetable.UseVisualStyleBackColor = true;
+            btnViewTimetable.Click += btnViewTimetable_Click_1;
             // 
             // btnManageExams
             // 
@@ -81,6 +83,7 @@
             btnManageExams.TabIndex = 4;
             btnManageExams.Text = "Manage Exams";
             btnManageExams.UseVisualStyleBackColor = true;
+            btnManageExams.Click += btnManageExams_Click_1;
             // 
             // btnManageMarks
             // 
@@ -90,6 +93,7 @@
             btnManageMarks.TabIndex = 5;
             btnManageMarks.Text = "Manage Marks";
             btnManageMarks.UseVisualStyleBackColor = true;
+            btnManageMarks.Click += btnManageMarks_Click_1;
             // 
             // btnLogout
             // 
@@ -99,6 +103,7 @@
             btnLogout.TabIndex = 6;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click_1;
             // 
             // StaffDashboardForm
             // 

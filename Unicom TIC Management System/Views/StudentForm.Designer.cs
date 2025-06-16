@@ -114,7 +114,7 @@
             // 
             // txtPhoneNumber
             // 
-            txtPhoneNumber.Location = new Point(191, 130);
+            txtPhoneNumber.Location = new Point(191, 133);
             txtPhoneNumber.Name = "txtPhoneNumber";
             txtPhoneNumber.Size = new Size(100, 23);
             txtPhoneNumber.TabIndex = 8;
@@ -129,6 +129,7 @@
             radMale.TabStop = true;
             radMale.Text = "Male";
             radMale.UseVisualStyleBackColor = true;
+            radMale.CheckedChanged += radMale_CheckedChanged;
             // 
             // radFemale
             // 
@@ -149,6 +150,7 @@
             btnAdd.TabIndex = 11;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click_1;
             // 
             // btnDelete
             // 
@@ -158,6 +160,7 @@
             btnDelete.TabIndex = 12;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click_1;
             // 
             // btnUpdate
             // 
@@ -167,6 +170,7 @@
             btnUpdate.TabIndex = 13;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click_1;
             // 
             // dataGridView1
             // 
@@ -175,6 +179,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(710, 226);
             dataGridView1.TabIndex = 14;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // StudentForm
             // 
@@ -197,7 +202,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "StudentForm";
-            Text = "StudentForm";
+            Text = "         mj\\";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();

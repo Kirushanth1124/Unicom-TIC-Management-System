@@ -15,9 +15,9 @@ namespace SchoolManageSystem.Controllers
             using (var conn = DbCon.GetConnection())
             {
                 var cmd = new SQLiteCommand(@"
-                    SELECT e.ExamID, e.ExamName, e.SubjectID, s.SubjectName 
-                    FROM Exams e 
-                    LEFT JOIN Subjects s ON e.SubjectID = s.SubjectID", conn);
+                    SELECT ExamID, ExamName, SubjectID, SubjectName 
+                    FROM Exams  
+                    LEFT JOIN Subjects  ON SubjectID = SubjectID", conn);
 
                 var reader = cmd.ExecuteReader();
 
@@ -40,7 +40,21 @@ namespace SchoolManageSystem.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("INSERT INTO Exams (ExamName, SubjectID) VALUES (@ExamName, @SubjectID)", conn);
+                conn.Open();
+
+                Random rnd = new Random();
+                int randomId;
+
+                // Random ExamID create பண்ணி அது DB-ல் இருக்கிறதா என்று Check பண்ணும்
+                do
+                {
+                    randomId = rnd.Next(21, 50);
+                } while (ExamIdExists(randomId, conn));
+
+                exam.ExamID = randomId;
+
+                var cmd = new SQLiteCommand("INSERT INTO Exams (ExamID, ExamName, SubjectID) VALUES (@ExamID, @ExamName, @SubjectID)", conn);
+                cmd.Parameters.AddWithValue("@ExamID", exam.ExamID);
                 cmd.Parameters.AddWithValue("@ExamName", exam.ExamName);
                 cmd.Parameters.AddWithValue("@SubjectID", exam.SubjectID);
                 cmd.ExecuteNonQuery();
@@ -89,6 +103,16 @@ namespace SchoolManageSystem.Controllers
             }
 
             return null;
+        }
+
+        private bool ExamIdExists(int examId, SQLiteConnection conn)
+        {
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Exams WHERE ExamID = @ExamID", conn))
+            {
+                cmd.Parameters.AddWithValue("@ExamID", examId);
+                var count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
         }
     }
 }

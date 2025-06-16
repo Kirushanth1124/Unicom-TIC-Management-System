@@ -6,38 +6,28 @@ namespace Unicom_TIC_Management_System.Repositories
 {
     public static class DbCon
     {
-        private static SQLiteConnection _connection;
-        private static readonly string _dbFilePath = "unicomtic.db";  
+        // Database file path - App-ன் bin folder ல் unicomtic.db உருவாக்கப்படும்
+        private static readonly string DbFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "unicomtic.db");
 
         public static SQLiteConnection GetConnection()
         {
-            try
+            if (!File.Exists(DbFilePath))
             {
-                if (_connection == null)
-                {
-                    
-                    if (!File.Exists(_dbFilePath))
-                    {
-                        SQLiteConnection.CreateFile(_dbFilePath);
-                    }
-
-                    _connection = new SQLiteConnection($"Data Source={_dbFilePath};Version=3;");
-                    _connection.Open();
-
-                    
-                    DatabaseManager.CreateTables();
-                }
-                else if (_connection.State != System.Data.ConnectionState.Open)
-                {
-                    _connection.Open();
-                }
-
-                return _connection;
+                SQLiteConnection.CreateFile(DbFilePath);
             }
-            catch (Exception ex)
+
+            var connection = new SQLiteConnection($"Data Source={DbFilePath};Version=3;");
+            connection.Open();
+
+            using (var pragmaCmd = new SQLiteCommand("PRAGMA foreign_keys = ON;", connection))
             {
-                throw new Exception("Failed to connect to the SQLite database.", ex);
+                pragmaCmd.ExecuteNonQuery();
             }
+
+            DatabaseManager.CreateTables(connection); // இங்க இச்செயலை செய்ய வேண்டும்
+
+            return connection;
         }
+
     }
 }

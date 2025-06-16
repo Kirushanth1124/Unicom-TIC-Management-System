@@ -42,6 +42,7 @@
             btnViewTimetable.TabIndex = 0;
             btnViewTimetable.Text = "View TimeTable";
             btnViewTimetable.UseVisualStyleBackColor = true;
+            btnViewTimetable.Click += btnViewTimetable_Click_1;
             // 
             // btnLogout
             // 
@@ -61,6 +62,7 @@
             btnViewExams.TabIndex = 2;
             btnViewExams.Text = "View Exam";
             btnViewExams.UseVisualStyleBackColor = true;
+            btnViewExams.Click += btnViewExams_Click_1;
             // 
             // groupActions
             // 
@@ -70,6 +72,7 @@
             groupActions.TabIndex = 3;
             groupActions.TabStop = false;
             groupActions.Text = "groupBox1";
+            groupActions.Enter += groupActions_Enter;
             // 
             // LecturerDashboardForm
             // 

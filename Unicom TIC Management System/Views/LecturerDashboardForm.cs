@@ -37,6 +37,25 @@ namespace Unicom_TIC_Management_System.Views
 
         private void btnLogout_Click_1(object sender, EventArgs e)
         {
+            this.Hide();
+            var loginForm = new LoginForm();
+            loginForm.Show();
+        }
+
+        private void btnViewTimetable_Click_1(object sender, EventArgs e)
+        {
+            var timetableForm = new TimetableForm();
+            timetableForm.ShowDialog();
+        }
+
+        private void btnViewExams_Click_1(object sender, EventArgs e)
+        {
+            var examForm = new ExamForm();
+            examForm.ShowDialog();
+        }
+
+        private void groupActions_Enter(object sender, EventArgs e)
+        {
 
         }
     }

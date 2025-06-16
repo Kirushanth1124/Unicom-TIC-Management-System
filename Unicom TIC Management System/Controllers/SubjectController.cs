@@ -39,7 +39,21 @@ namespace SchoolManageSystem.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("INSERT INTO Subjects (SubjectName, CourseID) VALUES (@SubjectName, @CourseID)", conn);
+                conn.Open();
+
+                Random rnd = new Random();
+                int randomId;
+
+                // Unique ID generate பண்ணு
+                do
+                {
+                    randomId = rnd.Next(201, 300);
+                } while (SubjectIdExists(randomId, conn));
+
+                subject.SubjectId = randomId;
+
+                var cmd = new SQLiteCommand("INSERT INTO Subjects (SubjectID, SubjectName, CourseID) VALUES (@SubjectID, @SubjectName, @CourseID)", conn);
+                cmd.Parameters.AddWithValue("@SubjectID", subject.SubjectId);
                 cmd.Parameters.AddWithValue("@SubjectName", subject.SubjectName);
                 cmd.Parameters.AddWithValue("@CourseID", subject.CourseId);
                 cmd.ExecuteNonQuery();
@@ -112,6 +126,16 @@ namespace SchoolManageSystem.Controllers
             }
 
             return subjects;
+        }
+
+        private bool SubjectIdExists(int subjectId, SQLiteConnection conn)
+        {
+            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Subjects WHERE SubjectID = @SubjectID", conn))
+            {
+                cmd.Parameters.AddWithValue("@SubjectID", subjectId);
+                var count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
         }
     }
 }

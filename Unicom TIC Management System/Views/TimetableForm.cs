@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using SchoolManageSystem.Controllers;
 using Unicom_TIC_Management_System.Modals;
@@ -21,11 +20,15 @@ namespace Unicom_TIC_Management_System.Views
             var timetables = _controller.GetAllTimetables();
             dataGridViewTimetables.DataSource = null;
             dataGridViewTimetables.DataSource = timetables;
+
+            // Optional: Auto-size columns
+            dataGridViewTimetables.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (!ValidateInputs()) return;
+            if (!ValidateInputs())
+                return;
 
             var timetable = new Timetable
             {
@@ -90,13 +93,21 @@ namespace Unicom_TIC_Management_System.Views
 
         private bool ValidateInputs()
         {
-            if (string.IsNullOrWhiteSpace(txtSubjectId.Text) || string.IsNullOrWhiteSpace(txtTimeSlot.Text) || string.IsNullOrWhiteSpace(txtRoomtId.Text))
+            if (string.IsNullOrWhiteSpace(txtSubjectId.Text) ||
+                string.IsNullOrWhiteSpace(txtTimeSlot.Text) ||
+                string.IsNullOrWhiteSpace(txtRoomtId.Text))
             {
                 MessageBox.Show("All fields are required.");
                 return false;
             }
 
-            return int.TryParse(txtSubjectId.Text, out _) && int.TryParse(txtRoomtId.Text, out _);
+            if (!int.TryParse(txtSubjectId.Text, out _) || !int.TryParse(txtRoomtId.Text, out _))
+            {
+                MessageBox.Show("SubjectId and RoomId must be valid numbers.");
+                return false;
+            }
+
+            return true;
         }
 
         private void ClearInputs()
@@ -104,6 +115,17 @@ namespace Unicom_TIC_Management_System.Views
             txtSubjectId.Clear();
             txtTimeSlot.Clear();
             txtRoomtId.Clear();
+        }
+
+        private void dataGridViewTimetables_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridViewTimetables.SelectedRows.Count > 0)
+            {
+                var row = dataGridViewTimetables.SelectedRows[0];
+                txtSubjectId.Text = row.Cells["SubjectId"].Value.ToString();
+                txtTimeSlot.Text = row.Cells["TimeSlot"].Value.ToString();
+                txtRoomtId.Text = row.Cells["RoomId"].Value.ToString();
+            }
         }
     }
 }
