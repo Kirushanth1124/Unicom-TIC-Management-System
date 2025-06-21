@@ -16,9 +16,9 @@ namespace Unicom_TIC_Management_System.Views
         public AdminDashboardForm()
         {
             InitializeComponent();
-            /*Image img = Image.FromFile(@"Z:\C# Programming\Unicom TIC Management System\Unicom TIC Management System\Images\R.JPEG");*/
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
 
-            /*this.BackgroundImageLayout = ImageLayout.Stretch;*/
 
         }
 
@@ -107,6 +107,30 @@ namespace Unicom_TIC_Management_System.Views
 
 
             btnLogout.Enabled = true;
+        }
+
+        private void AdminDashboardForm_Load(object sender, EventArgs e)
+        {
+            button1.Enabled = false;
+
+
+            var adminPermissionForm = new AdminPermissionForm();
+            adminPermissionForm.Show();
+
+
+            button1.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            button1.Enabled = false;
+
+
+            var adminPermissionForm = new AdminPermissionForm();
+            adminPermissionForm.Show();
+
+
+            button1.Enabled = true;
         }
     }
 }

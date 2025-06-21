@@ -28,7 +28,7 @@ namespace Unicom_TIC_Management_System
             }
         }
 
-        public static void CreateDefaultLecturer()
+        /*public static void CreateDefaultLecturer()
         {
             var loginController = new LoginController();
 
@@ -70,6 +70,6 @@ namespace Unicom_TIC_Management_System
             {
                 Console.WriteLine("Staff already exists.");
             }
-        }
+        }*/
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
-using Unicom_TIC_Management_System.Views;
 using Unicom_TIC_Management_System.Modals;
 using Unicom_TIC_Management_System.Repositories;
 
@@ -11,24 +11,35 @@ namespace Unicom_TIC_Management_System.Views
     {
         private readonly string _staffName;
 
+        public StaffDashboardForm()
+        {
+            InitializeComponent();
+            SetFormBackground();
+        }
+
         public StaffDashboardForm(string staffName)
         {
             InitializeComponent();
+            SetFormBackground();
+
             _staffName = staffName;
             lblWelcome.Text = $"Welcome, {_staffName}!";
-
-            // Attach event handlers
-            btnLoadStudents.Click += btnLoadStudents_Click;
-            btnViewTimetable.Click += btnViewTimetable_Click;
-            btnManageExams.Click += btnManageExams_Click;
-            btnManageMarks.Click += btnManageMarks_Click;
-            btnLogout.Click += btnLogout_Click;
         }
 
-        public StaffDashboardForm()
+        private void SetFormBackground()
         {
+            try
+            {
+                this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+                this.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Background image load failed: " + ex.Message);
+            }
         }
 
+        // Load Students button click
         private void btnLoadStudents_Click(object sender, EventArgs e)
         {
             try
@@ -42,70 +53,31 @@ namespace Unicom_TIC_Management_System.Views
             }
         }
 
+        // View Timetable button click
         private void btnViewTimetable_Click(object sender, EventArgs e)
         {
             TimetableForm form = new TimetableForm();
             form.ShowDialog();
         }
 
+        // Manage Exams button click
         private void btnManageExams_Click(object sender, EventArgs e)
         {
             ExamForm form = new ExamForm();
             form.ShowDialog();
         }
 
+        // Manage Marks button click
         private void btnManageMarks_Click(object sender, EventArgs e)
         {
             MarkForm form = new MarkForm();
             form.ShowDialog();
         }
 
+        // Logout button click
         private void btnLogout_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void btnLoadStudents_Click_1(object sender, EventArgs e)
-        {
-            try
-            {
-                List<Student> students = DatabaseManager.Instance.GetAllStudents();
-                dgvStudents.DataSource = students;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading students: {ex.Message}");
-            }
-        }
-
-        private void btnViewTimetable_Click_1(object sender, EventArgs e)
-        {
-            TimetableForm form = new TimetableForm();
-            form.ShowDialog();
-        }
-
-        private void btnManageExams_Click_1(object sender, EventArgs e)
-        {
-            ExamForm form = new ExamForm();
-            form.ShowDialog();
-        }
-
-        private void btnManageMarks_Click_1(object sender, EventArgs e)
-        {
-            MarkForm form = new MarkForm();
-            form.ShowDialog();
-        }
-
-        private void btnLogout_Click_1(object sender, EventArgs e)
-        {
-            btnLogout.Enabled = false;
-
-
-            var loginform = new LoginForm();
-            loginform.Show();
-
-
-            btnLogout.Enabled = true;
         }
     }
 }

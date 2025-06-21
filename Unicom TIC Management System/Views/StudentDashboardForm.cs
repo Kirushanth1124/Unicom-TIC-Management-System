@@ -13,6 +13,9 @@ namespace Unicom_TIC_Management_System.Views
         public StudentDashboardForm(int studentId, string studentName)
         {
             InitializeComponent();
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+            
             _studentId = studentId;
             _studentName = studentName;
 

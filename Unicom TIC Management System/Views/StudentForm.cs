@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolManageSystem.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Unicom_TIC_Management_System.Controllers;
@@ -9,18 +10,30 @@ namespace Unicom_TIC_Management_System.Views
     public partial class StudentForm : Form
     {
         private StudentController studentController = new StudentController();
+        private int selectedStudentId = -1;
+
+        private int currentUserId = 1; // Replace this dynamically after login
 
         public StudentForm()
         {
             InitializeComponent();
-
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
 
             btnAdd.Click += BtnAdd_Click;
             btnUpdate.Click += BtnUpdate_Click;
             btnDelete.Click += BtnDelete_Click;
             dataGridView1.CellClick += DataGridView1_CellClick;
 
+            LoadSubjects();
             LoadStudents();
+        }
+
+        private void LoadSubjects()
+        {
+            var subjects = new List<string> { "Python", "C#", "JavaScript", "C++", "HTML" };
+            cmbCourse.DataSource = subjects;
+            cmbCourse.SelectedIndex = -1;
         }
 
         private void LoadStudents()
@@ -29,7 +42,6 @@ namespace Unicom_TIC_Management_System.Views
             {
                 var students = studentController.GetAllStudents();
                 dataGridView1.DataSource = students;
-
 
                 if (dataGridView1.Columns["StudentId"] != null)
                     dataGridView1.Columns["StudentId"].HeaderText = "ID";
@@ -40,12 +52,14 @@ namespace Unicom_TIC_Management_System.Views
                 if (dataGridView1.Columns["Address"] != null)
                     dataGridView1.Columns["Address"].HeaderText = "Address";
 
-                if (dataGridView1.Columns["CourseId"] != null)
-                    dataGridView1.Columns["CourseId"].HeaderText = "Course ID";
+                if (dataGridView1.Columns["DOB"] != null)
+                    dataGridView1.Columns["DOB"].HeaderText = "DOB";
 
+                if (dataGridView1.Columns["Gender"] != null)
+                    dataGridView1.Columns["Gender"].HeaderText = "Gender";
 
                 if (dataGridView1.Columns["CourseName"] != null)
-                    dataGridView1.Columns["CourseName"].Visible = false;
+                    dataGridView1.Columns["CourseName"].HeaderText = "Subject";
             }
             catch (Exception ex)
             {
@@ -62,12 +76,10 @@ namespace Unicom_TIC_Management_System.Views
                     Name = txtStName.Text.Trim(),
                     Address = txtStAddress.Text.Trim(),
                     DOB = dateTimePicker1.Value.ToString("yyyy-MM-dd"),
-                    Gender = radMale.Checked ? "Male" : radFemale.Checked ? "Female" : ""
-
-
+                    Gender = radMale.Checked ? "Male" : radFemale.Checked ? "Female" : null,
+                    CourseName = cmbCourse.SelectedItem?.ToString(),
+                    UserID = currentUserId
                 };
-
-
 
                 studentController.AddStudent(student);
                 MessageBox.Show("Student added successfully!");
@@ -82,7 +94,7 @@ namespace Unicom_TIC_Management_System.Views
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentRow == null)
+            if (selectedStudentId <= 0)
             {
                 MessageBox.Show("Please select a student to update.");
                 return;
@@ -92,12 +104,12 @@ namespace Unicom_TIC_Management_System.Views
             {
                 var student = new Student
                 {
-                    StudentId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["StudentId"].Value),
+                    StudentId = selectedStudentId,
                     Name = txtStName.Text.Trim(),
                     Address = txtStAddress.Text.Trim(),
                     DOB = dateTimePicker1.Value.ToString("yyyy-MM-dd"),
-                    Gender = radMale.Checked ? "Male" : radFemale.Checked ? "Female" : ""
-
+                    Gender = radMale.Checked ? "Male" : radFemale.Checked ? "Female" : null,
+                    CourseName = cmbCourse.SelectedItem?.ToString()
                 };
 
                 studentController.UpdateStudent(student);
@@ -113,22 +125,19 @@ namespace Unicom_TIC_Management_System.Views
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentRow == null)
+            if (selectedStudentId <= 0)
             {
                 MessageBox.Show("Please select a student to delete.");
                 return;
             }
 
-            int studentId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["StudentId"].Value);
-
-            var confirmResult = MessageBox.Show("Are you sure to delete this student?",
-                                     "Confirm Delete",
-                                     MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes)
+            var confirm = MessageBox.Show("Are you sure you want to delete this student?",
+                                          "Confirm Delete", MessageBoxButtons.YesNo);
+            if (confirm == DialogResult.Yes)
             {
                 try
                 {
-                    studentController.DeleteStudent(studentId);
+                    studentController.DeleteStudent(selectedStudentId);
                     MessageBox.Show("Student deleted successfully!");
                     LoadStudents();
                     ClearFields();
@@ -142,23 +151,22 @@ namespace Unicom_TIC_Management_System.Views
 
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
             if (e.RowIndex >= 0)
             {
                 var row = dataGridView1.Rows[e.RowIndex];
+
+                selectedStudentId = Convert.ToInt32(row.Cells["StudentId"].Value);
                 txtStName.Text = row.Cells["Name"].Value?.ToString();
                 txtStAddress.Text = row.Cells["Address"].Value?.ToString();
 
-                if (DateTime.TryParse(row.Cells["DOB"]?.Value?.ToString(), out DateTime dob))
+                if (DateTime.TryParse(row.Cells["DOB"].Value?.ToString(), out DateTime dob))
                     dateTimePicker1.Value = dob;
-                else
-                    dateTimePicker1.Value = DateTime.Today;
 
-                var gender = row.Cells["Gender"]?.Value?.ToString();
+                string gender = row.Cells["Gender"].Value?.ToString();
                 radMale.Checked = gender == "Male";
                 radFemale.Checked = gender == "Female";
 
-
+                cmbCourse.SelectedItem = row.Cells["CourseName"].Value?.ToString();
             }
         }
 
@@ -169,123 +177,11 @@ namespace Unicom_TIC_Management_System.Views
             dateTimePicker1.Value = DateTime.Today;
             radMale.Checked = false;
             radFemale.Checked = false;
+            cmbCourse.SelectedIndex = -1;
+            selectedStudentId = -1;
         }
 
-        private void StudentForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-            if (e.RowIndex >= 0)
-            {
-                var row = dataGridView1.Rows[e.RowIndex];
-                txtStName.Text = row.Cells["Name"].Value?.ToString();
-                txtStAddress.Text = row.Cells["Address"].Value?.ToString();
-
-                if (DateTime.TryParse(row.Cells["DOB"]?.Value?.ToString(), out DateTime dob))
-                    dateTimePicker1.Value = dob;
-                else
-                    dateTimePicker1.Value = DateTime.Today;
-
-                var gender = row.Cells["Gender"]?.Value?.ToString();
-                radMale.Checked = gender == "Male";
-                radFemale.Checked = gender == "Female";
-
-
-            }
-        }
-
-        private void btnDelete_Click_1(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Please select a student to delete.");
-                return;
-            }
-
-            int studentId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["StudentId"].Value);
-
-            var confirmResult = MessageBox.Show("Are you sure to delete this student?",
-                                     "Confirm Delete",
-                                     MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes)
-            {
-                try
-                {
-                    studentController.DeleteStudent(studentId);
-                    MessageBox.Show("Student deleted successfully!");
-                    LoadStudents();
-                    ClearFields();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Failed to delete student: " + ex.Message);
-                }
-            }
-        }
-
-        private void btnUpdate_Click_1(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Please select a student to update.");
-                return;
-            }
-
-            try
-            {
-                var student = new Student
-                {
-                    StudentId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["StudentId"].Value),
-                    Name = txtStName.Text.Trim(),
-                    Address = txtStAddress.Text.Trim(),
-                    DOB = dateTimePicker1.Value.ToString("yyyy-MM-dd"),
-                    Gender = radMale.Checked ? "Male" : radFemale.Checked ? "Female" : ""
-
-                };
-
-                studentController.UpdateStudent(student);
-                MessageBox.Show("Student updated successfully!");
-                LoadStudents();
-                ClearFields();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to update student: " + ex.Message);
-            }
-        }
-
-        private void btnAdd_Click_1(object sender, EventArgs e)
-        {
-            try
-            {
-                var student = new Student
-                {
-                    Name = txtStName.Text.Trim(),
-                    Address = txtStAddress.Text.Trim(),
-                    DOB = dateTimePicker1.Value.ToString("yyyy-MM-dd"),
-                    Gender = radMale.Checked ? "Male" : radFemale.Checked ? "Female" : ""
-
-
-                };
-
-
-
-                studentController.AddStudent(student);
-                MessageBox.Show("Student added successfully!");
-                LoadStudents();
-                ClearFields();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to add student: " + ex.Message);
-            }
-        }
-
-        private void radMale_CheckedChanged(object sender, EventArgs e)
+        private void txtStName_TextChanged(object sender, EventArgs e)
         {
 
         }

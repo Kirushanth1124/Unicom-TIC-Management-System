@@ -20,7 +20,7 @@ namespace SchoolManageSystem.Controllers
             {
                 courses.Add(new Course
                 {
-                    CourseId = reader.GetInt32(0),
+                    CourseID = reader.GetInt32(0),
                     CourseName = reader.GetString(1)
                 });
             }
@@ -35,16 +35,16 @@ namespace SchoolManageSystem.Controllers
                 Random rnd = new Random();
                 int randomId;
 
-                // Unique CourseID generate பண்ணி DB-ல் இருக்கிறதா Check பண்ணுங்க
+                
                 do
                 {
-                    randomId = rnd.Next(1, 10000); // Range பெரிதாக வைத்துக்கொள்ளலாம்
+                    randomId = rnd.Next(1, 10000);
                 } while (CourseIdExists(randomId, conn));
 
-                course.CourseId = randomId;
+                course.CourseID = randomId;
 
                 using var cmd = new SQLiteCommand("INSERT INTO Courses (CourseID, CourseName) VALUES (@CourseID, @CourseName)", conn);
-                cmd.Parameters.AddWithValue("@CourseID", course.CourseId);
+                cmd.Parameters.AddWithValue("@CourseID", course.CourseID);
                 cmd.Parameters.AddWithValue("@CourseName", course.CourseName);
                 cmd.ExecuteNonQuery();
             }
@@ -56,7 +56,7 @@ namespace SchoolManageSystem.Controllers
             {
                 using var cmd = new SQLiteCommand("UPDATE Courses SET CourseName = @CourseName WHERE CourseID = @CourseID", conn);
                 cmd.Parameters.AddWithValue("@CourseName", course.CourseName);
-                cmd.Parameters.AddWithValue("@CourseID", course.CourseId);
+                cmd.Parameters.AddWithValue("@CourseID", course.CourseID);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -83,7 +83,7 @@ namespace SchoolManageSystem.Controllers
                 {
                     return new Course
                     {
-                        CourseId = reader.GetInt32(0),
+                        CourseID = reader.GetInt32(0),
                         CourseName = reader.GetString(1)
                     };
                 }

@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using SchoolManageSystem.Controllers;
 using Unicom_TIC_Management_System;
 using Unicom_TIC_Management_System.Modals;
-using Unicom_TIC_Management_System;
 using Unicom_TIC_Management_System.Controllers;
 
 namespace Unicom_TIC_Management_System.Views
@@ -18,6 +17,8 @@ namespace Unicom_TIC_Management_System.Views
         public MarkForm()
         {
             InitializeComponent();
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
             LoadStudents();
             LoadExams();
             LoadMarks();

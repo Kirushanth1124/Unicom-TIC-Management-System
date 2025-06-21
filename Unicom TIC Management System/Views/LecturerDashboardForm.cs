@@ -15,6 +15,8 @@ namespace Unicom_TIC_Management_System.Views
         public LecturerDashboardForm()
         {
             InitializeComponent();
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
         }
         private void btnViewTimetable_Click(object sender, EventArgs e)
         {
@@ -55,6 +57,11 @@ namespace Unicom_TIC_Management_System.Views
         }
 
         private void groupActions_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LecturerDashboardForm_Load(object sender, EventArgs e)
         {
 
         }

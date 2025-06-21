@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SchoolManageSystem.Controllers;
+using System;
+using System.Drawing;
 using System.Windows.Forms;
-using SchoolManageSystem.Controllers;
-using Unicom_TIC_Management_System.Controllers;
 using Unicom_TIC_Management_System.Modals;
 
 namespace Unicom_TIC_Management_System.Views
@@ -11,22 +9,27 @@ namespace Unicom_TIC_Management_System.Views
     public partial class ExamForm : Form
     {
         private ExamController examController = new ExamController();
-        private SubjectController subjectController = new SubjectController(); // Assuming this exists
-        private int selectedExamId = -1;
 
         public ExamForm()
         {
             InitializeComponent();
-            LoadSubjects();   
-            LoadExams();      
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
+            LoadSubjectComboBox();   // Populate subjects in combo box
+            LoadExams();             // Load exam data to grid
         }
 
-        private void LoadSubjects()
+        private void LoadSubjectComboBox()
         {
-            var subjects = subjectController.GetAllSubjects();
-            cmbSubjects.DataSource = subjects;
-            cmbSubjects.DisplayMember = "SubjectName";
-            cmbSubjects.ValueMember = "SubjectID";
+            cmbSubjects.Items.Clear();
+            cmbSubjects.Items.Add("Python");
+            cmbSubjects.Items.Add("C#");
+            cmbSubjects.Items.Add("JavaScript");
+            cmbSubjects.Items.Add("C++");
+            cmbSubjects.Items.Add("HTML");
+
+            cmbSubjects.SelectedIndex = 0; // Optional: Select the first item by default
         }
 
         private void LoadExams()
@@ -35,18 +38,39 @@ namespace Unicom_TIC_Management_System.Views
             dgvExams.DataSource = examController.GetAllExams();
         }
 
+        private void ClearForm()
+        {
+            txtExamID.Clear();
+            txtExamName.Clear();
+            cmbSubjects.SelectedIndex = -1;
+        }
+
+        private void dgvExams_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var row = dgvExams.Rows[e.RowIndex];
+                txtExamID.Text = row.Cells["ExamID"].Value.ToString();
+                txtExamName.Text = row.Cells["ExamName"].Value.ToString();
+                cmbSubjects.SelectedItem = row.Cells["SubjectID"].Value.ToString(); // assumes SubjectID is a string like "Python"
+            }
+        }
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtExamName.Text) || cmbSubjects.SelectedIndex == -1)
+            if (/*string.IsNullOrWhiteSpace(txtExamID.Text) ||*/
+                string.IsNullOrWhiteSpace(txtExamName.Text) ||
+                cmbSubjects.SelectedIndex == -1)
             {
-                MessageBox.Show("Please enter exam name and select subject.");
+                MessageBox.Show("Please fill all fields.");
                 return;
             }
 
             var exam = new Exam
             {
+                /*ExamID = int.Parse(txtExamID.Text),*/
                 ExamName = txtExamName.Text,
-                SubjectID = (int)cmbSubjects.SelectedValue
+                SubjectID = GetSubjectID(cmbSubjects.SelectedItem.ToString())
             };
 
             examController.AddExam(exam);
@@ -56,17 +80,17 @@ namespace Unicom_TIC_Management_System.Views
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (selectedExamId == -1)
+            if (string.IsNullOrWhiteSpace(txtExamID.Text))
             {
-                MessageBox.Show("Please select an exam to update.");
+                MessageBox.Show("Please select or enter an ExamID to update.");
                 return;
             }
 
             var exam = new Exam
             {
-                ExamID = selectedExamId,
+                ExamID = int.Parse(txtExamID.Text),
                 ExamName = txtExamName.Text,
-                SubjectID = (int)cmbSubjects.SelectedValue
+                SubjectID = GetSubjectID(cmbSubjects.SelectedItem.ToString())
             };
 
             examController.UpdateExam(exam);
@@ -76,33 +100,30 @@ namespace Unicom_TIC_Management_System.Views
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (selectedExamId == -1)
+            if (string.IsNullOrWhiteSpace(txtExamID.Text))
             {
-                MessageBox.Show("Please select an exam to delete.");
+                MessageBox.Show("Please enter ExamID to delete.");
                 return;
             }
 
-            examController.DeleteExam(selectedExamId);
+            int examId = int.Parse(txtExamID.Text);
+            examController.DeleteExam(examId);
             LoadExams();
             ClearForm();
         }
 
-        private void dgvExams_CellClick(object sender, DataGridViewCellEventArgs e)
+        // Map subject names to IDs if your DB expects numerical IDs
+        private int GetSubjectID(string subjectName)
         {
-            if (e.RowIndex >= 0)
+            return subjectName switch
             {
-                var row = dgvExams.Rows[e.RowIndex];
-                selectedExamId = Convert.ToInt32(row.Cells["ExamID"].Value);
-                txtExamName.Text = row.Cells["ExamName"].Value.ToString();
-                cmbSubjects.SelectedValue = Convert.ToInt32(row.Cells["SubjectID"].Value);
-            }
-        }
-
-        private void ClearForm()
-        {
-            txtExamName.Clear();
-            cmbSubjects.SelectedIndex = 0;
-            selectedExamId = -1;
+                "Python" => 1,
+                "C#" => 2,
+                "JavaScript" => 3,
+                "C++" => 4,
+                "HTML" => 5,
+                _ => 0,
+            };
         }
     }
 }

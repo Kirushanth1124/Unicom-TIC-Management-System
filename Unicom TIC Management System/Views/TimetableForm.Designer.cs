@@ -2,8 +2,15 @@
 {
     partial class TimetableForm
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -15,147 +22,155 @@
 
         #region Windows Form Designer generated code
 
+        /// <summary>
+        /// Required method for Designer support — do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            label2 = new Label();
-            txtSubjectId = new TextBox();
-            txtTimeSlot = new TextBox();
-            txtRoomtId = new TextBox();
-            label3 = new Label();
-            btnAdd = new Button();
-            btnUpdate = new Button();
-            btnDelete = new Button();
-            dataGridViewTimetables = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewTimetables).BeginInit();
-            SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(25, 22);
-            label1.Name = "label1";
-            label1.Size = new Size(60, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Subject ID";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(25, 65);
-            label2.Name = "label2";
-            label2.Size = new Size(53, 15);
-            label2.TabIndex = 1;
-            label2.Text = "Room ID";
-            // 
-            // txtSubjectId
-            // 
-            txtSubjectId.Location = new Point(120, 19);
-            txtSubjectId.Name = "txtSubjectId";
-            txtSubjectId.Size = new Size(150, 23);
-            txtSubjectId.TabIndex = 2;
-            // 
-            // txtTimeSlot
-            // 
-            txtTimeSlot.Location = new Point(120, 110);
-            txtTimeSlot.Name = "txtTimeSlot";
-            txtTimeSlot.Size = new Size(150, 23);
-            txtTimeSlot.TabIndex = 3;
-            // 
-            // txtRoomtId
-            // 
-            txtRoomtId.Location = new Point(120, 62);
-            txtRoomtId.Name = "txtRoomtId";
-            txtRoomtId.Size = new Size(150, 23);
-            txtRoomtId.TabIndex = 4;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(25, 113);
-            label3.Name = "label3";
-            label3.Size = new Size(57, 15);
-            label3.TabIndex = 5;
-            label3.Text = "Time Slot";
-            // 
-            // btnAdd
-            // 
-            btnAdd.Location = new Point(300, 19);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(75, 27);
-            btnAdd.TabIndex = 6;
-            btnAdd.Text = "Add";
-            btnAdd.UseVisualStyleBackColor = true;
-            btnAdd.Click += btnAdd_Click;
-            // 
-            // btnUpdate
-            // 
-            btnUpdate.Location = new Point(300, 62);
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(75, 27);
-            btnUpdate.TabIndex = 7;
-            btnUpdate.Text = "Update";
-            btnUpdate.UseVisualStyleBackColor = true;
-            btnUpdate.Click += btnUpdate_Click;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(300, 110);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(75, 27);
-            btnDelete.TabIndex = 8;
-            btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += btnDelete_Click;
+            this.dataGridViewTimetables = new System.Windows.Forms.DataGridView();
+            this.cmbSubject = new System.Windows.Forms.ComboBox();
+            this.cmbRoom = new System.Windows.Forms.ComboBox();
+            this.txtTimeSlot = new System.Windows.Forms.TextBox();
+            this.lblSubject = new System.Windows.Forms.Label();
+            this.lblRoom = new System.Windows.Forms.Label();
+            this.lblTimeSlot = new System.Windows.Forms.Label();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTimetables)).BeginInit();
+            this.SuspendLayout();
             // 
             // dataGridViewTimetables
             // 
-            dataGridViewTimetables.AllowUserToAddRows = false;
-            dataGridViewTimetables.AllowUserToDeleteRows = false;
-            dataGridViewTimetables.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewTimetables.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewTimetables.Location = new Point(25, 162);
-            dataGridViewTimetables.MultiSelect = false;
-            dataGridViewTimetables.Name = "dataGridViewTimetables";
-            dataGridViewTimetables.ReadOnly = true;
-            dataGridViewTimetables.RowHeadersVisible = false;
-            dataGridViewTimetables.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewTimetables.Size = new Size(550, 200);
-            dataGridViewTimetables.TabIndex = 9;
-            dataGridViewTimetables.CellContentClick += dataGridViewTimetables_CellContentClick;
-            dataGridViewTimetables.SelectionChanged += dataGridViewTimetables_SelectionChanged;
+            this.dataGridViewTimetables.AllowUserToAddRows = false;
+            this.dataGridViewTimetables.AllowUserToDeleteRows = false;
+            this.dataGridViewTimetables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTimetables.Location = new System.Drawing.Point(12, 190);
+            this.dataGridViewTimetables.Name = "dataGridViewTimetables";
+            this.dataGridViewTimetables.ReadOnly = true;
+            this.dataGridViewTimetables.RowHeadersWidth = 51;
+            this.dataGridViewTimetables.RowTemplate.Height = 24;
+            this.dataGridViewTimetables.Size = new System.Drawing.Size(760, 250);
+            this.dataGridViewTimetables.TabIndex = 0;
+            // 
+            // cmbSubject
+            // 
+            this.cmbSubject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSubject.FormattingEnabled = true;
+            this.cmbSubject.Location = new System.Drawing.Point(120, 25);
+            this.cmbSubject.Name = "cmbSubject";
+            this.cmbSubject.Size = new System.Drawing.Size(200, 24);
+            this.cmbSubject.TabIndex = 1;
+            // 
+            // cmbRoom
+            // 
+            this.cmbRoom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRoom.FormattingEnabled = true;
+            this.cmbRoom.Location = new System.Drawing.Point(120, 65);
+            this.cmbRoom.Name = "cmbRoom";
+            this.cmbRoom.Size = new System.Drawing.Size(200, 24);
+            this.cmbRoom.TabIndex = 2;
+            // 
+            // txtTimeSlot
+            // 
+            this.txtTimeSlot.Location = new System.Drawing.Point(120, 105);
+            this.txtTimeSlot.Name = "txtTimeSlot";
+            this.txtTimeSlot.Size = new System.Drawing.Size(200, 22);
+            this.txtTimeSlot.TabIndex = 3;
+            // 
+            // lblSubject
+            // 
+            this.lblSubject.AutoSize = true;
+            this.lblSubject.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblSubject.Location = new System.Drawing.Point(40, 28);
+            this.lblSubject.Name = "lblSubject";
+            this.lblSubject.Size = new System.Drawing.Size(59, 20);
+            this.lblSubject.TabIndex = 4;
+            this.lblSubject.Text = "Subject";
+            // 
+            // lblRoom
+            // 
+            this.lblRoom.AutoSize = true;
+            this.lblRoom.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblRoom.Location = new System.Drawing.Point(40, 68);
+            this.lblRoom.Name = "lblRoom";
+            this.lblRoom.Size = new System.Drawing.Size(51, 20);
+            this.lblRoom.TabIndex = 5;
+            this.lblRoom.Text = "Room";
+            // 
+            // lblTimeSlot
+            // 
+            this.lblTimeSlot.AutoSize = true;
+            this.lblTimeSlot.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblTimeSlot.Location = new System.Drawing.Point(40, 108);
+            this.lblTimeSlot.Name = "lblTimeSlot";
+            this.lblTimeSlot.Size = new System.Drawing.Size(73, 20);
+            this.lblTimeSlot.TabIndex = 6;
+            this.lblTimeSlot.Text = "Time Slot";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(360, 25);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(90, 30);
+            this.btnAdd.TabIndex = 7;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(360, 65);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(90, 30);
+            this.btnUpdate.TabIndex = 8;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(360, 105);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(90, 30);
+            this.btnDelete.TabIndex = 9;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
             // 
             // TimetableForm
             // 
-            ClientSize = new Size(600, 400);
-            Controls.Add(dataGridViewTimetables);
-            Controls.Add(btnDelete);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnAdd);
-            Controls.Add(label3);
-            Controls.Add(txtRoomtId);
-            Controls.Add(txtTimeSlot);
-            Controls.Add(txtSubjectId);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Name = "TimetableForm";
-            Text = "Timetable Management";
-            ((System.ComponentModel.ISupportInitialize)dataGridViewTimetables).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnUpdate);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.lblTimeSlot);
+            this.Controls.Add(this.lblRoom);
+            this.Controls.Add(this.lblSubject);
+            this.Controls.Add(this.txtTimeSlot);
+            this.Controls.Add(this.cmbRoom);
+            this.Controls.Add(this.cmbSubject);
+            this.Controls.Add(this.dataGridViewTimetables);
+            this.Name = "TimetableForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Timetable Management";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTimetables)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtSubjectId;
+        private System.Windows.Forms.DataGridView dataGridViewTimetables;
+        private System.Windows.Forms.ComboBox cmbSubject;
+        private System.Windows.Forms.ComboBox cmbRoom;
         private System.Windows.Forms.TextBox txtTimeSlot;
-        private System.Windows.Forms.TextBox txtRoomtId;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblSubject;
+        private System.Windows.Forms.Label lblRoom;
+        private System.Windows.Forms.Label lblTimeSlot;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.DataGridView dataGridViewTimetables;
     }
 }

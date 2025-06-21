@@ -17,34 +17,36 @@
 
         private void InitializeComponent()
         {
-            this.dataGridViewTimetable = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTimetable)).BeginInit();
-            this.SuspendLayout();
+            dataGridViewTimetable = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewTimetable).BeginInit();
+            SuspendLayout();
             // 
             // dataGridViewTimetable
             // 
-            this.dataGridViewTimetable.AllowUserToAddRows = false;
-            this.dataGridViewTimetable.AllowUserToDeleteRows = false;
-            this.dataGridViewTimetable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewTimetable.Location = new System.Drawing.Point(20, 20);
-            this.dataGridViewTimetable.Name = "dataGridViewTimetable";
-            this.dataGridViewTimetable.ReadOnly = true;
-            this.dataGridViewTimetable.RowHeadersWidth = 51;
-            this.dataGridViewTimetable.RowTemplate.Height = 29;
-            this.dataGridViewTimetable.Size = new System.Drawing.Size(740, 400);
-            this.dataGridViewTimetable.TabIndex = 0;
+            dataGridViewTimetable.AllowUserToAddRows = false;
+            dataGridViewTimetable.AllowUserToDeleteRows = false;
+            dataGridViewTimetable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewTimetable.Location = new Point(18, 62);
+            dataGridViewTimetable.Margin = new Padding(3, 2, 3, 2);
+            dataGridViewTimetable.Name = "dataGridViewTimetable";
+            dataGridViewTimetable.ReadOnly = true;
+            dataGridViewTimetable.RowHeadersWidth = 51;
+            dataGridViewTimetable.RowTemplate.Height = 29;
+            dataGridViewTimetable.Size = new Size(550, 253);
+            dataGridViewTimetable.TabIndex = 0;
+            dataGridViewTimetable.CellContentClick += dataGridViewTimetable_CellContentClick;
             // 
             // TimetableView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 461);
-            this.Controls.Add(this.dataGridViewTimetable);
-            this.Name = "TimetableView";
-            this.Text = "Student Timetable View";
-            this.Load += new System.EventHandler(this.StudentTimetableForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTimetable)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(686, 346);
+            Controls.Add(dataGridViewTimetable);
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "TimetableView";
+            Load += StudentTimetableForm_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridViewTimetable).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion

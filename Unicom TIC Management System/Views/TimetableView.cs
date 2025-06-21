@@ -13,6 +13,8 @@ namespace Unicom_TIC_Management_System
         public TimetableView()
         {
             InitializeComponent();
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\B.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
             timetableController = new TimeTableController();
         }
 
@@ -28,6 +30,7 @@ namespace Unicom_TIC_Management_System
                 List<Timetable> timetableList = timetableController.GetAllTimetables();
                 dataGridViewTimetable.DataSource = null;
                 dataGridViewTimetable.DataSource = timetableList;
+
 
                 // Optional: Customize columns
                 dataGridViewTimetable.Columns["TimetableId"].HeaderText = "ID";
@@ -47,6 +50,11 @@ namespace Unicom_TIC_Management_System
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             LoadTimetable();
+        }
+
+        private void dataGridViewTimetable_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

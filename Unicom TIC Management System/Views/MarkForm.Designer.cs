@@ -44,27 +44,30 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(46, 44);
             label1.Name = "label1";
-            label1.Size = new Size(48, 15);
+            label1.Size = new Size(70, 21);
             label1.TabIndex = 0;
             label1.Text = "Student";
             // 
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.Location = new Point(46, 90);
             label2.Name = "label2";
-            label2.Size = new Size(35, 15);
+            label2.Size = new Size(52, 21);
             label2.TabIndex = 1;
             label2.Text = "Exam";
             // 
             // label3
             // 
             label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.Location = new Point(45, 135);
             label3.Name = "label3";
-            label3.Size = new Size(36, 15);
+            label3.Size = new Size(52, 21);
             label3.TabIndex = 2;
             label3.Text = "Score";
             // 
@@ -93,9 +96,10 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(36, 184);
+            btnAdd.Font = new Font("Algerian", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnAdd.Location = new Point(41, 189);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(75, 23);
+            btnAdd.Size = new Size(75, 25);
             btnAdd.TabIndex = 6;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
@@ -103,9 +107,10 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(348, 184);
+            btnDelete.Font = new Font("Algerian", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnDelete.Location = new Point(347, 192);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(75, 23);
+            btnDelete.Size = new Size(75, 25);
             btnDelete.TabIndex = 7;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
@@ -113,9 +118,10 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(185, 184);
+            btnUpdate.Font = new Font("Algerian", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnUpdate.Location = new Point(186, 189);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(75, 23);
+            btnUpdate.Size = new Size(95, 28);
             btnUpdate.TabIndex = 8;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;

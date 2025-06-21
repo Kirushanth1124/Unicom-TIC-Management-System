@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Unicom_TIC_Management_System.Modals
 {
-    internal class Room
+    public class Room
     {
-        public int RoomId { get; set; }
+        public int RoomID { get; set; }
         public string RoomName { get; set; }
         public string RoomType { get; set; }
     }

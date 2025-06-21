@@ -4,7 +4,6 @@ namespace Unicom_TIC_Management_System.Repositories
 {
     public class DatabaseManager
     {
-        // Singleton pattern (optional)
         private static DatabaseManager? _instance;
         public static DatabaseManager Instance
         {
@@ -16,22 +15,19 @@ namespace Unicom_TIC_Management_System.Repositories
             }
         }
 
-        // Create all necessary tables in the SQLite database
         public static void CreateTables(SQLiteConnection conn)
         {
-            // Enable foreign key constraints in SQLite
             using (var pragmaCmd = conn.CreateCommand())
             {
                 pragmaCmd.CommandText = "PRAGMA foreign_keys = ON;";
                 pragmaCmd.ExecuteNonQuery();
             }
 
-            // Define each table creation command separately
             string[] tableCommands = new string[]
             {
                 @"
                 CREATE TABLE IF NOT EXISTS Rooms (
-                    RoomID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RoomID INTEGER PRIMARY KEY,
                     RoomName TEXT NOT NULL,
                     RoomType TEXT NOT NULL
                 );",
@@ -43,28 +39,44 @@ namespace Unicom_TIC_Management_System.Repositories
                 );",
 
                 @"
-                CREATE TABLE IF NOT EXISTS Students (
-                    StudentID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    StudentName TEXT NOT NULL,
-                    Address TEXT NOT NULL,
-                    DOB TEXT NOT NULL,
-                    CourseID INTEGER NOT NULL,
-                    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)
+                CREATE TABLE IF NOT EXISTS Users (
+                    UserID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Username TEXT NOT NULL,
+                    Password TEXT NOT NULL,
+                    Role TEXT NOT NULL
                 );",
 
                 @"
-                CREATE TABLE IF NOT EXISTS Lecturer (
+                CREATE TABLE IF NOT EXISTS Students (
+                    StudentID INTEGER PRIMARY KEY,
+                    StudentName TEXT NOT NULL,
+                    Address TEXT NOT NULL,
+                    DOB TEXT NOT NULL,
+                    Gender TEXT NOT NULL,
+                    CourseID INTEGER NOT NULL,
+                    CourseName TEXT NOT NULL,
+                    UserID INTEGER NOT NULL,
+                    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID),
+                    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+                );",
+
+                @"
+                CREATE TABLE IF NOT EXISTS Lecturers (
                     LecturerID INTEGER PRIMARY KEY AUTOINCREMENT,
                     LecturerName TEXT NOT NULL,
-                    PhoneNumber TEXT NOT NULL,
-                    Address TEXT NOT NULL
+                    PhoneNumber INTEGER NOT NULL,
+                    Address TEXT NOT NULL,
+                    UserID INTEGER NOT NULL,
+                    FOREIGN KEY (UserID) REFERENCES Users(UserID)
                 );",
 
                 @"
                 CREATE TABLE IF NOT EXISTS Exams (
                     ExamID INTEGER PRIMARY KEY AUTOINCREMENT,
                     ExamName TEXT NOT NULL,
-                    ExamMarks TEXT NOT NULL
+                    ExamMarks INTEGER,
+                    SubjectID INTEGER NOT NULL,
+                    FOREIGN KEY (SubjectID) REFERENCES Subjects(SubjectID)
                 );",
 
                 @"
@@ -75,39 +87,46 @@ namespace Unicom_TIC_Management_System.Repositories
                     SubjectID INTEGER NOT NULL,
                     Score INTEGER NOT NULL,
                     ExamName TEXT NOT NULL,
-                    StudentName TEXT NOT NULL
+                    StudentName TEXT NOT NULL,
+                    FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+                    FOREIGN KEY (ExamID) REFERENCES Exams(ExamID),
+                    FOREIGN KEY (SubjectID) REFERENCES Subjects(SubjectID)
                 );",
 
                 @"
-                CREATE TABLE IF NOT EXISTS Admin (
+                CREATE TABLE IF NOT EXISTS Admins (
                     AdminID INTEGER PRIMARY KEY AUTOINCREMENT,
                     AdminName TEXT NOT NULL,
-                    Password TEXT NOT NULL
+                    UserID INTEGER NOT NULL,
+                    FOREIGN KEY (UserID) REFERENCES Users(UserID)
                 );",
 
                 @"
-                CREATE TABLE IF NOT EXISTS Staff (
+                CREATE TABLE IF NOT EXISTS Staffs (
                     StaffID INTEGER PRIMARY KEY AUTOINCREMENT,
                     StaffName TEXT NOT NULL,
-                    StaffPassword TEXT NOT NULL
+                    Password TEXT NOT NULL,
+                    PhoneNumber INTEGER NOT NULL,
+                    UserID INTEGER NOT NULL,
+                    FOREIGN KEY (UserID) REFERENCES Users(UserID)
                 );",
 
                 @"
                 CREATE TABLE IF NOT EXISTS Subjects (
-                    SubjectID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    SubjectID INTEGER PRIMARY KEY,
                     SubjectName TEXT NOT NULL,
                     CourseID INTEGER,
                     CourseName TEXT,
-                    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)
+                    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
                 );",
 
                 @"
-                CREATE TABLE IF NOT EXISTS TimeTable (
-                    TimeTableID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    SubjectID INTEGER,
+                CREATE TABLE IF NOT EXISTS Timetables (
+                    TimetableID INTEGER PRIMARY KEY,
+                    SubjectID INTEGER NOT NULL,
                     TimeSlot TEXT NOT NULL,
                     RoomID INTEGER NOT NULL,
-                    FOREIGN KEY (SubjectID) REFERENCES Subject(SubjectID),
+                    FOREIGN KEY (SubjectID) REFERENCES Subjects(SubjectID),
                     FOREIGN KEY (RoomID) REFERENCES Rooms(RoomID)
                 );",
 
@@ -116,25 +135,17 @@ namespace Unicom_TIC_Management_System.Repositories
                     LecturerID INTEGER,
                     CourseID INTEGER,
                     PRIMARY KEY (LecturerID, CourseID),
-                    FOREIGN KEY (LecturerID) REFERENCES Lecturer(LecturerID),
-                    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)
+                    FOREIGN KEY (LecturerID) REFERENCES Lecturers(LecturerID),
+                    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
                 );",
 
                 @"
-                CREATE TABLE IF NOT EXISTS LecturerSubject (
+                CREATE TABLE IF NOT EXISTS LecturerSubjects (
                     LecturerID INTEGER,
                     SubjectID INTEGER,
                     PRIMARY KEY (LecturerID, SubjectID),
-                    FOREIGN KEY (LecturerID) REFERENCES Lecturer(LecturerID),
-                    FOREIGN KEY (SubjectID) REFERENCES Subject(SubjectID)
-                );",
-
-                @"
-                CREATE TABLE IF NOT EXISTS Users (
-                    UserId INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Username TEXT NOT NULL,
-                    Password TEXT NOT NULL,
-                    Role TEXT NOT NULL
+                    FOREIGN KEY (LecturerID) REFERENCES Lecturers(LecturerID),
+                    FOREIGN KEY (SubjectID) REFERENCES Subjects(SubjectID)
                 );",
 
                 @"
@@ -144,20 +155,19 @@ namespace Unicom_TIC_Management_System.Repositories
                     Score INTEGER,
                     PRIMARY KEY (StudentID, ExamID),
                     FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
-                    FOREIGN KEY (ExamID) REFERENCES Exam(ExamID)
+                    FOREIGN KEY (ExamID) REFERENCES Exams(ExamID)
                 );",
 
                 @"
-                CREATE TABLE IF NOT EXISTS LecturerStudent (
+                CREATE TABLE IF NOT EXISTS LecturerStudents (
                     LecturerID INTEGER,
                     StudentID INTEGER,
                     PRIMARY KEY (LecturerID, StudentID),
-                    FOREIGN KEY (LecturerID) REFERENCES Lecturer(LecturerID),
+                    FOREIGN KEY (LecturerID) REFERENCES Lecturers(LecturerID),
                     FOREIGN KEY (StudentID) REFERENCES Students(StudentID)
                 );"
             };
 
-            // Execute each table creation command one by one
             foreach (var cmdText in tableCommands)
             {
                 using (var cmd = conn.CreateCommand())
@@ -167,8 +177,6 @@ namespace Unicom_TIC_Management_System.Repositories
                 }
             }
         }
-
-        // TODO: Implement these methods as per your need
 
         internal List<Modals.Student> GetAllStudents()
         {

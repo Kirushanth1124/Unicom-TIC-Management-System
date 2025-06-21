@@ -36,9 +36,10 @@
             // 
             // btnViewTimetable
             // 
-            btnViewTimetable.Location = new Point(80, 39);
+            btnViewTimetable.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnViewTimetable.Location = new Point(53, 39);
             btnViewTimetable.Name = "btnViewTimetable";
-            btnViewTimetable.Size = new Size(121, 23);
+            btnViewTimetable.Size = new Size(148, 35);
             btnViewTimetable.TabIndex = 0;
             btnViewTimetable.Text = "View TimeTable";
             btnViewTimetable.UseVisualStyleBackColor = true;
@@ -46,9 +47,10 @@
             // 
             // btnLogout
             // 
-            btnLogout.Location = new Point(80, 363);
+            btnLogout.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogout.Location = new Point(53, 403);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(75, 23);
+            btnLogout.Size = new Size(95, 35);
             btnLogout.TabIndex = 1;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
@@ -56,9 +58,10 @@
             // 
             // btnViewExams
             // 
-            btnViewExams.Location = new Point(80, 116);
+            btnViewExams.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnViewExams.Location = new Point(53, 115);
             btnViewExams.Name = "btnViewExams";
-            btnViewExams.Size = new Size(121, 23);
+            btnViewExams.Size = new Size(148, 33);
             btnViewExams.TabIndex = 2;
             btnViewExams.Text = "View Exam";
             btnViewExams.UseVisualStyleBackColor = true;
@@ -85,6 +88,7 @@
             Controls.Add(btnViewTimetable);
             Name = "LecturerDashboardForm";
             Text = "LecturerDashboardForm";
+            Load += LecturerDashboardForm_Load;
             ResumeLayout(false);
         }
 

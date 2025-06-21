@@ -8,9 +8,9 @@ namespace Unicom_TIC_Management_System.Modals
 {
     public class Subject
     {
-        public int SubjectId { get; set; }
+        public int SubjectID { get; set; }
         public string SubjectName { get; set; }
-        public int CourseId { get; set; }
+        public int CourseID { get; set; }
         public string CourseName { get; set; }
     }
 }

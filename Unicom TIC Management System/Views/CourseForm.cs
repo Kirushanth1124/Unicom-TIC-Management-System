@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using SchoolManageSystem.Controllers;
-using Unicom_TIC_Management_System;
 using Unicom_TIC_Management_System.Modals;
-using Unicom_TIC_Management_System;
 
 namespace Unicom_TIC_Management_System.Views
 {
@@ -15,6 +13,17 @@ namespace Unicom_TIC_Management_System.Views
         {
             InitializeComponent();
             LoadCourses();
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
+            // Setup DataGridView selection
+            dataGridViewCourses.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewCourses.MultiSelect = false;
+            dataGridViewCourses.ReadOnly = true;
+            dataGridViewCourses.AllowUserToAddRows = false;
+
+            // Attach event
+            dataGridViewCourses.SelectionChanged += dataGridViewCourses_SelectionChanged;
         }
 
         private void LoadCourses()
@@ -22,20 +31,19 @@ namespace Unicom_TIC_Management_System.Views
             var courses = controller.GetAllCourses();
             dataGridViewCourses.DataSource = null;
             dataGridViewCourses.DataSource = courses;
+
+            if (dataGridViewCourses.Columns["CourseID"] != null)
+                dataGridViewCourses.Columns["CourseID"].HeaderText = "ID";
+            if (dataGridViewCourses.Columns["CourseName"] != null)
+                dataGridViewCourses.Columns["CourseName"].HeaderText = "Course Name";
         }
 
-
-        private void dataGridViewCourses_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridViewCourses_SelectionChanged(object sender, EventArgs e)
         {
-            if (dataGridViewCourses.SelectedRows.Count > 0)
+            if (dataGridViewCourses.CurrentRow != null && dataGridViewCourses.CurrentRow.Index >= 0)
             {
-                txtCourseName.Text = dataGridViewCourses.SelectedRows[0].Cells["CourseName"].Value.ToString();
+                txtCourseName.Text = dataGridViewCourses.CurrentRow.Cells["CourseName"].Value?.ToString();
             }
-        }
-
-        private void txtCourseName_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void btnAdd_Click_1(object sender, EventArgs e)
@@ -54,40 +62,51 @@ namespace Unicom_TIC_Management_System.Views
 
         private void btnUpdate_Click_1(object sender, EventArgs e)
         {
-            if (dataGridViewCourses.SelectedRows.Count == 0)
+            if (dataGridViewCourses.CurrentRow == null)
             {
                 MessageBox.Show("Please select a course to update.");
                 return;
             }
 
-            var selectedRow = dataGridViewCourses.SelectedRows[0];
-            int courseId = Convert.ToInt32(selectedRow.Cells["CourseID"].Value);
+            int courseId = Convert.ToInt32(dataGridViewCourses.CurrentRow.Cells["CourseID"].Value);
 
             var course = new Course
             {
-                CourseId = courseId,
+                CourseID = courseId,
                 CourseName = txtCourseName.Text.Trim()
             };
 
             controller.UpdateCourse(course);
             LoadCourses();
+            txtCourseName.Clear();
         }
 
         private void btnDelete_Click_1(object sender, EventArgs e)
         {
-
-            if (dataGridViewCourses.SelectedRows.Count == 0)
+            if (dataGridViewCourses.CurrentRow == null)
             {
                 MessageBox.Show("Please select a course to delete.");
                 return;
             }
 
-            var selectedRow = dataGridViewCourses.SelectedRows[0];
-            int courseId = Convert.ToInt32(selectedRow.Cells["CourseID"].Value);
+            int courseId = Convert.ToInt32(dataGridViewCourses.CurrentRow.Cells["CourseID"].Value);
 
             controller.DeleteCourse(courseId);
             LoadCourses();
             txtCourseName.Clear();
         }
+
+        private void CourseForm_Load(object sender, EventArgs e)
+        {
+            // Optional Load logic
+        }
+
+        private void txtCourseName_TextChanged(object sender, EventArgs e)
+        {
+            // Optional validation
+        }
+
+        // ❌ Remove this empty method if present
+        // private void dataGridViewCourses_SelectionChanged_1(object sender, EventArgs e) { }
     }
 }

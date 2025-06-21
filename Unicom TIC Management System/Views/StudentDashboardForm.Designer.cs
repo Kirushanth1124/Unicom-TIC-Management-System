@@ -37,9 +37,10 @@
             // 
             // btnViewMarks
             // 
+            btnViewMarks.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnViewMarks.Location = new Point(28, 34);
             btnViewMarks.Name = "btnViewMarks";
-            btnViewMarks.Size = new Size(110, 23);
+            btnViewMarks.Size = new Size(141, 32);
             btnViewMarks.TabIndex = 1;
             btnViewMarks.Text = "View Marks";
             btnViewMarks.UseVisualStyleBackColor = true;
@@ -47,9 +48,10 @@
             // 
             // btnViewTimetable
             // 
+            btnViewTimetable.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnViewTimetable.Location = new Point(28, 87);
             btnViewTimetable.Name = "btnViewTimetable";
-            btnViewTimetable.Size = new Size(110, 23);
+            btnViewTimetable.Size = new Size(141, 32);
             btnViewTimetable.TabIndex = 2;
             btnViewTimetable.Text = "View Timetable";
             btnViewTimetable.UseVisualStyleBackColor = true;
@@ -57,9 +59,10 @@
             // 
             // btnLogout
             // 
-            btnLogout.Location = new Point(687, 396);
+            btnLogout.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogout.Location = new Point(680, 396);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(75, 23);
+            btnLogout.Size = new Size(90, 42);
             btnLogout.TabIndex = 3;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;

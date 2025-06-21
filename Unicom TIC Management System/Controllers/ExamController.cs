@@ -8,6 +8,7 @@ namespace SchoolManageSystem.Controllers
 {
     internal class ExamController
     {
+        // Get all exams with subject names
         public List<Exam> GetAllExams()
         {
             var exams = new List<Exam>();
@@ -15,9 +16,9 @@ namespace SchoolManageSystem.Controllers
             using (var conn = DbCon.GetConnection())
             {
                 var cmd = new SQLiteCommand(@"
-                    SELECT ExamID, ExamName, SubjectID, SubjectName 
+                    SELECT Exams.ExamID, Exams.ExamName, Exams.ExamMarks, Exams.SubjectID, Subjects.SubjectName 
                     FROM Exams  
-                    LEFT JOIN Subjects  ON SubjectID = SubjectID", conn);
+                    LEFT JOIN Subjects ON Exams.SubjectID = Subjects.SubjectID", conn);
 
                 var reader = cmd.ExecuteReader();
 
@@ -27,8 +28,9 @@ namespace SchoolManageSystem.Controllers
                     {
                         ExamID = reader.GetInt32(0),
                         ExamName = reader.GetString(1),
-                        SubjectID = reader.GetInt32(2),
-                        SubjectName = reader.IsDBNull(3) ? "" : reader.GetString(3)
+                        ExamMarks = reader.GetInt32(2),
+                        SubjectID = reader.GetInt32(3),
+                        SubjectName = reader.IsDBNull(4) ? "" : reader.GetString(4)
                     });
                 }
             }
@@ -36,43 +38,34 @@ namespace SchoolManageSystem.Controllers
             return exams;
         }
 
+        // Add a new exam
         public void AddExam(Exam exam)
         {
             using (var conn = DbCon.GetConnection())
             {
-                conn.Open();
-
-                Random rnd = new Random();
-                int randomId;
-
-                // Random ExamID create பண்ணி அது DB-ல் இருக்கிறதா என்று Check பண்ணும்
-                do
-                {
-                    randomId = rnd.Next(21, 50);
-                } while (ExamIdExists(randomId, conn));
-
-                exam.ExamID = randomId;
-
-                var cmd = new SQLiteCommand("INSERT INTO Exams (ExamID, ExamName, SubjectID) VALUES (@ExamID, @ExamName, @SubjectID)", conn);
-                cmd.Parameters.AddWithValue("@ExamID", exam.ExamID);
+                var cmd = new SQLiteCommand("INSERT INTO Exams (ExamName, ExamMarks, SubjectID) VALUES (@ExamName, @ExamMarks, @SubjectID)", conn);
                 cmd.Parameters.AddWithValue("@ExamName", exam.ExamName);
+                cmd.Parameters.AddWithValue("@ExamMarks", exam.ExamMarks);
                 cmd.Parameters.AddWithValue("@SubjectID", exam.SubjectID);
                 cmd.ExecuteNonQuery();
             }
         }
 
+        // Update exam
         public void UpdateExam(Exam exam)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("UPDATE Exams SET ExamName = @ExamName, SubjectID = @SubjectID WHERE ExamID = @ExamID", conn);
+                var cmd = new SQLiteCommand("UPDATE Exams SET ExamName = @ExamName, ExamMarks = @ExamMarks, SubjectID = @SubjectID WHERE ExamID = @ExamID", conn);
                 cmd.Parameters.AddWithValue("@ExamName", exam.ExamName);
+                cmd.Parameters.AddWithValue("@ExamMarks", exam.ExamMarks);
                 cmd.Parameters.AddWithValue("@SubjectID", exam.SubjectID);
                 cmd.Parameters.AddWithValue("@ExamID", exam.ExamID);
                 cmd.ExecuteNonQuery();
             }
         }
 
+        // Delete exam
         public void DeleteExam(int examId)
         {
             using (var conn = DbCon.GetConnection())
@@ -83,11 +76,12 @@ namespace SchoolManageSystem.Controllers
             }
         }
 
+        // Get exam by ID
         public Exam GetExamById(int id)
         {
             using (var conn = DbCon.GetConnection())
             {
-                var cmd = new SQLiteCommand("SELECT ExamID, ExamName, SubjectID FROM Exams WHERE ExamID = @ExamID", conn);
+                var cmd = new SQLiteCommand("SELECT ExamID, ExamName, ExamMarks, SubjectID FROM Exams WHERE ExamID = @ExamID", conn);
                 cmd.Parameters.AddWithValue("@ExamID", id);
 
                 var reader = cmd.ExecuteReader();
@@ -97,22 +91,13 @@ namespace SchoolManageSystem.Controllers
                     {
                         ExamID = reader.GetInt32(0),
                         ExamName = reader.GetString(1),
-                        SubjectID = reader.GetInt32(2)
+                        ExamMarks = reader.GetInt32(2),
+                        SubjectID = reader.GetInt32(3)
                     };
                 }
             }
 
             return null;
-        }
-
-        private bool ExamIdExists(int examId, SQLiteConnection conn)
-        {
-            using (var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Exams WHERE ExamID = @ExamID", conn))
-            {
-                cmd.Parameters.AddWithValue("@ExamID", examId);
-                var count = Convert.ToInt32(cmd.ExecuteScalar());
-                return count > 0;
-            }
         }
     }
 }

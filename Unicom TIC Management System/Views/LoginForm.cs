@@ -11,7 +11,7 @@ namespace Unicom_TIC_Management_System.Views
         public LoginForm()
         {
             InitializeComponent();
-            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\R.JPG");
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\B.JPG");
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
             comboBoxRole.Items.Clear();

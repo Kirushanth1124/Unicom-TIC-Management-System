@@ -12,6 +12,7 @@ namespace Unicom_TIC_Management_System.Modals
         public string ExamName { get; set; }
         public int SubjectID { get; set; }
         public string SubjectName { get; set; }
+        public int ExamMarks { get; set; }
 
     }
 }

@@ -13,7 +13,7 @@ namespace Unicom_TIC_Management_System.Controllers
             using (var conn = DbCon.GetConnection())
             {
                 using (var cmd = new SQLiteCommand(
-                    "SELECT UserId, Username, Password, Role FROM Users WHERE Username = @Username AND Password = @Password AND Role = @Role", conn))
+                    "SELECT UserID, Username, Password, Role FROM Users WHERE Username = @Username AND Password = @Password AND Role = @Role", conn))
                 {
                     cmd.Parameters.AddWithValue("@Username", username);
                     cmd.Parameters.AddWithValue("@Password", password);

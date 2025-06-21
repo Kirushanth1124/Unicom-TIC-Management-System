@@ -8,7 +8,7 @@ namespace Unicom_TIC_Management_System.Modals
 {
     internal class Course
     {
-        public int CourseId { get; set; }
+        public int CourseID { get; set; }
         public string CourseName { get; set; }
     }
 }
