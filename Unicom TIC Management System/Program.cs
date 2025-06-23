@@ -21,7 +21,7 @@ namespace Unicom_TIC_Management_System
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MarkForm()); // First show login
+            Application.Run(new LoginForm()); // First show login
 
 
 
