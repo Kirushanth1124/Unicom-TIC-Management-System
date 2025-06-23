@@ -14,25 +14,42 @@ namespace Unicom_TIC_Management_System.Controllers
 
             using (var conn = DbCon.GetConnection())
             {
-                // Ensure foreign keys are enabled for this connection
                 EnableForeignKeys(conn);
 
                 var cmd = new SQLiteCommand("SELECT * FROM Users", conn);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (var reader = cmd.ExecuteReader())
                 {
-                    list.Add(new AppUser
+                    while (reader.Read())
                     {
-                        UserID = reader.GetInt32(0),
-                        Username = reader.GetString(1),
-                        Password = reader.GetString(2),
-                        Role = reader.GetString(3),
-                        Name = GetNameFromRole(reader.GetInt32(0), reader.GetString(3), conn)
-                    });
+                        list.Add(new AppUser
+                        {
+                            UserID = reader.GetInt32(0),
+                            Username = reader.GetString(1),
+                            Password = reader.GetString(2),
+                            Role = reader.GetString(3),
+                            Name = GetNameFromRole(reader.GetInt32(0), reader.GetString(3), conn)
+                        });
+                    }
                 }
             }
 
             return list;
+        }
+
+        public List<AppUser> SearchUsers(string searchTerm)
+        {
+            var users = GetAllUsers();
+
+            if (string.IsNullOrWhiteSpace(searchTerm) || searchTerm.Trim().ToLower() == "all users")
+                return users;
+
+            searchTerm = searchTerm.ToLower();
+
+            return users.FindAll(user =>
+                (user.Role != null && user.Role.ToLower().Contains(searchTerm)) ||
+                (user.Username != null && user.Username.ToLower().Contains(searchTerm)) ||
+                (user.Name != null && user.Name.ToLower().Contains(searchTerm))
+            );
         }
 
         public void AddUser(AppUser user)
@@ -41,14 +58,15 @@ namespace Unicom_TIC_Management_System.Controllers
             {
                 EnableForeignKeys(conn);
 
-                // Insert into Users and get new UserID
-                var cmd = new SQLiteCommand("INSERT INTO Users (Username, Password, Role) VALUES (@u, @p, @r); SELECT last_insert_rowid();", conn);
-                cmd.Parameters.AddWithValue("@u", user.Username);
-                cmd.Parameters.AddWithValue("@p", user.Password);
-                cmd.Parameters.AddWithValue("@r", user.Role);
-                long userId = (long)cmd.ExecuteScalar();
+                using (var cmd = new SQLiteCommand("INSERT INTO Users (Username, Password, Role) VALUES (@u, @p, @r); SELECT last_insert_rowid();", conn))
+                {
+                    cmd.Parameters.AddWithValue("@u", user.Username);
+                    cmd.Parameters.AddWithValue("@p", user.Password);
+                    cmd.Parameters.AddWithValue("@r", user.Role);
+                    long userId = (long)cmd.ExecuteScalar();
 
-                InsertRoleDetails((int)userId, user, conn);
+                    InsertRoleDetails((int)userId, user, conn);
+                }
             }
         }
 
@@ -58,12 +76,14 @@ namespace Unicom_TIC_Management_System.Controllers
             {
                 EnableForeignKeys(conn);
 
-                var cmd = new SQLiteCommand("UPDATE Users SET Username = @u, Password = @p, Role = @r WHERE UserID = @id", conn);
-                cmd.Parameters.AddWithValue("@u", user.Username);
-                cmd.Parameters.AddWithValue("@p", user.Password);
-                cmd.Parameters.AddWithValue("@r", user.Role);
-                cmd.Parameters.AddWithValue("@id", user.UserID);
-                cmd.ExecuteNonQuery();
+                using (var cmd = new SQLiteCommand("UPDATE Users SET Username = @u, Password = @p, Role = @r WHERE UserID = @id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@u", user.Username);
+                    cmd.Parameters.AddWithValue("@p", user.Password);
+                    cmd.Parameters.AddWithValue("@r", user.Role);
+                    cmd.Parameters.AddWithValue("@id", user.UserID);
+                    cmd.ExecuteNonQuery();
+                }
 
                 UpdateRoleDetails(user.UserID, user, conn);
             }
@@ -75,13 +95,13 @@ namespace Unicom_TIC_Management_System.Controllers
             {
                 EnableForeignKeys(conn);
 
-                // Important: First delete from role tables to avoid FK constraint errors
                 DeleteRoleDetails(userId, conn);
 
-                // Then delete from Users
-                var cmd = new SQLiteCommand("DELETE FROM Users WHERE UserID = @id", conn);
-                cmd.Parameters.AddWithValue("@id", userId);
-                cmd.ExecuteNonQuery();
+                using (var cmd = new SQLiteCommand("DELETE FROM Users WHERE UserID = @id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", userId);
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
@@ -91,39 +111,58 @@ namespace Unicom_TIC_Management_System.Controllers
 
             if (user.Role == "Student")
             {
-                var courseCmd = new SQLiteCommand("SELECT CourseID FROM Courses LIMIT 1", conn);
-                var result = courseCmd.ExecuteScalar();
-                if (result != null)
+                // Fetch course ID if available
+                using (var courseCmd = new SQLiteCommand("SELECT CourseID FROM Courses LIMIT 1", conn))
                 {
-                    defaultCourseId = Convert.ToInt32(result);
+                    var result = courseCmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        defaultCourseId = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        throw new SQLiteException("No courses found in database. Please add at least one course.");
+                    }
                 }
-                else
+
+                // ✅ Generate Unique StudentID
+                int newStudentId = GenerateUniqueStudentId(conn);
+
+                string sql = @"INSERT INTO Students 
+                    (StudentID, StudentName, Address, DOB, Gender, CourseID, UserID) 
+                    VALUES (@sid, @name, '', '', '', @cid, @uid)";
+
+                using (var cmd = new SQLiteCommand(sql, conn))
                 {
-                    throw new SQLiteException("No courses found in database. Please add at least one course.");
+                    cmd.Parameters.AddWithValue("@sid", newStudentId);
+                    cmd.Parameters.AddWithValue("@name", user.Name);
+                    cmd.Parameters.AddWithValue("@cid", defaultCourseId);
+                    cmd.Parameters.AddWithValue("@uid", userId);
+                    cmd.ExecuteNonQuery();
                 }
             }
-
-            string sql = user.Role switch
+            else
             {
-                "Admin" => "INSERT INTO Admins (AdminName, UserID) VALUES (@name, @uid)",
-                "Lecturer" => "INSERT INTO Lecturers (LecturerName, PhoneNumber, Address, UserID) VALUES (@name, '', '', @uid)",
-                "Staff" => "INSERT INTO Staffs (StaffName, UserID) VALUES (@name, @uid)",
-                "Student" => "INSERT INTO Students (StudentID, StudentName, Address, DOB, Gender, CourseID, UserID) VALUES (@uid, @name, '', '', '', @cid, @uid)",
-                _ => ""
-            };
-
-            if (!string.IsNullOrEmpty(sql))
-            {
-                var cmd = new SQLiteCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@name", user.Name);
-                cmd.Parameters.AddWithValue("@uid", userId);
-                if (user.Role == "Student")
+                string sql = user.Role switch
                 {
-                    cmd.Parameters.AddWithValue("@cid", defaultCourseId);
+                    "Admin" => "INSERT INTO Admins (AdminName, UserID) VALUES (@name, @uid)",
+                    "Lecturer" => "INSERT INTO Lecturers (LecturerName, PhoneNumber, Address, UserID) VALUES (@name, '', '', @uid)",
+                    "Staff" => "INSERT INTO Staffs (StaffName, UserID) VALUES (@name, @uid)",
+                    _ => ""
+                };
+
+                if (!string.IsNullOrEmpty(sql))
+                {
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@name", user.Name);
+                        cmd.Parameters.AddWithValue("@uid", userId);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
-                cmd.ExecuteNonQuery();
             }
         }
+
 
         private void UpdateRoleDetails(int userId, AppUser user, SQLiteConnection conn)
         {
@@ -138,23 +177,26 @@ namespace Unicom_TIC_Management_System.Controllers
 
             if (!string.IsNullOrEmpty(sql))
             {
-                var cmd = new SQLiteCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@name", user.Name);
-                cmd.Parameters.AddWithValue("@uid", userId);
-                cmd.ExecuteNonQuery();
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@name", user.Name);
+                    cmd.Parameters.AddWithValue("@uid", userId);
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
         private void DeleteRoleDetails(int userId, SQLiteConnection conn)
         {
-            // Delete role-specific records first to avoid foreign key constraint error
             var roles = new string[] { "Admins", "Lecturers", "Staffs", "Students" };
 
             foreach (var roleTable in roles)
             {
-                var cmd = new SQLiteCommand($"DELETE FROM {roleTable} WHERE UserID = @uid", conn);
-                cmd.Parameters.AddWithValue("@uid", userId);
-                cmd.ExecuteNonQuery();
+                using (var cmd = new SQLiteCommand($"DELETE FROM {roleTable} WHERE UserID = @uid", conn))
+                {
+                    cmd.Parameters.AddWithValue("@uid", userId);
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
@@ -171,10 +213,12 @@ namespace Unicom_TIC_Management_System.Controllers
 
             if (!string.IsNullOrEmpty(sql))
             {
-                var cmd = new SQLiteCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", userId);
-                var result = cmd.ExecuteScalar();
-                return result?.ToString() ?? "";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", userId);
+                    var result = cmd.ExecuteScalar();
+                    return result?.ToString() ?? "";
+                }
             }
 
             return "";
@@ -182,11 +226,28 @@ namespace Unicom_TIC_Management_System.Controllers
 
         private void EnableForeignKeys(SQLiteConnection conn)
         {
-            // This ensures foreign keys are enforced on this connection
             using (var cmd = new SQLiteCommand("PRAGMA foreign_keys = ON;", conn))
             {
                 cmd.ExecuteNonQuery();
             }
+        }
+        private int GenerateUniqueStudentId(SQLiteConnection conn)
+        {
+            Random rnd = new Random();
+            int studentId;
+            do
+            {
+                studentId = rnd.Next(1000, 9999);
+                using (var checkCmd = new SQLiteCommand("SELECT COUNT(*) FROM Students WHERE StudentID = @id", conn))
+                {
+                    checkCmd.Parameters.AddWithValue("@id", studentId);
+                    var count = Convert.ToInt32(checkCmd.ExecuteScalar());
+                    if (count == 0)
+                        break;
+                }
+            } while (true);
+
+            return studentId;
         }
     }
 }

@@ -11,44 +11,39 @@ namespace SchoolManageSystem.Controllers
         public List<Course> GetAllCourses()
         {
             var courses = new List<Course>();
-
-            using var conn = DbCon.GetConnection();
-            using var cmd = new SQLiteCommand("SELECT CourseID, CourseName FROM Courses", conn);
-            using var reader = cmd.ExecuteReader();
-
-            while (reader.Read())
+            using (var conn = DbCon.GetConnection())
             {
-                courses.Add(new Course
+                var cmd = new SQLiteCommand("SELECT CourseID, CourseName FROM Courses", conn);
+                using (var reader = cmd.ExecuteReader())
                 {
-                    CourseID = reader.GetInt32(0),
-                    CourseName = reader.GetString(1)
-                });
+                    while (reader.Read())
+                    {
+                        courses.Add(new Course
+                        {
+                            CourseID = reader.GetInt32(0),
+                            CourseName = reader.GetString(1)
+                        });
+                    }
+                }
             }
-
             return courses;
         }
+
 
         public void AddCourse(Course course)
         {
             using (var conn = DbCon.GetConnection())
             {
-                Random rnd = new Random();
-                int randomId;
-
-                
-                do
-                {
-                    randomId = rnd.Next(1, 10000);
-                } while (CourseIdExists(randomId, conn));
-
-                course.CourseID = randomId;
-
-                using var cmd = new SQLiteCommand("INSERT INTO Courses (CourseID, CourseName) VALUES (@CourseID, @CourseName)", conn);
-                cmd.Parameters.AddWithValue("@CourseID", course.CourseID);
+                // CourseID கொடுக்காமல், CourseName மட்டும் insert பண்ணு
+                using var cmd = new SQLiteCommand("INSERT INTO Courses (CourseName) VALUES (@CourseName)", conn);
                 cmd.Parameters.AddWithValue("@CourseName", course.CourseName);
                 cmd.ExecuteNonQuery();
+
+                // விருப்பமா: கடைசி insert ஆன row-இன் ID-யை பெறலாம்
+                course.CourseID = (int)conn.LastInsertRowId;
             }
         }
+
 
         public void UpdateCourse(Course course)
         {

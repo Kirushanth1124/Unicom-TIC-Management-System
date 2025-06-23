@@ -36,7 +36,7 @@ namespace Unicom_TIC_Management_System.Views
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtRoomId.Text) || string.IsNullOrWhiteSpace(txtRoomName.Text) || string.IsNullOrWhiteSpace(txtRoomType.Text))
+            if (/*string.IsNullOrWhiteSpace(txtRoomId.Text) ||*/ string.IsNullOrWhiteSpace(txtRoomName.Text) || string.IsNullOrWhiteSpace(txtRoomType.Text))
             {
                 MessageBox.Show("Please fill all fields.");
                 return;
@@ -44,7 +44,7 @@ namespace Unicom_TIC_Management_System.Views
 
             var room = new Room
             {
-                RoomID = int.Parse(txtRoomId.Text),
+                /*RoomID = int.Parse(txtRoomId.Text),*/
                 RoomName = txtRoomName.Text.Trim(),
                 RoomType = txtRoomType.Text.Trim()
             };
@@ -65,7 +65,7 @@ namespace Unicom_TIC_Management_System.Views
 
             var room = new Room
             {
-                RoomID = int.Parse(txtRoomId.Text),
+                /*RoomID = int.Parse(txtRoomId.Text),*/
                 RoomName = txtRoomName.Text.Trim(),
                 RoomType = txtRoomType.Text.Trim()
             };
@@ -98,7 +98,7 @@ namespace Unicom_TIC_Management_System.Views
             if (dataGridViewRooms.SelectedRows.Count > 0)
             {
                 var row = dataGridViewRooms.SelectedRows[0];
-                txtRoomId.Text = row.Cells["RoomId"].Value.ToString();
+                /*txtRoomId.Text = row.Cells["RoomId"].Value.ToString();*/
                 txtRoomName.Text = row.Cells["RoomName"].Value.ToString();
                 txtRoomType.Text = row.Cells["RoomType"].Value.ToString();
             }
@@ -113,7 +113,7 @@ namespace Unicom_TIC_Management_System.Views
 
         private void btnAdd_Click_1(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtRoomId.Text) || string.IsNullOrWhiteSpace(txtRoomName.Text) || string.IsNullOrWhiteSpace(txtRoomType.Text))
+            if (string.IsNullOrWhiteSpace(txtRoomName.Text) || string.IsNullOrWhiteSpace(txtRoomType.Text))
             {
                 MessageBox.Show("Please fill all fields.");
                 return;
@@ -121,7 +121,6 @@ namespace Unicom_TIC_Management_System.Views
 
             var room = new Room
             {
-                RoomID = int.Parse(txtRoomId.Text),
                 RoomName = txtRoomName.Text.Trim(),
                 RoomType = txtRoomType.Text.Trim()
             };
@@ -140,17 +139,26 @@ namespace Unicom_TIC_Management_System.Views
                 return;
             }
 
+            // Ensure that RoomID is correctly passed
+            int roomId;
+            if (!int.TryParse(txtRoomId.Text, out roomId))  // This prevents crash if RoomID is not an integer
+            {
+                MessageBox.Show("Invalid Room ID.");
+                return;
+            }
+
             var room = new Room
             {
-                RoomID = int.Parse(txtRoomId.Text),
+                RoomID = roomId,
                 RoomName = txtRoomName.Text.Trim(),
                 RoomType = txtRoomType.Text.Trim()
             };
 
+            // Pass Room object to controller to update
             _controller.UpdateRoom(room);
-            LoadRooms();
-            ClearInputs();
-            MessageBox.Show("Room updated successfully!");
+            LoadRooms();  // Reload rooms to reflect changes
+            ClearInputs();  // Clear input fields
+            MessageBox.Show("Room updated successfully!");  // Show success message
         }
 
         private void btnDelete_Click_1(object sender, EventArgs e)

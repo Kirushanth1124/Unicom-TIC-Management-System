@@ -27,7 +27,7 @@ namespace Unicom_TIC_Management_System.Repositories
             {
                 @"
                 CREATE TABLE IF NOT EXISTS Rooms (
-                    RoomID INTEGER PRIMARY KEY,
+                    RoomID INTEGER PRIMARY KEY AUTOINCREMENT,
                     RoomName TEXT NOT NULL,
                     RoomType TEXT NOT NULL
                 );",
@@ -48,7 +48,7 @@ namespace Unicom_TIC_Management_System.Repositories
 
                 @"
                 CREATE TABLE IF NOT EXISTS Students (
-                    StudentID INTEGER PRIMARY KEY,
+                    StudentID INTEGER PRIMARY KEY AUTOINCREMENT,
                     StudentName TEXT NOT NULL,
                     Address TEXT NOT NULL,
                     DOB TEXT NOT NULL,
@@ -113,7 +113,7 @@ namespace Unicom_TIC_Management_System.Repositories
 
                 @"
                 CREATE TABLE IF NOT EXISTS Subjects (
-                    SubjectID INTEGER PRIMARY KEY,
+                    SubjectID INTEGER PRIMARY KEY AUTOINCREMENT,
                     SubjectName TEXT NOT NULL,
                     CourseID INTEGER,
                     CourseName TEXT,
@@ -122,7 +122,7 @@ namespace Unicom_TIC_Management_System.Repositories
 
                 @"
                 CREATE TABLE IF NOT EXISTS Timetables (
-                    TimetableID INTEGER PRIMARY KEY,
+                    TimetableID INTEGER PRIMARY KEY ,
                     SubjectID INTEGER NOT NULL,
                     TimeSlot TEXT NOT NULL,
                     RoomID INTEGER NOT NULL,

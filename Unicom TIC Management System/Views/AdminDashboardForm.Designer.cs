@@ -126,7 +126,7 @@
             // 
             button1.BackColor = Color.MistyRose;
             button1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(357, 174);
+            button1.Location = new Point(366, 189);
             button1.Name = "button1";
             button1.Size = new Size(248, 42);
             button1.TabIndex = 7;

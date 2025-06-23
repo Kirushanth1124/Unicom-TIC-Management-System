@@ -11,11 +11,11 @@ namespace Unicom_TIC_Management_System.Modals
     {
  
 
-        public int StudentId { get; set; }
+        public int StudentID { get; set; }
         public int UserID { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public int CourseId { get; set; }
+        public int CourseID { get; set; }
         public string CourseName { get; set; } 
         public string DOB { get; set; }
         public string Gender { get; set; }

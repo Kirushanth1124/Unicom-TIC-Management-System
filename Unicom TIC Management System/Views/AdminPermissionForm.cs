@@ -15,14 +15,13 @@ namespace Unicom_TIC_Management_System.Views
         {
             InitializeComponent();
 
-            // DataGridView Properties for smooth selection
             dgvUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsers.MultiSelect = false;
             dgvUsers.ReadOnly = true;
 
-            // Subscribe events
             dgvUsers.CellClick += DgvUsers_CellClick;
             dgvUsers.SelectionChanged += DgvUsers_SelectionChanged;
+            txtSearch.TextChanged += TxtSearch_TextChanged;
 
             LoadRoles();
             LoadUsers();
@@ -43,22 +42,26 @@ namespace Unicom_TIC_Management_System.Views
                 dgvUsers.DataSource = null;
                 dgvUsers.DataSource = users;
 
-                // Optional: Adjust DataGridView columns headers for better readability
-                if (dgvUsers.Columns["UserID"] != null)
-                    dgvUsers.Columns["UserID"].HeaderText = "User ID";
-                if (dgvUsers.Columns["Username"] != null)
-                    dgvUsers.Columns["Username"].HeaderText = "Username";
-                if (dgvUsers.Columns["Password"] != null)
-                    dgvUsers.Columns["Password"].HeaderText = "Password";
-                if (dgvUsers.Columns["Role"] != null)
-                    dgvUsers.Columns["Role"].HeaderText = "Role";
-                if (dgvUsers.Columns["Name"] != null)
-                    dgvUsers.Columns["Name"].HeaderText = "Name";
+                FormatGridHeaders();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to load users: " + ex.Message);
             }
+        }
+
+        private void FormatGridHeaders()
+        {
+            if (dgvUsers.Columns["UserID"] != null)
+                dgvUsers.Columns["UserID"].HeaderText = "User ID";
+            if (dgvUsers.Columns["Username"] != null)
+                dgvUsers.Columns["Username"].HeaderText = "Username";
+            if (dgvUsers.Columns["Password"] != null)
+                dgvUsers.Columns["Password"].HeaderText = "Password";
+            if (dgvUsers.Columns["Role"] != null)
+                dgvUsers.Columns["Role"].HeaderText = "Role";
+            if (dgvUsers.Columns["Name"] != null)
+                dgvUsers.Columns["Name"].HeaderText = "Name";
         }
 
         private void ClearForm()
@@ -155,7 +158,6 @@ namespace Unicom_TIC_Management_System.Views
 
         private void DgvUsers_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Safely load user details on row click
             if (e.RowIndex >= 0)
             {
                 LoadUserDetailsFromRow(dgvUsers.Rows[e.RowIndex]);
@@ -164,7 +166,6 @@ namespace Unicom_TIC_Management_System.Views
 
         private void DgvUsers_SelectionChanged(object sender, EventArgs e)
         {
-            // Also update form fields when selection changes (e.g., keyboard navigation)
             if (dgvUsers.SelectedRows.Count > 0)
             {
                 LoadUserDetailsFromRow(dgvUsers.SelectedRows[0]);
@@ -204,6 +205,25 @@ namespace Unicom_TIC_Management_System.Views
                 return false;
             }
             return true;
+        }
+
+        private void TxtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string searchTerm = txtSearch.Text.ToLower();
+            var filteredUsers = controller.SearchUsers(searchTerm);
+
+            dgvUsers.DataSource = null;
+            dgvUsers.DataSource = filteredUsers;
+
+            FormatGridHeaders();
+        }
+
+        private void dgvUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvUsers.SelectedRows.Count > 0)
+            {
+                LoadUserDetailsFromRow(dgvUsers.SelectedRows[0]);
+            }
         }
 
         private void btnAdd_Click_1(object sender, EventArgs e)
@@ -288,12 +308,18 @@ namespace Unicom_TIC_Management_System.Views
             }
         }
 
-        private void dgvUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvUsers_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
+
             if (dgvUsers.SelectedRows.Count > 0)
             {
                 LoadUserDetailsFromRow(dgvUsers.SelectedRows[0]);
             }
+        }
+
+        public object GetAllUsers()
+        {
+            throw new NotImplementedException();
         }
     }
 }

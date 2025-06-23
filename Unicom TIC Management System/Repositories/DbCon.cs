@@ -11,23 +11,12 @@ namespace Unicom_TIC_Management_System.Repositories
 
         public static SQLiteConnection GetConnection()
         {
-            if (!File.Exists(DbFilePath))
-            {
-                SQLiteConnection.CreateFile(DbFilePath);
-            }
-
-            var connection = new SQLiteConnection($"Data Source={DbFilePath};Version=3;");
+            string connectionString = "Data Source=unicomtic.db;Version=3;";
+            var connection = new SQLiteConnection(connectionString);
             connection.Open();
-
-            using (var pragmaCmd = new SQLiteCommand("PRAGMA foreign_keys = ON;", connection))
-            {
-                pragmaCmd.ExecuteNonQuery();
-            }
-
-            DatabaseManager.CreateTables(connection); // இங்க இச்செயலை செய்ய வேண்டும்
-
             return connection;
         }
+
 
     }
 }

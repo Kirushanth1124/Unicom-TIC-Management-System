@@ -38,19 +38,7 @@ namespace SchoolManageSystem.Controllers
         {
             using (var conn = DbCon.GetConnection())
             {
-                int randomId;
-                Random rnd = new Random();
-
-                // Generate a unique RoomID (range 101 to 299)
-                do
-                {
-                    randomId = rnd.Next(101, 299);
-                } while (RoomIdExists(randomId, conn));
-
-                room.RoomID = randomId;
-
-                var cmd = new SQLiteCommand("INSERT INTO Rooms (RoomID, RoomName, RoomType) VALUES (@RoomID, @RoomName, @RoomType)", conn);
-                cmd.Parameters.AddWithValue("@RoomID", room.RoomID);
+                var cmd = new SQLiteCommand("INSERT INTO Rooms (RoomName, RoomType) VALUES (@RoomName, @RoomType)", conn);
                 cmd.Parameters.AddWithValue("@RoomName", room.RoomName);
                 cmd.Parameters.AddWithValue("@RoomType", room.RoomType);
                 cmd.ExecuteNonQuery();

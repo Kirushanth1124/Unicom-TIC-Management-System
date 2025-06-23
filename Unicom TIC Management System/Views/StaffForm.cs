@@ -67,7 +67,7 @@ namespace Unicom_TIC_Management_System
 
                 var staff = new Staff
                 {
-                    StaffId = staffId,
+                    StaffID = staffId,
                     StaffName = txtName.Text.Trim(),
                     Password = txtPassword.Text.Trim(),
                     PhoneNumber = txtPhoneNumber.Text.Trim()

@@ -25,7 +25,7 @@ namespace Unicom_TIC_Management_System.Controllers
                         {
                             return new User
                             {
-                                UserId = reader.GetInt32(0),
+                                UserID = reader.GetInt32(0),
                                 Username = reader.GetString(1),
                                 Password = reader.GetString(2),
                                 Role = reader.GetString(3)

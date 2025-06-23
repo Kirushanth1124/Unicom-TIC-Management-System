@@ -104,7 +104,7 @@ namespace Unicom_TIC_Management_System.Views
             {
                 var student = new Student
                 {
-                    StudentId = selectedStudentId,
+                    StudentID = selectedStudentId,
                     Name = txtStName.Text.Trim(),
                     Address = txtStAddress.Text.Trim(),
                     DOB = dateTimePicker1.Value.ToString("yyyy-MM-dd"),

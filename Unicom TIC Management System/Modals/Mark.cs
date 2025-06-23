@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Unicom_TIC_Management_System.Modals
 {
-    internal class Mark
+    public class Mark
     {
         public int StudentID { get; set; }
         public int ExamID { get; set; }

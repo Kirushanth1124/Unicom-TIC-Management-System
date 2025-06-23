@@ -13,6 +13,7 @@ namespace Unicom_TIC_Management_System.Views
         private MarkController markController = new MarkController();
         private StudentController studentController = new StudentController();
         private ExamController examController = new ExamController();
+        private AdminPermissionController controller = new AdminPermissionController();
 
         public MarkForm()
         {
@@ -26,15 +27,19 @@ namespace Unicom_TIC_Management_System.Views
 
         private void LoadStudents()
         {
-            var students = studentController.GetAllStudents();
-            comboBoxStudents.DataSource = students;
-            comboBoxStudents.DisplayMember = "Name";
-            comboBoxStudents.ValueMember = "StudentID";
+            var allUsers = controller.GetAllUsers();  
+            var students = allUsers.Where(user => user.Role == "Student").ToList(); 
+
+            comboBoxStudents.DataSource = null;  
+            comboBoxStudents.DataSource = students;  
+            comboBoxStudents.DisplayMember = "Username"; 
+            comboBoxStudents.ValueMember = "UserID"; 
         }
 
         private void LoadExams()
         {
             var exams = examController.GetAllExams();
+            comboBoxExams.DataSource = null;  // Reset the ComboBox
             comboBoxExams.DataSource = exams;
             comboBoxExams.DisplayMember = "ExamName";
             comboBoxExams.ValueMember = "ExamID";

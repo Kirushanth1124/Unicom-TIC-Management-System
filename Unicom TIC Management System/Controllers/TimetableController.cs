@@ -14,41 +14,34 @@ namespace SchoolManageSystem.Controllers
         {
             var timetables = new List<Timetable>();
 
-            try
+            using (var conn = DbCon.GetConnection())
             {
-                using (var conn = DbCon.GetConnection())
+                EnableForeignKeys(conn);
+
+                string query = @"
+                    SELECT t.TimetableID, t.SubjectID, s.SubjectName, 
+                           t.TimeSlot, t.RoomID, r.RoomName, r.RoomType
+                    FROM Timetables t
+                    LEFT JOIN Subjects s ON t.SubjectID = s.SubjectID
+                    LEFT JOIN Rooms r ON t.RoomID = r.RoomID";
+
+                using (var cmd = new SQLiteCommand(query, conn))
+                using (var reader = cmd.ExecuteReader())
                 {
-                    EnableForeignKeys(conn);
-
-                    string query = @"
-                        SELECT t.TimetableID, t.SubjectID, s.SubjectName, 
-                               t.TimeSlot, t.RoomID, r.RoomName, r.RoomType
-                        FROM Timetables t
-                        LEFT JOIN Subjects s ON t.SubjectID = s.SubjectID
-                        LEFT JOIN Rooms r ON t.RoomID = r.RoomID";
-
-                    using (var cmd = new SQLiteCommand(query, conn))
-                    using (var reader = cmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        while (reader.Read())
+                        timetables.Add(new Timetable
                         {
-                            timetables.Add(new Timetable
-                            {
-                                TimetableID = reader.GetInt32(0),
-                                SubjectID = reader.GetInt32(1),
-                                SubjectName = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                                TimeSlot = reader.IsDBNull(3) ? "" : reader.GetString(3),
-                                RoomID = reader.GetInt32(4),
-                                RoomName = reader.IsDBNull(5) ? "" : reader.GetString(5),
-                                RoomType = reader.IsDBNull(6) ? "" : reader.GetString(6)
-                            });
-                        }
+                            TimetableID = reader.GetInt32(0),
+                            SubjectID = reader.GetInt32(1),
+                            SubjectName = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                            TimeSlot = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                            RoomID = reader.GetInt32(4),
+                            RoomName = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                            RoomType = reader.IsDBNull(6) ? "" : reader.GetString(6)
+                        });
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error in GetAllTimetables: " + ex.Message);
             }
 
             return timetables;
@@ -56,152 +49,115 @@ namespace SchoolManageSystem.Controllers
 
         public void AddTimetable(Timetable timetable)
         {
-            try
+            using (var conn = DbCon.GetConnection())
             {
-                using (var conn = DbCon.GetConnection())
+                EnableForeignKeys(conn);
+
+                if (!SubjectExists(timetable.SubjectID, conn))
+                    throw new Exception("Invalid SubjectID.");
+
+                if (!RoomExists(timetable.RoomID, conn))
+                    throw new Exception("Invalid RoomID.");
+
+                int id;
+                do
                 {
-                    EnableForeignKeys(conn);
+                    id = rnd.Next(300, 999);
+                } while (TimetableIdExists(id, conn));
 
-                    if (!SubjectExists(timetable.SubjectID, conn))
-                        throw new Exception("Invalid SubjectID: Not found in Subjects table.");
+                timetable.TimetableID = id;
 
-                    if (!RoomExists(timetable.RoomID, conn))
-                        throw new Exception("Invalid RoomID: Not found in Rooms table.");
+                string insert = @"INSERT INTO Timetables (TimetableID, SubjectID, TimeSlot, RoomID) 
+                                  VALUES (@TimetableID, @SubjectID, @TimeSlot, @RoomID)";
 
-                    int randomId;
-                    do
-                    {
-                        randomId = rnd.Next(301, 999);
-                    } while (TimetableIdExists(randomId, conn));
-
-                    timetable.TimetableID = randomId;
-
-                    string insertQuery = @"INSERT INTO Timetables 
-                        (TimetableID, SubjectID, TimeSlot, RoomID) 
-                        VALUES (@TimetableID, @SubjectID, @TimeSlot, @RoomID)";
-
-                    using (var cmd = new SQLiteCommand(insertQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@TimetableID", timetable.TimetableID);
-                        cmd.Parameters.AddWithValue("@SubjectID", timetable.SubjectID);
-                        cmd.Parameters.AddWithValue("@TimeSlot", timetable.TimeSlot);
-                        cmd.Parameters.AddWithValue("@RoomID", timetable.RoomID);
-
-                        int rows = cmd.ExecuteNonQuery();
-                        if (rows == 0)
-                            throw new Exception("Insert failed. No rows affected.");
-                    }
+                using (var cmd = new SQLiteCommand(insert, conn))
+                {
+                    cmd.Parameters.AddWithValue("@TimetableID", timetable.TimetableID);
+                    cmd.Parameters.AddWithValue("@SubjectID", timetable.SubjectID);
+                    cmd.Parameters.AddWithValue("@TimeSlot", timetable.TimeSlot);
+                    cmd.Parameters.AddWithValue("@RoomID", timetable.RoomID);
+                    cmd.ExecuteNonQuery();
                 }
-            }
-            catch (SQLiteException ex) when (ex.Message.Contains("FOREIGN KEY constraint failed"))
-            {
-                throw new Exception("Foreign key constraint failed. Please ensure the SubjectID and RoomID exist.");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error in AddTimetable: " + ex.Message);
             }
         }
 
         public void UpdateTimetable(Timetable timetable)
         {
-            try
+            using (var conn = DbCon.GetConnection())
             {
-                using (var conn = DbCon.GetConnection())
+                EnableForeignKeys(conn);
+
+                string update = @"UPDATE Timetables 
+                                  SET SubjectID = @SubjectID, TimeSlot = @TimeSlot, RoomID = @RoomID 
+                                  WHERE TimetableID = @TimetableID";
+
+                using (var cmd = new SQLiteCommand(update, conn))
                 {
-                    EnableForeignKeys(conn);
-
-                    if (!SubjectExists(timetable.SubjectID, conn))
-                        throw new Exception("Invalid SubjectID: Not found in Subjects table.");
-
-                    if (!RoomExists(timetable.RoomID, conn))
-                        throw new Exception("Invalid RoomID: Not found in Rooms table.");
-
-                    string updateQuery = @"UPDATE Timetables 
-                        SET SubjectID = @SubjectID, 
-                            TimeSlot = @TimeSlot, 
-                            RoomID = @RoomID 
-                        WHERE TimetableID = @TimetableID";
-
-                    using (var cmd = new SQLiteCommand(updateQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@SubjectID", timetable.SubjectID);
-                        cmd.Parameters.AddWithValue("@TimeSlot", timetable.TimeSlot);
-                        cmd.Parameters.AddWithValue("@RoomID", timetable.RoomID);
-                        cmd.Parameters.AddWithValue("@TimetableID", timetable.TimetableID);
-
-                        int rows = cmd.ExecuteNonQuery();
-                        if (rows == 0)
-                            throw new Exception("Update failed. No matching record found.");
-                    }
+                    cmd.Parameters.AddWithValue("@SubjectID", timetable.SubjectID);
+                    cmd.Parameters.AddWithValue("@TimeSlot", timetable.TimeSlot);
+                    cmd.Parameters.AddWithValue("@RoomID", timetable.RoomID);
+                    cmd.Parameters.AddWithValue("@TimetableID", timetable.TimetableID);
+                    cmd.ExecuteNonQuery();
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error in UpdateTimetable: " + ex.Message);
             }
         }
 
         public void DeleteTimetable(int timetableId)
         {
-            try
+            using (var conn = DbCon.GetConnection())
             {
-                using (var conn = DbCon.GetConnection())
+                EnableForeignKeys(conn);
+                string delete = "DELETE FROM Timetables WHERE TimetableID = @id";
+
+                using (var cmd = new SQLiteCommand(delete, conn))
                 {
-                    EnableForeignKeys(conn);
+                    cmd.Parameters.AddWithValue("@id", timetableId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
-                    string deleteQuery = @"DELETE FROM Timetables WHERE TimetableID = @TimetableID";
-
-                    using (var cmd = new SQLiteCommand(deleteQuery, conn))
+        public List<Subject> GetAllSubjects()
+        {
+            var list = new List<Subject>();
+            using (var conn = DbCon.GetConnection())
+            {
+                var cmd = new SQLiteCommand("SELECT SubjectID, SubjectName FROM Subjects", conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
                     {
-                        cmd.Parameters.AddWithValue("@TimetableID", timetableId);
-
-                        int rows = cmd.ExecuteNonQuery();
-                        if (rows == 0)
-                            throw new Exception("Delete failed. No matching timetable found.");
+                        list.Add(new Subject
+                        {
+                            SubjectID = reader.GetInt32(0),
+                            SubjectName = reader.GetString(1)
+                        });
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error in DeleteTimetable: " + ex.Message);
-            }
+            return list;
         }
 
-        private bool TimetableIdExists(int timetableId, SQLiteConnection conn)
+        public List<Room> GetAllRooms()
         {
-            string query = "SELECT COUNT(*) FROM Timetables WHERE TimetableID = @TimetableID";
-
-            using (var cmd = new SQLiteCommand(query, conn))
+            var list = new List<Room>();
+            using (var conn = DbCon.GetConnection())
             {
-                cmd.Parameters.AddWithValue("@TimetableID", timetableId);
-                int count = Convert.ToInt32(cmd.ExecuteScalar());
-                return count > 0;
+                var cmd = new SQLiteCommand("SELECT RoomID, RoomName, RoomType FROM Rooms", conn);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Room
+                        {
+                            RoomID = reader.GetInt32(0),
+                            RoomName = reader.GetString(1),
+                            RoomType = reader.GetString(2)
+                        });
+                    }
+                }
             }
-        }
-
-        private bool SubjectExists(int subjectId, SQLiteConnection conn)
-        {
-            string query = "SELECT COUNT(*) FROM Subjects WHERE SubjectID = @SubjectID";
-
-            using (var cmd = new SQLiteCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@SubjectID", subjectId);
-                int count = Convert.ToInt32(cmd.ExecuteScalar());
-                return count > 0;
-            }
-        }
-
-        private bool RoomExists(int roomId, SQLiteConnection conn)
-        {
-            string query = "SELECT COUNT(*) FROM Rooms WHERE RoomID = @RoomID";
-
-            using (var cmd = new SQLiteCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@RoomID", roomId);
-                int count = Convert.ToInt32(cmd.ExecuteScalar());
-                return count > 0;
-            }
+            return list;
         }
 
         private void EnableForeignKeys(SQLiteConnection conn)
@@ -210,6 +166,27 @@ namespace SchoolManageSystem.Controllers
             {
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        private bool TimetableIdExists(int id, SQLiteConnection conn)
+        {
+            var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Timetables WHERE TimetableID = @id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+        }
+
+        private bool SubjectExists(int id, SQLiteConnection conn)
+        {
+            var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Subjects WHERE SubjectID = @id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+        }
+
+        private bool RoomExists(int id, SQLiteConnection conn)
+        {
+            var cmd = new SQLiteCommand("SELECT COUNT(*) FROM Rooms WHERE RoomID = @id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
         }
     }
 }

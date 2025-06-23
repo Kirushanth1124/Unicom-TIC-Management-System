@@ -27,7 +27,7 @@ namespace Unicom_TIC_Management_System.Controllers
                     {
                         staffList.Add(new Staff
                         {
-                            StaffId = reader.GetInt32(0),
+                            StaffID = reader.GetInt32(0),
                             StaffName = reader.GetString(1),
                             Password = reader.GetString(2),
                             PhoneNumber = reader.GetString(3)
@@ -55,12 +55,12 @@ namespace Unicom_TIC_Management_System.Controllers
                     randomId = rnd.Next(100, 99999);
                 } while (StaffIdExists(randomId, conn));
 
-                staff.StaffId = randomId;
+                staff.StaffID = randomId;
 
                 string insertSql = "INSERT INTO Staffs (StaffID, StaffName, Password, PhoneNumber) VALUES (@StaffID, @StaffName, @Password, @PhoneNumber)";
                 using (var cmd = new SQLiteCommand(insertSql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@StaffID", staff.StaffId);
+                    cmd.Parameters.AddWithValue("@StaffID", staff.StaffID);
                     cmd.Parameters.AddWithValue("@StaffName", staff.StaffName);
                     cmd.Parameters.AddWithValue("@Password", staff.Password);
                     cmd.Parameters.AddWithValue("@PhoneNumber", staff.PhoneNumber);
@@ -87,8 +87,8 @@ namespace Unicom_TIC_Management_System.Controllers
                 string updateSql = @"
                     UPDATE Staffs
                     SET StaffName = @StaffName,
-                        Password = @Password,
-                        PhoneNumber = @PhoneNumber
+                    Password = @Password,
+                    PhoneNumber = @PhoneNumber
                     WHERE StaffID = @StaffID";
 
                 using (var cmd = new SQLiteCommand(updateSql, conn))
@@ -96,12 +96,12 @@ namespace Unicom_TIC_Management_System.Controllers
                     cmd.Parameters.AddWithValue("@StaffName", staff.StaffName);
                     cmd.Parameters.AddWithValue("@Password", staff.Password);
                     cmd.Parameters.AddWithValue("@PhoneNumber", staff.PhoneNumber);
-                    cmd.Parameters.AddWithValue("@StaffID", staff.StaffId);
+                    cmd.Parameters.AddWithValue("@StaffID", staff.StaffID);
 
                     int rows = cmd.ExecuteNonQuery();
                     if (rows == 0)
                     {
-                        throw new Exception($"Update failed: StaffID {staff.StaffId} not found.");
+                        throw new Exception($"Update failed: StaffID {staff.StaffID} not found.");
                     }
                 }
             }
