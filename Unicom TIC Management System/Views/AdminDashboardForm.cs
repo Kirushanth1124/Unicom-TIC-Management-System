@@ -38,14 +38,14 @@ namespace Unicom_TIC_Management_System.Views
         private void btnManageStudents_Click(object sender, EventArgs e)
         {
 
-            btnManageStudents.Enabled = false;
+            /*btnManageStudents.Enabled = false;
 
 
             var studentForm = new StudentForm();
             studentForm.Show();
 
 
-            btnManageStudents.Enabled = true;
+            btnManageStudents.Enabled = true;*/
         }
 
         private void btnManageCourses_Click(object sender, EventArgs e)
@@ -131,6 +131,18 @@ namespace Unicom_TIC_Management_System.Views
 
 
             button1.Enabled = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            btnSTDash.Enabled = false;
+
+
+            var studentDashboardForm = new StudentDashboardForm();
+            studentDashboardForm.Show();
+
+
+            btnSTDash.Enabled = true;
         }
     }
 }

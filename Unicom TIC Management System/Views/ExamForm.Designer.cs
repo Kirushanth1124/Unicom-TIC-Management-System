@@ -4,6 +4,17 @@
     {
         private System.ComponentModel.IContainer components = null;
 
+        private System.Windows.Forms.Label lblExamID;
+        private System.Windows.Forms.Label lblExamName;
+        private System.Windows.Forms.Label lblSubject;
+        private System.Windows.Forms.TextBox txtExamID;
+        private System.Windows.Forms.TextBox txtExamName;
+        private System.Windows.Forms.ComboBox cmbSubjects;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.DataGridView dgvExams;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -13,170 +24,134 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
         private void InitializeComponent()
         {
+            lblExamID = new Label();
+            lblExamName = new Label();
+            lblSubject = new Label();
+            txtExamID = new TextBox();
             txtExamName = new TextBox();
             cmbSubjects = new ComboBox();
-            dgvExams = new DataGridView();
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
-            lblExamName = new Label();
-            lblSubject = new Label();
-            lblSubjectID = new Label();
-            lblExamID = new Label();
-            txtExamID = new TextBox();
-            txtSubjectID = new TextBox();
+            dgvExams = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dgvExams).BeginInit();
             SuspendLayout();
             // 
+            // lblExamID
+            // 
+            lblExamID.AutoSize = true;
+            lblExamID.Location = new Point(30, 30);
+            lblExamID.Name = "lblExamID";
+            lblExamID.Size = new Size(52, 15);
+            lblExamID.TabIndex = 0;
+            lblExamID.Text = "Exam ID:";
+            // 
+            // lblExamName
+            // 
+            lblExamName.AutoSize = true;
+            lblExamName.Location = new Point(30, 70);
+            lblExamName.Name = "lblExamName";
+            lblExamName.Size = new Size(73, 15);
+            lblExamName.TabIndex = 2;
+            lblExamName.Text = "Exam Name:";
+            // 
+            // lblSubject
+            // 
+            lblSubject.AutoSize = true;
+            lblSubject.Location = new Point(30, 110);
+            lblSubject.Name = "lblSubject";
+            lblSubject.Size = new Size(49, 15);
+            lblSubject.TabIndex = 4;
+            lblSubject.Text = "Subject:";
+            // 
+            // txtExamID
+            // 
+            txtExamID.Location = new Point(120, 27);
+            txtExamID.Name = "txtExamID";
+            txtExamID.ReadOnly = true;
+            txtExamID.Size = new Size(200, 23);
+            txtExamID.TabIndex = 1;
+            // 
             // txtExamName
             // 
-            txtExamName.Location = new Point(122, 28);
+            txtExamName.Location = new Point(120, 67);
             txtExamName.Name = "txtExamName";
-            txtExamName.Size = new Size(176, 23);
-            txtExamName.TabIndex = 0;
+            txtExamName.Size = new Size(200, 23);
+            txtExamName.TabIndex = 3;
             // 
             // cmbSubjects
             // 
             cmbSubjects.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSubjects.FormattingEnabled = true;
-            cmbSubjects.Location = new Point(122, 66);
+            cmbSubjects.Location = new Point(120, 107);
             cmbSubjects.Name = "cmbSubjects";
-            cmbSubjects.Size = new Size(176, 23);
-            cmbSubjects.TabIndex = 1;
-            // 
-            // dgvExams
-            // 
-            dgvExams.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvExams.Location = new Point(35, 178);
-            dgvExams.Name = "dgvExams";
-            dgvExams.RowHeadersWidth = 51;
-            dgvExams.RowTemplate.Height = 24;
-            dgvExams.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvExams.Size = new Size(438, 188);
-            dgvExams.TabIndex = 4;
-            dgvExams.CellClick += dgvExams_CellClick;
+            cmbSubjects.Size = new Size(200, 23);
+            cmbSubjects.TabIndex = 5;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(324, 23);
+            btnAdd.Location = new Point(360, 25);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(79, 28);
-            btnAdd.TabIndex = 2;
+            btnAdd.Size = new Size(90, 30);
+            btnAdd.TabIndex = 6;
             btnAdd.Text = "Add Exam";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click;
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(324, 61);
+            btnUpdate.Location = new Point(360, 65);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(79, 28);
-            btnUpdate.TabIndex = 3;
+            btnUpdate.Size = new Size(90, 30);
+            btnUpdate.TabIndex = 7;
             btnUpdate.Text = "Update Exam";
             btnUpdate.UseVisualStyleBackColor = true;
             btnUpdate.Click += btnUpdate_Click;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(324, 98);
+            btnDelete.Location = new Point(360, 105);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(79, 28);
-            btnDelete.TabIndex = 5;
+            btnDelete.Size = new Size(90, 30);
+            btnDelete.TabIndex = 8;
             btnDelete.Text = "Delete Exam";
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
             // 
-            // lblExamName
+            // dgvExams
             // 
-            lblExamName.AutoSize = true;
-            lblExamName.Location = new Point(35, 31);
-            lblExamName.Name = "lblExamName";
-            lblExamName.Size = new Size(73, 15);
-            lblExamName.TabIndex = 6;
-            lblExamName.Text = "Exam Name:";
-            // 
-            // lblSubject
-            // 
-            lblSubject.AutoSize = true;
-            lblSubject.Location = new Point(35, 68);
-            lblSubject.Name = "lblSubject";
-            lblSubject.Size = new Size(49, 15);
-            lblSubject.TabIndex = 7;
-            lblSubject.Text = "Subject:";
-            // 
-            // lblSubjectID
-            // 
-            lblSubjectID.AutoSize = true;
-            lblSubjectID.Location = new Point(35, 105);
-            lblSubjectID.Name = "lblSubjectID";
-            lblSubjectID.Size = new Size(60, 15);
-            lblSubjectID.TabIndex = 8;
-            lblSubjectID.Text = "Subject ID";
-            // 
-            // lblExamID
-            // 
-            lblExamID.AutoSize = true;
-            lblExamID.Location = new Point(35, 139);
-            lblExamID.Name = "lblExamID";
-            lblExamID.Size = new Size(49, 15);
-            lblExamID.TabIndex = 9;
-            lblExamID.Text = "Exam ID";
-            // 
-            // txtExamID
-            // 
-            txtExamID.Location = new Point(122, 136);
-            txtExamID.Name = "txtExamID";
-            txtExamID.Size = new Size(176, 23);
-            txtExamID.TabIndex = 10;
-            // 
-            // txtSubjectID
-            // 
-            txtSubjectID.Location = new Point(122, 103);
-            txtSubjectID.Name = "txtSubjectID";
-            txtSubjectID.Size = new Size(176, 23);
-            txtSubjectID.TabIndex = 11;
+            dgvExams.AllowUserToAddRows = false;
+            dgvExams.AllowUserToDeleteRows = false;
+            dgvExams.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvExams.Location = new Point(30, 159);
+            dgvExams.Name = "dgvExams";
+            dgvExams.ReadOnly = true;
+            dgvExams.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvExams.Size = new Size(600, 250);
+            dgvExams.TabIndex = 9;
+            dgvExams.CellClick += dgvExams_CellClick;
+            dgvExams.CellContentClick += dgvExams_CellContentClick;
             // 
             // ExamForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(509, 378);
-            Controls.Add(txtSubjectID);
-            Controls.Add(txtExamID);
-            Controls.Add(lblExamID);
-            Controls.Add(lblSubjectID);
-            Controls.Add(lblSubject);
-            Controls.Add(lblExamName);
+            ClientSize = new Size(680, 440);
+            Controls.Add(dgvExams);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(btnAdd);
-            Controls.Add(dgvExams);
             Controls.Add(cmbSubjects);
+            Controls.Add(lblSubject);
             Controls.Add(txtExamName);
+            Controls.Add(lblExamName);
+            Controls.Add(txtExamID);
+            Controls.Add(lblExamID);
             Name = "ExamForm";
-            Text = "Exam Form";
+            Text = "Exam Management";
             ((System.ComponentModel.ISupportInitialize)dgvExams).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
-
-        #endregion
-
-        private System.Windows.Forms.TextBox txtExamName;
-        private System.Windows.Forms.ComboBox cmbSubjects;
-        private System.Windows.Forms.DataGridView dgvExams;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Label lblExamName;
-        private System.Windows.Forms.Label lblSubject;
-        private Label lblSubjectID;
-        private Label lblExamID;
-        private TextBox txtExamID;
-        private TextBox txtSubjectID;
     }
 }

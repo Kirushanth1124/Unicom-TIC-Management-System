@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimetableForm));
             dataGridViewTimetables = new DataGridView();
             cmbSubject = new ComboBox();
             cmbRoom = new ComboBox();
@@ -46,105 +47,72 @@
             dataGridViewTimetables.AllowUserToAddRows = false;
             dataGridViewTimetables.AllowUserToDeleteRows = false;
             dataGridViewTimetables.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewTimetables.Location = new Point(10, 178);
+            resources.ApplyResources(dataGridViewTimetables, "dataGridViewTimetables");
             dataGridViewTimetables.Name = "dataGridViewTimetables";
             dataGridViewTimetables.ReadOnly = true;
-            dataGridViewTimetables.RowHeadersWidth = 51;
             dataGridViewTimetables.RowTemplate.Height = 24;
-            dataGridViewTimetables.Size = new Size(665, 234);
-            dataGridViewTimetables.TabIndex = 0;
             dataGridViewTimetables.CellContentClick += dataGridViewTimetables_CellContentClick;
+            dataGridViewTimetables.SelectionChanged += dataGridViewTimetables_SelectionChanged_1;
             // 
             // cmbSubject
             // 
             cmbSubject.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSubject.FormattingEnabled = true;
-            cmbSubject.Location = new Point(105, 23);
+            resources.ApplyResources(cmbSubject, "cmbSubject");
             cmbSubject.Name = "cmbSubject";
-            cmbSubject.Size = new Size(176, 23);
-            cmbSubject.TabIndex = 1;
             // 
             // cmbRoom
             // 
             cmbRoom.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRoom.FormattingEnabled = true;
-            cmbRoom.Location = new Point(105, 61);
+            resources.ApplyResources(cmbRoom, "cmbRoom");
             cmbRoom.Name = "cmbRoom";
-            cmbRoom.Size = new Size(176, 23);
-            cmbRoom.TabIndex = 2;
             // 
             // txtTimeSlot
             // 
-            txtTimeSlot.Location = new Point(105, 98);
+            resources.ApplyResources(txtTimeSlot, "txtTimeSlot");
             txtTimeSlot.Name = "txtTimeSlot";
-            txtTimeSlot.Size = new Size(176, 23);
-            txtTimeSlot.TabIndex = 3;
             // 
             // lblSubject
             // 
-            lblSubject.AutoSize = true;
-            lblSubject.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblSubject.Location = new Point(35, 26);
+            resources.ApplyResources(lblSubject, "lblSubject");
             lblSubject.Name = "lblSubject";
-            lblSubject.Size = new Size(49, 15);
-            lblSubject.TabIndex = 4;
-            lblSubject.Text = "Subject";
             // 
             // lblRoom
             // 
-            lblRoom.AutoSize = true;
-            lblRoom.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblRoom.Location = new Point(35, 64);
+            resources.ApplyResources(lblRoom, "lblRoom");
             lblRoom.Name = "lblRoom";
-            lblRoom.Size = new Size(40, 15);
-            lblRoom.TabIndex = 5;
-            lblRoom.Text = "Room";
             // 
             // lblTimeSlot
             // 
-            lblTimeSlot.AutoSize = true;
-            lblTimeSlot.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblTimeSlot.Location = new Point(35, 101);
+            resources.ApplyResources(lblTimeSlot, "lblTimeSlot");
             lblTimeSlot.Name = "lblTimeSlot";
-            lblTimeSlot.Size = new Size(60, 15);
-            lblTimeSlot.TabIndex = 6;
-            lblTimeSlot.Text = "Time Slot";
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(315, 23);
+            resources.ApplyResources(btnAdd, "btnAdd");
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(79, 28);
-            btnAdd.TabIndex = 7;
-            btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = true;
             btnAdd.Click += btnAdd_Click_1;
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(315, 61);
+            resources.ApplyResources(btnUpdate, "btnUpdate");
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(79, 28);
-            btnUpdate.TabIndex = 8;
-            btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
             btnUpdate.Click += btnUpdate_Click_1;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(315, 98);
+            resources.ApplyResources(btnDelete, "btnDelete");
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(79, 28);
-            btnDelete.TabIndex = 9;
-            btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click_1;
             // 
             // TimetableForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(686, 432);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(btnAdd);
@@ -155,9 +123,8 @@
             Controls.Add(cmbRoom);
             Controls.Add(cmbSubject);
             Controls.Add(dataGridViewTimetables);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "TimetableForm";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "Timetable Management";
             ((System.ComponentModel.ISupportInitialize)dataGridViewTimetables).EndInit();
             ResumeLayout(false);
             PerformLayout();

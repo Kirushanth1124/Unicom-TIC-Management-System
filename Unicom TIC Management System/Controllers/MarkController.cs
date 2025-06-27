@@ -45,42 +45,29 @@ public class MarkController
     // புதிய மதிப்பெண்களை சேர்
     public void AddMark(Mark mark)
     {
-        using (var conn = DbCon.GetConnection())
+        int subjectID = GetSubjectIDFromExam(mark.ExamID);
+        if (subjectID == 0)
         {
-            var cmd = new SQLiteCommand("PRAGMA busy_timeout = 5000;", conn);  // Timeout 5 seconds
-            cmd.ExecuteNonQuery();
+            MessageBox.Show("Invalid Subject ID.");
+            return;
+        }
 
-            // Get ExamName using ExamID
-            var exam = examController.GetExamById(mark.ExamID);
-            string examName = exam?.ExamName ?? "Unknown"; // Default to "Unknown" if no ExamName found
+        var exam = examController.GetExamById(mark.ExamID);
+        var student = GetStudentById(mark.StudentID);
 
-            // Get StudentName using StudentID
-            var student = GetStudentById(mark.StudentID);
-            string studentName = student?.Name ?? "Unknown"; // Default to "Unknown" if no StudentName found
-
-            var cmdInsert = new SQLiteCommand("INSERT INTO Marks (StudentID, ExamID, Score, SubjectID, ExamName, StudentName) VALUES (@StudentID, @ExamID, @Score, @SubjectID, @ExamName, @StudentName)", conn);
-
-            cmdInsert.Parameters.AddWithValue("@StudentID", mark.StudentID);
-            cmdInsert.Parameters.AddWithValue("@ExamID", mark.ExamID);
-            cmdInsert.Parameters.AddWithValue("@Score", mark.Score);
-
-            // Get SubjectID based on ExamID
-            int subjectID = GetSubjectIDFromExam(mark.ExamID);
-
-            // Check if SubjectID is valid
-            if (subjectID == 0)
-            {
-                MessageBox.Show("Error: Invalid ExamID. Could not retrieve SubjectID.");
-                return;
-            }
-
-            cmdInsert.Parameters.AddWithValue("@SubjectID", subjectID);  // Add SubjectID
-            cmdInsert.Parameters.AddWithValue("@ExamName", examName);  // Add ExamName to the insert statement
-            cmdInsert.Parameters.AddWithValue("@StudentName", studentName);  // Add StudentName to the insert statement
+        using (var conn = DbCon.GetConnection())
+        using (var cmd = new SQLiteCommand("INSERT INTO Marks (StudentID, ExamID, Score, SubjectID, ExamName, StudentName) VALUES (@StudentID, @ExamID, @Score, @SubjectID, @ExamName, @StudentName)", conn))
+        {
+            cmd.Parameters.AddWithValue("@StudentID", mark.StudentID);
+            cmd.Parameters.AddWithValue("@ExamID", mark.ExamID);
+            cmd.Parameters.AddWithValue("@Score", mark.Score);
+            cmd.Parameters.AddWithValue("@SubjectID", subjectID);
+            cmd.Parameters.AddWithValue("@ExamName", exam?.ExamName ?? "Unknown");
+            cmd.Parameters.AddWithValue("@StudentName", student?.Name ?? "Unknown");
 
             try
             {
-                cmdInsert.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
                 MessageBox.Show("Mark added successfully.");
             }
             catch (SQLiteException ex)
@@ -89,6 +76,8 @@ public class MarkController
             }
         }
     }
+
+
     private Student GetStudentById(int studentID)
     {
         using (var conn = DbCon.GetConnection())
@@ -111,22 +100,24 @@ public class MarkController
     }
     private string GetStudentNameFromStudent(int studentID)
     {
-        string studentName = string.Empty;
-
         using (var conn = DbCon.GetConnection())
         {
-            var cmd = new SQLiteCommand("SELECT StudentName FROM Students WHERE StudentID = @StudentID", conn);
-            cmd.Parameters.AddWithValue("@StudentID", studentID);
-
-            var reader = cmd.ExecuteReader();
-            if (reader.Read())
+            using (var cmd = new SQLiteCommand("SELECT StudentName FROM Students WHERE StudentID = @StudentID", conn))
             {
-                studentName = reader.GetString(0);  // StudentName களை பெறுதல்
+                cmd.Parameters.AddWithValue("@StudentID", studentID);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return reader.GetString(0);
+                    }
+                }
             }
         }
 
-        return studentName;
+        return "Unknown";
     }
+
 
 
     private string GetExamNameFromExam(int examID)
@@ -255,4 +246,40 @@ public class MarkController
             return count > 0;
         }
     }
+
+    public List<Mark> GetAllMarksWithNames()
+    {
+        var marks = new List<Mark>();
+
+        using (var conn = DbCon.GetConnection())
+        {
+            var cmd = new SQLiteCommand(@"
+            SELECT m.MarkID, m.StudentID, m.ExamID, m.Score,
+                   s.StudentName AS StudentName,
+                   sub.SubjectID, sub.SubjectName AS SubjectName
+            FROM Marks m
+            LEFT JOIN Students s ON m.StudentID = s.StudentID
+            LEFT JOIN Exams e ON m.ExamID = e.ExamID
+            LEFT JOIN Subjects sub ON e.SubjectID = sub.SubjectID", conn);
+
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                marks.Add(new Mark
+                {
+                    MarkID = reader.GetInt32(0),
+                    StudentID = reader.GetInt32(1),
+                    ExamID = reader.GetInt32(2),
+                    Score = reader.GetInt32(3),
+                    StudentName = reader.IsDBNull(4) ? "" : reader.GetString(4),
+                    SubjectID = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
+                    SubjectName = reader.IsDBNull(6) ? "" : reader.GetString(6)
+                });
+            }
+        }
+
+        return marks;
+    }
+
 }

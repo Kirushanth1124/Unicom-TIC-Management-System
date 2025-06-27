@@ -31,11 +31,11 @@
             btnLogout = new Button();
             btnManageCourses = new Button();
             btnManageLecturers = new Button();
-            btnManageStudents = new Button();
             btnManageTimeTable = new Button();
             btnManageExam = new Button();
             btnManageMarks = new Button();
             button1 = new Button();
+            btnSTDash = new Button();
             SuspendLayout();
             // 
             // btnLogout
@@ -54,7 +54,7 @@
             // 
             btnManageCourses.BackColor = Color.MistyRose;
             btnManageCourses.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnManageCourses.Location = new Point(68, 179);
+            btnManageCourses.Location = new Point(57, 98);
             btnManageCourses.Name = "btnManageCourses";
             btnManageCourses.Size = new Size(166, 35);
             btnManageCourses.TabIndex = 1;
@@ -66,7 +66,7 @@
             // 
             btnManageLecturers.BackColor = Color.MistyRose;
             btnManageLecturers.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnManageLecturers.Location = new Point(68, 252);
+            btnManageLecturers.Location = new Point(57, 169);
             btnManageLecturers.Name = "btnManageLecturers";
             btnManageLecturers.Size = new Size(166, 31);
             btnManageLecturers.TabIndex = 2;
@@ -74,23 +74,11 @@
             btnManageLecturers.UseVisualStyleBackColor = false;
             btnManageLecturers.Click += btnManageLecturers_Click;
             // 
-            // btnManageStudents
-            // 
-            btnManageStudents.BackColor = Color.MistyRose;
-            btnManageStudents.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnManageStudents.Location = new Point(68, 36);
-            btnManageStudents.Name = "btnManageStudents";
-            btnManageStudents.Size = new Size(166, 33);
-            btnManageStudents.TabIndex = 3;
-            btnManageStudents.Text = "Manage Student";
-            btnManageStudents.UseVisualStyleBackColor = false;
-            btnManageStudents.Click += btnManageStudents_Click;
-            // 
             // btnManageTimeTable
             // 
             btnManageTimeTable.BackColor = Color.MistyRose;
             btnManageTimeTable.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnManageTimeTable.Location = new Point(68, 389);
+            btnManageTimeTable.Location = new Point(57, 302);
             btnManageTimeTable.Name = "btnManageTimeTable";
             btnManageTimeTable.Size = new Size(166, 33);
             btnManageTimeTable.TabIndex = 4;
@@ -102,7 +90,7 @@
             // 
             btnManageExam.BackColor = Color.MistyRose;
             btnManageExam.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnManageExam.Location = new Point(68, 105);
+            btnManageExam.Location = new Point(57, 31);
             btnManageExam.Name = "btnManageExam";
             btnManageExam.Size = new Size(166, 35);
             btnManageExam.TabIndex = 5;
@@ -114,7 +102,7 @@
             // 
             btnManageMarks.BackColor = Color.MistyRose;
             btnManageMarks.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnManageMarks.Location = new Point(68, 318);
+            btnManageMarks.Location = new Point(57, 233);
             btnManageMarks.Name = "btnManageMarks";
             btnManageMarks.Size = new Size(166, 34);
             btnManageMarks.TabIndex = 6;
@@ -134,16 +122,28 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
+            // btnSTDash
+            // 
+            btnSTDash.BackColor = Color.MistyRose;
+            btnSTDash.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSTDash.Location = new Point(57, 363);
+            btnSTDash.Name = "btnSTDash";
+            btnSTDash.Size = new Size(166, 35);
+            btnSTDash.TabIndex = 8;
+            btnSTDash.Text = "Student Dashboard";
+            btnSTDash.UseVisualStyleBackColor = false;
+            btnSTDash.Click += button2_Click;
+            // 
             // AdminDashboardForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnSTDash);
             Controls.Add(button1);
             Controls.Add(btnManageMarks);
             Controls.Add(btnManageExam);
             Controls.Add(btnManageTimeTable);
-            Controls.Add(btnManageStudents);
             Controls.Add(btnManageLecturers);
             Controls.Add(btnManageCourses);
             Controls.Add(btnLogout);
@@ -159,10 +159,10 @@
         private Button btnLogout;
         private Button btnManageCourses;
         private Button btnManageLecturers;
-        private Button btnManageStudents;
         private Button btnManageTimeTable;
         private Button btnManageExam;
         private Button btnManageMarks;
         private Button button1;
+        private Button btnSTDash;
     }
 }

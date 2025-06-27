@@ -2,173 +2,157 @@
 {
     partial class MarkForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        private System.Windows.Forms.Label lblStudent;
+        private System.Windows.Forms.Label lblExam;
+        private System.Windows.Forms.Label lblScore;
+        private System.Windows.Forms.ComboBox comboBoxStudents;
+        private System.Windows.Forms.ComboBox comboBoxExams;
+        private System.Windows.Forms.TextBox txtScore;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.DataGridView dataGridViewMarks;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            comboBoxStudents = new ComboBox();
-            comboBoxExams = new ComboBox();
-            txtScore = new TextBox();
-            btnAdd = new Button();
-            btnDelete = new Button();
-            btnUpdate = new Button();
-            dataGridViewMarks = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewMarks).BeginInit();
-            SuspendLayout();
+            this.lblStudent = new System.Windows.Forms.Label();
+            this.lblExam = new System.Windows.Forms.Label();
+            this.lblScore = new System.Windows.Forms.Label();
+            this.comboBoxStudents = new System.Windows.Forms.ComboBox();
+            this.comboBoxExams = new System.Windows.Forms.ComboBox();
+            this.txtScore = new System.Windows.Forms.TextBox();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.dataGridViewMarks = new System.Windows.Forms.DataGridView();
+
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMarks)).BeginInit();
+            this.SuspendLayout();
+
             // 
-            // label1
+            // lblStudent
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(46, 44);
-            label1.Name = "label1";
-            label1.Size = new Size(70, 21);
-            label1.TabIndex = 0;
-            label1.Text = "Student";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(46, 90);
-            label2.Name = "label2";
-            label2.Size = new Size(52, 21);
-            label2.TabIndex = 1;
-            label2.Text = "Exam";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(45, 135);
-            label3.Name = "label3";
-            label3.Size = new Size(52, 21);
-            label3.TabIndex = 2;
-            label3.Text = "Score";
+            this.lblStudent.AutoSize = true;
+            this.lblStudent.Location = new System.Drawing.Point(30, 30);
+            this.lblStudent.Name = "lblStudent";
+            this.lblStudent.Size = new System.Drawing.Size(47, 13);
+            this.lblStudent.Text = "Student:";
+
             // 
             // comboBoxStudents
             // 
-            comboBoxStudents.FormattingEnabled = true;
-            comboBoxStudents.Location = new Point(160, 44);
-            comboBoxStudents.Name = "comboBoxStudents";
-            comboBoxStudents.Size = new Size(121, 23);
-            comboBoxStudents.TabIndex = 3;
+            this.comboBoxStudents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxStudents.FormattingEnabled = true;
+            this.comboBoxStudents.Location = new System.Drawing.Point(100, 27);
+            this.comboBoxStudents.Name = "comboBoxStudents";
+            this.comboBoxStudents.Size = new System.Drawing.Size(200, 21);
+
+            // 
+            // lblExam
+            // 
+            this.lblExam.AutoSize = true;
+            this.lblExam.Location = new System.Drawing.Point(30, 65);
+            this.lblExam.Name = "lblExam";
+            this.lblExam.Size = new System.Drawing.Size(37, 13);
+            this.lblExam.Text = "Exam:";
+
             // 
             // comboBoxExams
             // 
-            comboBoxExams.FormattingEnabled = true;
-            comboBoxExams.Location = new Point(160, 90);
-            comboBoxExams.Name = "comboBoxExams";
-            comboBoxExams.Size = new Size(121, 23);
-            comboBoxExams.TabIndex = 4;
+            this.comboBoxExams.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxExams.FormattingEnabled = true;
+            this.comboBoxExams.Location = new System.Drawing.Point(100, 62);
+            this.comboBoxExams.Name = "comboBoxExams";
+            this.comboBoxExams.Size = new System.Drawing.Size(200, 21);
+
+            // 
+            // lblScore
+            // 
+            this.lblScore.AutoSize = true;
+            this.lblScore.Location = new System.Drawing.Point(30, 100);
+            this.lblScore.Name = "lblScore";
+            this.lblScore.Size = new System.Drawing.Size(38, 13);
+            this.lblScore.Text = "Score:";
+
             // 
             // txtScore
             // 
-            txtScore.Location = new Point(160, 135);
-            txtScore.Name = "txtScore";
-            txtScore.Size = new Size(121, 23);
-            txtScore.TabIndex = 5;
+            this.txtScore.Location = new System.Drawing.Point(100, 97);
+            this.txtScore.Name = "txtScore";
+            this.txtScore.Size = new System.Drawing.Size(200, 20);
+
             // 
             // btnAdd
             // 
-            btnAdd.Font = new Font("Algerian", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAdd.Location = new Point(41, 189);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(75, 25);
-            btnAdd.TabIndex = 6;
-            btnAdd.Text = "Add";
-            btnAdd.UseVisualStyleBackColor = true;
-            btnAdd.Click += btnAdd_Click_1;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Font = new Font("Algerian", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(347, 192);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(75, 25);
-            btnDelete.TabIndex = 7;
-            btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += btnDelete_Click_1;
+            this.btnAdd.Location = new System.Drawing.Point(330, 25);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(90, 30);
+            this.btnAdd.Text = "Add Mark";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+
             // 
             // btnUpdate
             // 
-            btnUpdate.Font = new Font("Algerian", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnUpdate.Location = new Point(186, 189);
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(95, 28);
-            btnUpdate.TabIndex = 8;
-            btnUpdate.Text = "Update";
-            btnUpdate.UseVisualStyleBackColor = true;
-            btnUpdate.Click += btnUpdate_Click_1;
+            this.btnUpdate.Location = new System.Drawing.Point(330, 60);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(90, 30);
+            this.btnUpdate.Text = "Update Mark";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(330, 95);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(90, 30);
+            this.btnDelete.Text = "Delete Mark";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+
             // 
             // dataGridViewMarks
             // 
-            dataGridViewMarks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewMarks.Location = new Point(77, 251);
-            dataGridViewMarks.Name = "dataGridViewMarks";
-            dataGridViewMarks.Size = new Size(423, 194);
-            dataGridViewMarks.TabIndex = 9;
-            dataGridViewMarks.CellContentClick += dataGridViewMarks_CellContentClick;
+            this.dataGridViewMarks.AllowUserToAddRows = false;
+            this.dataGridViewMarks.AllowUserToDeleteRows = false;
+            this.dataGridViewMarks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewMarks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMarks.Location = new System.Drawing.Point(30, 150);
+            this.dataGridViewMarks.Name = "dataGridViewMarks";
+            this.dataGridViewMarks.ReadOnly = true;
+            this.dataGridViewMarks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewMarks.Size = new System.Drawing.Size(540, 250);
+            this.dataGridViewMarks.SelectionChanged += new System.EventHandler(this.dataGridViewMarks_SelectionChanged);
+
             // 
             // MarkForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(dataGridViewMarks);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnDelete);
-            Controls.Add(btnAdd);
-            Controls.Add(txtScore);
-            Controls.Add(comboBoxExams);
-            Controls.Add(comboBoxStudents);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Name = "MarkForm";
-            Text = "MarkForm";
-            ((System.ComponentModel.ISupportInitialize)dataGridViewMarks).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.ClientSize = new System.Drawing.Size(600, 430);
+            this.Controls.Add(this.lblStudent);
+            this.Controls.Add(this.comboBoxStudents);
+            this.Controls.Add(this.lblExam);
+            this.Controls.Add(this.comboBoxExams);
+            this.Controls.Add(this.lblScore);
+            this.Controls.Add(this.txtScore);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnUpdate);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.dataGridViewMarks);
+            this.Name = "MarkForm";
+            this.Text = "Mark Management";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMarks)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
-
-        #endregion
-
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private ComboBox comboBoxStudents;
-        private ComboBox comboBoxExams;
-        private TextBox txtScore;
-        private Button btnAdd;
-        private Button btnDelete;
-        private Button btnUpdate;
-        private DataGridView dataGridViewMarks;
     }
 }

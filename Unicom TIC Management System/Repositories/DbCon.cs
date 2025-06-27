@@ -11,11 +11,12 @@ namespace Unicom_TIC_Management_System.Repositories
 
         public static SQLiteConnection GetConnection()
         {
-            string connectionString = "Data Source=unicomtic.db;Version=3;";
+            string connectionString = "Data Source=unicomtic.db;Version=3;BusyTimeout=5000;";
             var connection = new SQLiteConnection(connectionString);
             connection.Open();
             return connection;
         }
+
 
 
     }

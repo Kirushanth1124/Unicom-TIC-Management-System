@@ -1,3 +1,4 @@
+using Unicom_TIC_Management_System.Repositories;
 using Unicom_TIC_Management_System.Views;
 
 namespace Unicom_TIC_Management_System
@@ -10,6 +11,8 @@ namespace Unicom_TIC_Management_System
         [STAThread]
         static void Main()
         {
+            var conn =  DbCon.GetConnection();
+            DatabaseManager.CreateTables(conn);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -21,7 +24,7 @@ namespace Unicom_TIC_Management_System
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new LoginForm()); // First show login
+            Application.Run(new MarkForm()); // First show login
 
 
 

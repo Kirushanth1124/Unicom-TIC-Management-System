@@ -45,7 +45,7 @@ namespace Unicom_TIC_Management_System.Views
             cmbSubjects.SelectedIndex = -1;
         }
 
-        private void dgvExams_CellClick(object sender, DataGridViewCellEventArgs e)
+        public void dgvExams_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -124,6 +124,11 @@ namespace Unicom_TIC_Management_System.Views
                 "HTML" => 5,
                 _ => 0,
             };
+        }
+
+        private void dgvExams_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

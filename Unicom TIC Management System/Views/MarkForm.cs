@@ -27,13 +27,13 @@ namespace Unicom_TIC_Management_System.Views
 
         private void LoadStudents()
         {
-            var allUsers = controller.GetAllUsers();  
-            var students = allUsers.Where(user => user.Role == "Student").ToList(); 
+            var allUsers = controller.GetAllUsers();
+            var students = allUsers.Where(user => user.Role == "Student").ToList();
 
-            comboBoxStudents.DataSource = null;  
-            comboBoxStudents.DataSource = students;  
-            comboBoxStudents.DisplayMember = "Username"; 
-            comboBoxStudents.ValueMember = "UserID"; 
+            comboBoxStudents.DataSource = null;
+            comboBoxStudents.DataSource = students;
+            comboBoxStudents.DisplayMember = "Username";
+            comboBoxStudents.ValueMember = "UserID";
         }
 
         private void LoadExams()
@@ -218,6 +218,11 @@ namespace Unicom_TIC_Management_System.Views
                 comboBoxStudents.SelectedValue = row.Cells["StudentId"].Value;
                 comboBoxExams.SelectedValue = row.Cells["ExamId"].Value;
             }
+        }
+
+        private void MarkForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -13,6 +13,9 @@ namespace Unicom_TIC_Management_System.Views
         public TimetableForm()
         {
             InitializeComponent();
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
             LoadSubjects();
             LoadRooms();
             LoadTimetables();
@@ -235,6 +238,11 @@ namespace Unicom_TIC_Management_System.Views
         }
 
         private void dataGridViewTimetables_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+           
+        }
+
+        private void dataGridViewTimetables_SelectionChanged_1(object sender, EventArgs e)
         {
             if (dataGridViewTimetables.SelectedRows.Count > 0)
             {

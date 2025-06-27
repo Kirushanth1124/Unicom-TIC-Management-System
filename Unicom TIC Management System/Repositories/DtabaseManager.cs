@@ -178,6 +178,11 @@ namespace Unicom_TIC_Management_System.Repositories
             }
         }
 
+        internal static IDisposable GetConnection()
+        {
+            throw new NotImplementedException();
+        }
+
         internal List<Modals.Student> GetAllStudents()
         {
             throw new System.NotImplementedException();

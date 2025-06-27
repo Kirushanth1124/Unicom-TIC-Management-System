@@ -99,5 +99,39 @@ namespace SchoolManageSystem.Controllers
 
             return null;
         }
+
+        public List<Exam> GetAllExamsWithSubjectNames()
+        {
+            List<Exam> exams = new List<Exam>();
+
+            using (var conn = DbCon.GetConnection())
+            {
+                var cmd = new SQLiteCommand(@"
+            SELECT e.ExamID, e.ExamName, e.SubjectID, 
+                   s.SubjectName
+            FROM Exams e
+            LEFT JOIN Subjects s ON e.SubjectID = s.SubjectID", conn);
+
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    exams.Add(new Exam
+                    {
+                        ExamID = reader.GetInt32(0),
+                        ExamName = reader.GetString(1),
+                        SubjectID = reader.GetInt32(2),
+                        SubjectName = reader.IsDBNull(3) ? "" : reader.GetString(3)
+                    });
+                }
+            }
+
+            return exams;
+        }
+
+
+
+
+
+
     }
 }

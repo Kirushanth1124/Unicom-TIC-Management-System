@@ -14,6 +14,8 @@ namespace Unicom_TIC_Management_System.Modals
         public int MarkID { get; set; }
         public string ExamName { get; set; }
         public string StudentName { get; set; }
+        public int SubjectID { get; set; }
+        public string SubjectName { get; set; }
 
         
     }

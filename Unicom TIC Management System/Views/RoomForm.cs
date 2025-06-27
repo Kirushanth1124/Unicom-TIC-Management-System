@@ -13,6 +13,9 @@ namespace Unicom_TIC_Management_System.Views
         public RoomForm()
         {
             InitializeComponent();
+            this.BackgroundImage = Image.FromFile("Z:\\C# Programming\\Unicom TIC Management System\\C.JPG");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
             LoadRooms();
             btnAdd.Click += BtnAdd_Click;
             btnUpdate.Click += BtnUpdate_Click;

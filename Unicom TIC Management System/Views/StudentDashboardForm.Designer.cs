@@ -32,6 +32,8 @@
             btnViewTimetable = new Button();
             btnLogout = new Button();
             dgvData = new DataGridView();
+            btnViewcourse = new Button();
+            btnExamView = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
             SuspendLayout();
             // 
@@ -71,17 +73,41 @@
             // dgvData
             // 
             dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Location = new Point(12, 196);
+            dgvData.Location = new Point(12, 240);
             dgvData.Name = "dgvData";
             dgvData.Size = new Size(389, 198);
             dgvData.TabIndex = 4;
             dgvData.CellContentClick += dgvData_CellContentClick;
+            // 
+            // btnViewcourse
+            // 
+            btnViewcourse.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnViewcourse.Location = new Point(28, 146);
+            btnViewcourse.Name = "btnViewcourse";
+            btnViewcourse.Size = new Size(141, 29);
+            btnViewcourse.TabIndex = 5;
+            btnViewcourse.Text = "View Course";
+            btnViewcourse.UseVisualStyleBackColor = true;
+            btnViewcourse.Click += btnViewcourse_Click;
+            // 
+            // btnExamView
+            // 
+            btnExamView.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnExamView.Location = new Point(28, 196);
+            btnExamView.Name = "btnExamView";
+            btnExamView.Size = new Size(141, 29);
+            btnExamView.TabIndex = 6;
+            btnExamView.Text = "View Exam";
+            btnExamView.UseVisualStyleBackColor = true;
+            btnExamView.Click += button1_Click;
             // 
             // StudentDashboardForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnExamView);
+            Controls.Add(btnViewcourse);
             Controls.Add(dgvData);
             Controls.Add(btnLogout);
             Controls.Add(btnViewTimetable);
@@ -97,5 +123,7 @@
         private Button btnViewTimetable;
         private Button btnLogout;
         private DataGridView dgvData;
+        private Button btnViewcourse;
+        private Button btnExamView;
     }
 }
